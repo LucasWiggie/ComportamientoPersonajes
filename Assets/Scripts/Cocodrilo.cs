@@ -13,7 +13,37 @@ public class Cocodrilo : MonoBehaviour
     public LayerMask targetMask;
     public LayerMask obstructionMask;
     public bool puedeVer;
-    public GameObject cosa;
+
+    //Rango 0-100 las 3 
+    public float hambre = 90; 
+    public float energia = 100;
+    public float miedo = 0;
+
+    //Getters y Setters
+    public float getHambre()
+    {
+        return this.hambre;
+    }
+    public float getEnergia()
+    {
+        return this.energia;
+    }
+    public float getMiedo()
+    {
+        return this.miedo;
+    }
+    public void setHambre(float h)
+    {
+        this.hambre = h;
+    }
+    public void setEnergia(float e)
+    {
+        this.energia = e;
+    }
+    public void setMiedo(float m)
+    {
+        this.miedo = m;
+    }
 
     private void Start()
     {

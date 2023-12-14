@@ -69,6 +69,10 @@ PrefabInstance:
       value: Crocodilo
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ce6029a5c350e83478d0376855762c91, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ce6029a5c350e83478d0376855762c91, type: 3}
       propertyPath: m_TagString
       value: Cocodrilo
       objectReference: {fileID: 0}
@@ -133,4 +137,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   puedeVer: 0
-  cosa: {fileID: 0}
+  hambre: 70
+  energia: 100
+  miedo: 0
