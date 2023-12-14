@@ -100,4 +100,9 @@ public class Cocodrilo : MonoBehaviour
             puedeVer = false;
         }
     }
+
+    public void UtilitySystem()
+    {
+
+    }
 }
