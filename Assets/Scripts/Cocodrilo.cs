@@ -15,9 +15,14 @@ public class Cocodrilo : MonoBehaviour
     public bool puedeVer;
 
     //Rango 0-100 las 3 
-    public float hambre = 90; 
-    public float energia = 100;
-    public float miedo = 0;
+    public float hambre; 
+    public float energia;
+    public float miedo;
+
+    // Utilidades
+    public float _hambre;
+    public float _energia;
+    public float _miedo;
 
     //Getters y Setters
     public float getHambre()
@@ -48,6 +53,15 @@ public class Cocodrilo : MonoBehaviour
     private void Start()
     {
         playerRef = this.gameObject;
+
+        hambre = 90;
+        energia = 100;
+        miedo = 0;
+
+        _hambre = hambre;
+        _energia = energia;
+        _miedo = miedo;
+
         StartCoroutine(FOVRoutine());
     }
 
@@ -103,6 +117,37 @@ public class Cocodrilo : MonoBehaviour
 
     public void UtilitySystem()
     {
+        _hambre = this.getHambre();
+        _energia = this.getEnergia();
+        _miedo = this.getMiedo();
 
+        if (_energia < 50)
+        {
+            EnergiaAction();
+        } 
+        else if (_hambre > 70 && _hambre > _miedo && _energia > 50)
+        {
+            HambreAction();
+        }
+        else if (_miedo > 80 && _miedo > _hambre && _energia > 50)
+        {
+            MiedoAction();
+        }
     }
+
+    public void HambreAction()
+    {
+        // BT de cuando el Cocodrilo tiene hambre
+    }
+
+    public void EnergiaAction()
+    {
+        // BT de cuando el Cocodrilo tiene poca energía
+    }
+
+    public void MiedoAction()
+    {
+        // BT de cuando el Cocodrilo tiene miedo
+    }
+
 }
