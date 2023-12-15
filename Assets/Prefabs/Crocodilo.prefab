@@ -34,19 +34,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ce6029a5c350e83478d0376855762c91, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.00000013767878
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ce6029a5c350e83478d0376855762c91, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.00000013767875
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ce6029a5c350e83478d0376855762c91, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7071069
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ce6029a5c350e83478d0376855762c91, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.70710665
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ce6029a5c350e83478d0376855762c91, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -58,7 +58,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ce6029a5c350e83478d0376855762c91, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ce6029a5c350e83478d0376855762c91, type: 3}
       propertyPath: m_ConstrainProportionsScale
@@ -71,5 +71,35 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ce6029a5c350e83478d0376855762c91, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3292833783963909165}
   m_SourcePrefab: {fileID: 100100000, guid: ce6029a5c350e83478d0376855762c91, type: 3}
+--- !u!1 &679631145219194378 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ce6029a5c350e83478d0376855762c91, type: 3}
+  m_PrefabInstance: {fileID: 409793743644377947}
+  m_PrefabAsset: {fileID: 0}
+--- !u!195 &3292833783963909165
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 679631145219194378}
+  m_Enabled: 0
+  m_AgentTypeID: -334000983
+  m_Radius: 1.27
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 0.19
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
