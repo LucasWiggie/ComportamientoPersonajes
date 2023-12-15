@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Cocodrilo : MonoBehaviour
 {
@@ -28,6 +29,12 @@ public class Cocodrilo : MonoBehaviour
     public float _hambre;
     public float _energia;
     public float _miedo;
+
+    //NavMeshAgent
+    private NavMeshAgent crocodrile;
+
+    //Collider el objeto con el que se ha chocado
+    private Collider collidedObject;
 
     //Getters y Setters
     public float getHambre()
@@ -58,6 +65,7 @@ public class Cocodrilo : MonoBehaviour
     private void Start()
     {
         playerRef = this.gameObject;
+        crocodrile = GetComponent<NavMeshAgent>();
 
         hambre = 90;
         energia = 100;
@@ -120,6 +128,10 @@ public class Cocodrilo : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        collidedObject = collision.gameObject.GetComponent<Collider>();
+    }
     public void UtilitySystem()
     {
         _hambre = this.getHambre();

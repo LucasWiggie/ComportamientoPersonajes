@@ -377,6 +377,7 @@ MonoBehaviour:
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
+  animalTarget: {fileID: 0}
 --- !u!1 &8848663780347430460
 GameObject:
   m_ObjectHideFlags: 0
@@ -690,6 +691,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ce6029a5c350e83478d0376855762c91, type: 3}
       insertIndex: -1
       addedObject: {fileID: -6017237697104204736}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ce6029a5c350e83478d0376855762c91, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5169368867478602403}
   m_SourcePrefab: {fileID: 100100000, guid: ce6029a5c350e83478d0376855762c91, type: 3}
 --- !u!4 &154626795854144688 stripped
 Transform:
@@ -755,3 +759,25 @@ MonoBehaviour:
   _hambre: 0
   _energia: 0
   _miedo: 0
+--- !u!195 &5169368867478602403
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 679631145219194378}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.42
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 2
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 0.29
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
