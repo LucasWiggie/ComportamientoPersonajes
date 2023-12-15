@@ -186,7 +186,7 @@ Transform:
   m_GameObject: {fileID: 122460971}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.36, z: 0}
+  m_LocalPosition: {x: 0, y: 2.7, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -359,12 +359,10 @@ MonoBehaviour:
   castor: {fileID: 7077717063672759098, guid: f78f1d36fc7ebd748b39b30e95d663f4, type: 3}
   salamandra: {fileID: 5489956750369340815, guid: 8fbaf18edefc9b84e921f3cac4508485, type: 3}
   pato: {fileID: 5698116583432613237, guid: c1d9db48ff0b73042836e507fdf0a8cf, type: 3}
-  patoHijo: {fileID: 5842986526443527119, guid: fcd7e96b0af642c45930bff60bce15b1, type: 3}
   nCocodrilos: 2
   nCastores: 3
   nSalamandras: 2
   nPatos: 2
-  nPatosHijos: 3
 --- !u!4 &362074959
 Transform:
   m_ObjectHideFlags: 0
