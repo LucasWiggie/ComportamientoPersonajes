@@ -10,11 +10,15 @@ public class GeneracionAleatoria : MonoBehaviour
     public GameObject castor;
     public GameObject salamandra;
     public GameObject pato;
+    public GameObject palo;
+    public GameObject mosca;
 
     public int nCocodrilos;
     public int nCastores;
     public int nSalamandras;
     public int nPatos;
+    public int nPalos;
+    public int nMoscas;
 
 
     // Start is called before the first frame update
@@ -70,6 +74,32 @@ public class GeneracionAleatoria : MonoBehaviour
 
             GameObject instance = Instantiate(pato, hit.position, new Quaternion(0f, 0f, 0f, 0f));
             instance.transform.position = new Vector3(hit.position.x, -0.373f, hit.position.z);
+        }
+
+        for (int i = 0; i < nPalos; i++)
+        {
+            NavMeshHit hit;
+            Vector3 randomPoint = GetRandomPointOnNavMeshPato(2.77f);//No bajar de 2.63 que se cuelga
+            while (!NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
+            {
+                randomPoint = GetRandomPointOnNavMeshPato(2.77f);//No bajar de 2.63 que se cuelga
+            }
+
+            GameObject instance = Instantiate(palo, hit.position, new Quaternion(0f, 0f, 0f, 0f));
+            instance.transform.position = new Vector3(hit.position.x, 2.92f, hit.position.z);
+        }
+
+        for (int i = 0; i < nMoscas; i++)
+        {
+            NavMeshHit hit;
+            Vector3 randomPoint = GetRandomPointOnNavMeshPato(2.77f);//No bajar de 2.63 que se cuelga
+            while (!NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
+            {
+                randomPoint = GetRandomPointOnNavMeshPato(2.77f);//No bajar de 2.63 que se cuelga
+            }
+
+            GameObject instance = Instantiate(mosca, hit.position, new Quaternion(0f, 0f, 0f, 0f));
+            instance.transform.position = new Vector3(hit.position.x, 3.23f, hit.position.z);
         }
 
     }
