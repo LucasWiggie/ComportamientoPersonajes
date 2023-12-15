@@ -10,6 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5110568978766686693}
   - component: {fileID: 844850606372000754}
+  - component: {fileID: 6134355166461649826}
+  - component: {fileID: 1748277432791939197}
+  - component: {fileID: 1872066894361907827}
+  - component: {fileID: 6314958071991085002}
   m_Layer: 11
   m_Name: BT Miedo
   m_TagString: Untagged
@@ -44,10 +48,117 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 0}
+  selectedEditorNode: {fileID: 6314958071991085002}
   repeatOnFinish: 0
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
+--- !u!114 &6134355166461649826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3760301380305623227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 538645f2f9090fd43bc6154b2e89e2d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Root
+  rect:
+    serializedVersion: 2
+    x: 320
+    y: 115
+    width: 160
+    height: 45
+  parent: {fileID: 0}
+  children:
+  - {fileID: 1748277432791939197}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+--- !u!114 &1748277432791939197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3760301380305623227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c78c7da6b00e1b46bad07949050f82f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Sequence
+  rect:
+    serializedVersion: 2
+    x: 320
+    y: 200
+    width: 160
+    height: 45
+  parent: {fileID: 6134355166461649826}
+  children:
+  - {fileID: 1872066894361907827}
+  - {fileID: 6314958071991085002}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  random: 0
+--- !u!114 &1872066894361907827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3760301380305623227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b06668c424a40b499fd6da0b036edb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Croc_HayArena
+  rect:
+    serializedVersion: 2
+    x: 200
+    y: 360
+    width: 160
+    height: 45
+  parent: {fileID: 1748277432791939197}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  abort: 0
+  somePropertyRef:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0
+--- !u!114 &6314958071991085002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3760301380305623227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26689b50366d8384f9f90ab83b75ba77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Croc_IrArena
+  rect:
+    serializedVersion: 2
+    x: 435
+    y: 358
+    width: 160
+    height: 45
+  parent: {fileID: 1748277432791939197}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
 --- !u!1 &8792374671060363509
 GameObject:
   m_ObjectHideFlags: 0
@@ -98,7 +209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 3997437741653068606}
+  selectedEditorNode: {fileID: 0}
   repeatOnFinish: 0
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
@@ -276,6 +387,12 @@ GameObject:
   m_Component:
   - component: {fileID: 5319528506592859230}
   - component: {fileID: 8263836319693507718}
+  - component: {fileID: 5580146114662991599}
+  - component: {fileID: 4960071877887696928}
+  - component: {fileID: 7860517292401030708}
+  - component: {fileID: 2110501172676248241}
+  - component: {fileID: 6131299164290454353}
+  - component: {fileID: 6066673945394651381}
   m_Layer: 11
   m_Name: BT Energia
   m_TagString: Untagged
@@ -310,10 +427,174 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 0}
+  selectedEditorNode: {fileID: 6066673945394651381}
   repeatOnFinish: 0
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
+--- !u!114 &5580146114662991599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8848663780347430460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 538645f2f9090fd43bc6154b2e89e2d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Root
+  rect:
+    serializedVersion: 2
+    x: 357
+    y: 132
+    width: 160
+    height: 45
+  parent: {fileID: 0}
+  children:
+  - {fileID: 4960071877887696928}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+--- !u!114 &4960071877887696928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8848663780347430460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c78c7da6b00e1b46bad07949050f82f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Sequence
+  rect:
+    serializedVersion: 2
+    x: 360
+    y: 220
+    width: 160
+    height: 45
+  parent: {fileID: 5580146114662991599}
+  children:
+  - {fileID: 7860517292401030708}
+  - {fileID: 2110501172676248241}
+  - {fileID: 6131299164290454353}
+  - {fileID: 6066673945394651381}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  random: 0
+--- !u!114 &7860517292401030708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8848663780347430460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80bc1e87755830845806762a5b59b60d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Croc_HayHuevos
+  rect:
+    serializedVersion: 2
+    x: 100
+    y: 380
+    width: 160
+    height: 45
+  parent: {fileID: 4960071877887696928}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  abort: 0
+  somePropertyRef:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0
+--- !u!114 &2110501172676248241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8848663780347430460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8d746368a9cbbe41b95ffc671706d2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Croc_IrHuevos
+  rect:
+    serializedVersion: 2
+    x: 292
+    y: 380
+    width: 160
+    height: 45
+  parent: {fileID: 4960071877887696928}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+--- !u!114 &6131299164290454353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8848663780347430460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80bc1e87755830845806762a5b59b60d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Croc_HayHuevos
+  rect:
+    serializedVersion: 2
+    x: 480
+    y: 380
+    width: 160
+    height: 45
+  parent: {fileID: 4960071877887696928}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  abort: 0
+  somePropertyRef:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0
+--- !u!114 &6066673945394651381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8848663780347430460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de032e8db206f5147adddf45a4a2ced1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Croc_ComerHuevos
+  rect:
+    serializedVersion: 2
+    x: 680
+    y: 380
+    width: 160
+    height: 45
+  parent: {fileID: 4960071877887696928}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
 --- !u!1001 &409793743644377947
 PrefabInstance:
   m_ObjectHideFlags: 0
