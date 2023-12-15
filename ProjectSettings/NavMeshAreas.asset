@@ -13,9 +13,9 @@ NavMeshProjectSettings:
     cost: 2
   - name: Presa
     cost: 1
-  - name: 
+  - name: Arena
     cost: 1
-  - name: 
+  - name: Nenufares
     cost: 1
   - name: 
     cost: 1
