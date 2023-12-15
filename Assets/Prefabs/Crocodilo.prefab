@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5110568978766686693
 Transform:
   m_ObjectHideFlags: 0
@@ -60,16 +60,17 @@ GameObject:
   - component: {fileID: 8741855071015340053}
   - component: {fileID: 4360387782269741815}
   - component: {fileID: 8531161285983354118}
-  - component: {fileID: 1750844753955856245}
-  - component: {fileID: 2717337513277825123}
-  - component: {fileID: 1036694292377418347}
+  - component: {fileID: 6688757406222029765}
+  - component: {fileID: 3997437741653068606}
+  - component: {fileID: 8803786299050360606}
+  - component: {fileID: 1931743244945009217}
   m_Layer: 11
   m_Name: BT Hambre
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7857108708980691413
 Transform:
   m_ObjectHideFlags: 0
@@ -97,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 1750844753955856245}
+  selectedEditorNode: {fileID: 3997437741653068606}
   repeatOnFinish: 0
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
@@ -147,12 +148,15 @@ MonoBehaviour:
     height: 45
   parent: {fileID: 4360387782269741815}
   children:
-  - {fileID: 1750844753955856245}
+  - {fileID: 3997437741653068606}
+  - {fileID: 6688757406222029765}
+  - {fileID: 8803786299050360606}
+  - {fileID: 1931743244945009217}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
   random: 0
---- !u!114 &1750844753955856245
+--- !u!114 &6688757406222029765
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -161,25 +165,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 8792374671060363509}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c78c7da6b00e1b46bad07949050f82f, type: 3}
+  m_Script: {fileID: 11500000, guid: 936a172425aea9c4ca8327b85b73c3ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: Sequence
+  title: Croc_BuscarCaza
   rect:
     serializedVersion: 2
-    x: 445
-    y: 282
+    x: 160
+    y: 320
     width: 160
     height: 45
   parent: {fileID: 8531161285983354118}
-  children:
-  - {fileID: 2717337513277825123}
-  - {fileID: 1036694292377418347}
+  children: []
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
-  random: 0
---- !u!114 &2717337513277825123
+--- !u!114 &3997437741653068606
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -188,36 +189,60 @@ MonoBehaviour:
   m_GameObject: {fileID: 8792374671060363509}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea825aa2e7214af419a5aa40843b9dbd, type: 3}
+  m_Script: {fileID: 11500000, guid: 568bfee1c090a494e89cabb7e26ebcde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: Move Towards
+  title: Croc_HayCaza
+  rect:
+    serializedVersion: 2
+    x: -40
+    y: 320
+    width: 160
+    height: 45
+  parent: {fileID: 8531161285983354118}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  abort: 0
+  somePropertyRef:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0
+--- !u!114 &8803786299050360606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8792374671060363509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 568bfee1c090a494e89cabb7e26ebcde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Croc_HayCaza
   rect:
     serializedVersion: 2
     x: 360
-    y: 420
+    y: 320
     width: 160
     height: 45
-  parent: {fileID: 1750844753955856245}
+  parent: {fileID: 8531161285983354118}
   children: []
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
-  targetPosition:
+  abort: 0
+  somePropertyRef:
     useConstant: 0
-    mode: 0
+    mode: 1
     blackboard: {fileID: 0}
     key: 
-    constantValue: {x: 0, y: 0, z: 0}
-  transformToMove:
-    useConstant: 0
-    mode: 0
-    blackboard: {fileID: 0}
-    key: 
-    constantValue: {fileID: 0}
-  speed: 0.1
-  minDistance: 0
---- !u!114 &1036694292377418347
+    constantValue: 0
+--- !u!114 &1931743244945009217
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -226,22 +251,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 8792374671060363509}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c78c7da6b00e1b46bad07949050f82f, type: 3}
+  m_Script: {fileID: 11500000, guid: 1883640551a539641b3759c093de9b67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: Sequence
+  title: Croc_Comer
   rect:
     serializedVersion: 2
-    x: 540
-    y: 420
+    x: 560
+    y: 320
     width: 160
     height: 45
-  parent: {fileID: 1750844753955856245}
+  parent: {fileID: 8531161285983354118}
   children: []
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
-  random: 0
 --- !u!1 &8848663780347430460
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,7 +282,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5319528506592859230
 Transform:
   m_ObjectHideFlags: 0
