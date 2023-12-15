@@ -76,12 +76,12 @@ public class GeneracionAleatoria : MonoBehaviour
 
     Vector3 GetRandomPointOnNavMesh(float yOffset)
     {
-        return new Vector3(Random.Range(-13.0f, 13.0f), yOffset, Random.Range(-13.0f, 13.0f));
+        return new Vector3(Random.Range(-28.0f, 28.0f), yOffset, Random.Range(-28.0f, 28.0f));
     }
 
     Vector3 GetRandomPointOnNavMeshPato(float yOffset)
     {
-        return new Vector3(Random.Range(-9.0f, 9.0f), yOffset, Random.Range(-13.0f, 13.0f));
+        return new Vector3(Random.Range(-25.0f, 25.0f), yOffset, Random.Range(-25.0f, 25.0f));
     }
 
     // Update is called once per frame
