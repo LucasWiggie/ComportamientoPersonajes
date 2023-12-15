@@ -14,6 +14,11 @@ public class Cocodrilo : MonoBehaviour
     public LayerMask obstructionMask;
     public bool puedeVer;
 
+    // BTs de cada acción
+    public GameObject BT_Hambre;
+    public GameObject BT_Energia;
+    public GameObject BT_Miedo;
+
     //Rango 0-100 las 3 
     public float hambre; 
     public float energia;

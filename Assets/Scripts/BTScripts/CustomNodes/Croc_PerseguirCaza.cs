@@ -7,9 +7,9 @@ namespace CustomNodes
 {
     // Empty Menu attribute prevents Node to show up in "Add Component" menu.
     [AddComponentMenu("")]
-    [MBTNode(name = "CustomNodes/Croc_BuscarCaza")]
+    [MBTNode(name = "CustomNodes/Croc_PerseguirCaza")]
 
-    public class Croc_BuscarCaza : Leaf
+    public class Croc_PerseguirCaza : Leaf
     {
 
         // This is called every tick as long as node is executed

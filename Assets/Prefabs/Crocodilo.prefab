@@ -60,10 +60,10 @@ GameObject:
   - component: {fileID: 8741855071015340053}
   - component: {fileID: 4360387782269741815}
   - component: {fileID: 8531161285983354118}
-  - component: {fileID: 6688757406222029765}
   - component: {fileID: 3997437741653068606}
   - component: {fileID: 8803786299050360606}
   - component: {fileID: 1931743244945009217}
+  - component: {fileID: 9083728785584762547}
   m_Layer: 11
   m_Name: BT Hambre
   m_TagString: Untagged
@@ -149,37 +149,13 @@ MonoBehaviour:
   parent: {fileID: 4360387782269741815}
   children:
   - {fileID: 3997437741653068606}
-  - {fileID: 6688757406222029765}
+  - {fileID: 9083728785584762547}
   - {fileID: 8803786299050360606}
   - {fileID: 1931743244945009217}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
   random: 0
---- !u!114 &6688757406222029765
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8792374671060363509}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 936a172425aea9c4ca8327b85b73c3ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: Croc_BuscarCaza
-  rect:
-    serializedVersion: 2
-    x: 160
-    y: 320
-    width: 160
-    height: 45
-  parent: {fileID: 8531161285983354118}
-  children: []
-  behaviourTree: {fileID: 0}
-  runtimePriority: 0
-  breakpoint: 0
 --- !u!114 &3997437741653068606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,8 +171,8 @@ MonoBehaviour:
   title: Croc_HayCaza
   rect:
     serializedVersion: 2
-    x: -40
-    y: 320
+    x: -42
+    y: 315
     width: 160
     height: 45
   parent: {fileID: 8531161285983354118}
@@ -259,6 +235,30 @@ MonoBehaviour:
     serializedVersion: 2
     x: 560
     y: 320
+    width: 160
+    height: 45
+  parent: {fileID: 8531161285983354118}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+--- !u!114 &9083728785584762547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8792374671060363509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 936a172425aea9c4ca8327b85b73c3ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Croc_PerseguirCaza
+  rect:
+    serializedVersion: 2
+    x: 159
+    y: 318
     width: 160
     height: 45
   parent: {fileID: 8531161285983354118}
@@ -465,6 +465,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   puedeVer: 0
+  BT_Hambre: {fileID: 8792374671060363509}
+  BT_Energia: {fileID: 8848663780347430460}
+  BT_Miedo: {fileID: 3760301380305623227}
   hambre: 70
   energia: 100
   miedo: 0

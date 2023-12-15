@@ -29,6 +29,11 @@ namespace MBT
         private List<Decorator> interruptingNodes = new List<Decorator>();
         public float LastTick { get; private set; }
 
+        public void OnEnable()
+        {
+            Restart();
+        }
+
         void Awake()
         {
             rootNode = GetComponent<Root>();
