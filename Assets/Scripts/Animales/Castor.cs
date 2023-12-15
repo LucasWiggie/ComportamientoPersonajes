@@ -14,9 +14,19 @@ public class Castor : MonoBehaviour
     public LayerMask obstructionMask;
     public bool puedeVer;
 
-    public float hambre = 50; //Rango 0-100 las 3
-    public float energia = 100;
-    public float miedo = 0;
+    // BTs de cada acción
+    public GameObject BT_Hambre;
+    public GameObject BT_EnergiaMiedo;
+    public GameObject BT_PalosPresa; // *Acción por defecto
+
+    public float hambre; //Rango 0-100 las 3
+    public float energia;
+    public float miedo;
+
+    // Utilidades
+    public float _hambre;
+    public float _energia;
+    public float _miedo;
 
     //Getters y Setters
     public float getHambre()
@@ -47,6 +57,15 @@ public class Castor : MonoBehaviour
     private void Start()
     {
         playerRef = this.gameObject;
+
+        hambre = 50;
+        energia = 100;
+        miedo = 0;
+
+        _hambre = hambre;
+        _energia = energia;
+        _miedo = miedo;
+
         StartCoroutine(FOVRoutine());
     }
 
@@ -98,5 +117,31 @@ public class Castor : MonoBehaviour
         {
             puedeVer = false;
         }
+    }
+
+    public void UtilitySystem()
+    {
+        _hambre = this.getHambre();
+        _energia = this.getEnergia();
+        _miedo = this.getMiedo();
+
+        if (_energia < 50 || _miedo > 80)
+        {
+            EnergiaMiedoAction();
+        }
+        else if (_hambre > 70 && _hambre > _miedo && _energia > 50)
+        {
+            HambreAction();
+        }
+    }
+
+    public void HambreAction()
+    {
+        // BT de cuando el Cocodrilo tiene hambre
+    }
+
+    public void EnergiaMiedoAction()
+    {
+        // BT de cuando el Cocodrilo tiene poca energía
     }
 }

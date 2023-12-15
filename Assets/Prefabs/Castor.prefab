@@ -1,5 +1,223 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1675697618097588121
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5130773916139200988}
+  - component: {fileID: 5421714491714198123}
+  - component: {fileID: 3943335230717891253}
+  - component: {fileID: 5531909167830443237}
+  - component: {fileID: 6075981661003003301}
+  - component: {fileID: 1381572509571395564}
+  - component: {fileID: 7902718916232899318}
+  - component: {fileID: 6384150623594599636}
+  m_Layer: 6
+  m_Name: BT Palos Presa
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5130773916139200988
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1675697618097588121}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7598358202805115264}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5421714491714198123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1675697618097588121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedEditorNode: {fileID: 6384150623594599636}
+  repeatOnFinish: 0
+  maxExecutionsPerTick: 1000
+  parent: {fileID: 0}
+--- !u!114 &3943335230717891253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1675697618097588121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 538645f2f9090fd43bc6154b2e89e2d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Root
+  rect:
+    serializedVersion: 2
+    x: 260
+    y: 140
+    width: 160
+    height: 45
+  parent: {fileID: 0}
+  children:
+  - {fileID: 5531909167830443237}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+--- !u!114 &5531909167830443237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1675697618097588121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c78c7da6b00e1b46bad07949050f82f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Sequence
+  rect:
+    serializedVersion: 2
+    x: 259
+    y: 230
+    width: 160
+    height: 45
+  parent: {fileID: 3943335230717891253}
+  children:
+  - {fileID: 6075981661003003301}
+  - {fileID: 1381572509571395564}
+  - {fileID: 7902718916232899318}
+  - {fileID: 6384150623594599636}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  random: 0
+--- !u!114 &6075981661003003301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1675697618097588121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f45879248489fae46886abd594c163fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Cast_HayPalo
+  rect:
+    serializedVersion: 2
+    x: -100
+    y: 380
+    width: 160
+    height: 45
+  parent: {fileID: 5531909167830443237}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  abort: 0
+  somePropertyRef:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0
+--- !u!114 &1381572509571395564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1675697618097588121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a17c145209978ec41b36142b5c850d99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Cast_IrPalo
+  rect:
+    serializedVersion: 2
+    x: 120
+    y: 380
+    width: 160
+    height: 45
+  parent: {fileID: 5531909167830443237}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+--- !u!114 &7902718916232899318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1675697618097588121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f45879248489fae46886abd594c163fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Cast_HayPalo
+  rect:
+    serializedVersion: 2
+    x: 300
+    y: 380
+    width: 160
+    height: 45
+  parent: {fileID: 5531909167830443237}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  abort: 0
+  somePropertyRef:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0
+--- !u!114 &6384150623594599636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1675697618097588121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a44de1cf0d14b2646b0eb1a99c3b3895, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Cast_LlevarPaloPresa
+  rect:
+    serializedVersion: 2
+    x: 537
+    y: 373
+    width: 160
+    height: 45
+  parent: {fileID: 5531909167830443237}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
 --- !u!1 &3098766514677601670
 GameObject:
   m_ObjectHideFlags: 0
@@ -9,8 +227,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7582213895381973340}
+  - component: {fileID: 8133114092095588116}
+  - component: {fileID: 2600884774414839485}
+  - component: {fileID: 5346261159624609150}
+  - component: {fileID: 5515402326188212484}
+  - component: {fileID: 2519212002237163490}
   m_Layer: 6
-  m_Name: GameObject
+  m_Name: BT Energia Miedo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,6 +254,347 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7598358202805115264}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8133114092095588116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3098766514677601670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedEditorNode: {fileID: 0}
+  repeatOnFinish: 0
+  maxExecutionsPerTick: 1000
+  parent: {fileID: 0}
+--- !u!114 &2600884774414839485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3098766514677601670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 538645f2f9090fd43bc6154b2e89e2d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Root
+  rect:
+    serializedVersion: 2
+    x: 264
+    y: 183
+    width: 160
+    height: 45
+  parent: {fileID: 0}
+  children:
+  - {fileID: 5346261159624609150}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+--- !u!114 &5346261159624609150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3098766514677601670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c78c7da6b00e1b46bad07949050f82f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Sequence
+  rect:
+    serializedVersion: 2
+    x: 260
+    y: 280
+    width: 160
+    height: 45
+  parent: {fileID: 2600884774414839485}
+  children:
+  - {fileID: 5515402326188212484}
+  - {fileID: 2519212002237163490}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  random: 0
+--- !u!114 &5515402326188212484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3098766514677601670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 440b9e32e06d24a43bed4871ef667132, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Cast_HayPresa
+  rect:
+    serializedVersion: 2
+    x: 79
+    y: 417
+    width: 160
+    height: 45
+  parent: {fileID: 5346261159624609150}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  abort: 0
+  somePropertyRef:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0
+--- !u!114 &2519212002237163490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3098766514677601670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6d1c1b2a1a9480409273657f3ee321e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Cast_IrPresa
+  rect:
+    serializedVersion: 2
+    x: 417
+    y: 420
+    width: 160
+    height: 45
+  parent: {fileID: 5346261159624609150}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+--- !u!1 &4089050960983413300
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8646401461540339859}
+  - component: {fileID: 6136434242544006541}
+  - component: {fileID: 5199823516280664687}
+  - component: {fileID: 4093196910220421719}
+  - component: {fileID: 1310258905989067063}
+  - component: {fileID: 6125328242556647192}
+  - component: {fileID: 3570083602044517172}
+  - component: {fileID: 4600686690931119035}
+  m_Layer: 6
+  m_Name: BT Hambre
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8646401461540339859
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4089050960983413300}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7598358202805115264}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6136434242544006541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4089050960983413300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedEditorNode: {fileID: 4600686690931119035}
+  repeatOnFinish: 0
+  maxExecutionsPerTick: 1000
+  parent: {fileID: 0}
+--- !u!114 &5199823516280664687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4089050960983413300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 538645f2f9090fd43bc6154b2e89e2d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Root
+  rect:
+    serializedVersion: 2
+    x: 260
+    y: 140
+    width: 160
+    height: 45
+  parent: {fileID: 0}
+  children:
+  - {fileID: 4093196910220421719}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+--- !u!114 &4093196910220421719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4089050960983413300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c78c7da6b00e1b46bad07949050f82f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Sequence
+  rect:
+    serializedVersion: 2
+    x: 259
+    y: 230
+    width: 160
+    height: 45
+  parent: {fileID: 5199823516280664687}
+  children:
+  - {fileID: 1310258905989067063}
+  - {fileID: 6125328242556647192}
+  - {fileID: 3570083602044517172}
+  - {fileID: 4600686690931119035}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  random: 0
+--- !u!114 &1310258905989067063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4089050960983413300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f45879248489fae46886abd594c163fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Cast_HayPalo
+  rect:
+    serializedVersion: 2
+    x: -20
+    y: 360
+    width: 160
+    height: 45
+  parent: {fileID: 4093196910220421719}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  abort: 0
+  somePropertyRef:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0
+--- !u!114 &6125328242556647192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4089050960983413300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a17c145209978ec41b36142b5c850d99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Cast_IrPalo
+  rect:
+    serializedVersion: 2
+    x: 180
+    y: 360
+    width: 160
+    height: 45
+  parent: {fileID: 4093196910220421719}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+--- !u!114 &3570083602044517172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4089050960983413300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f45879248489fae46886abd594c163fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Cast_HayPalo
+  rect:
+    serializedVersion: 2
+    x: 367
+    y: 365
+    width: 160
+    height: 45
+  parent: {fileID: 4093196910220421719}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  abort: 0
+  somePropertyRef:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0
+--- !u!114 &4600686690931119035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4089050960983413300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3462b042aae18ed45aaf5b5a735106d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Cast_ComerPalo
+  rect:
+    serializedVersion: 2
+    x: 620
+    y: 360
+    width: 160
+    height: 45
+  parent: {fileID: 4093196910220421719}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
 --- !u!1001 &7996268657802133099
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -113,6 +677,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8d8a7541d7c36de4e9985ddc99ac995d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7582213895381973340}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8d8a7541d7c36de4e9985ddc99ac995d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8646401461540339859}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8d8a7541d7c36de4e9985ddc99ac995d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5130773916139200988}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8d8a7541d7c36de4e9985ddc99ac995d, type: 3}
       insertIndex: -1
@@ -171,9 +741,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   puedeVer: 0
+  BT_Hambre: {fileID: 4089050960983413300}
+  BT_EnergiaMiedo: {fileID: 3098766514677601670}
+  BT_PalosPresa: {fileID: 1675697618097588121}
   hambre: 50
   energia: 100
   miedo: 0
+  _hambre: 0
+  _energia: 0
+  _miedo: 0
 --- !u!4 &7598358202805115264 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8d8a7541d7c36de4e9985ddc99ac995d, type: 3}
