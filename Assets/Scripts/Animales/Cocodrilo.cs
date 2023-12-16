@@ -78,6 +78,8 @@ public class Cocodrilo : MonoBehaviour
         _energia = energia;
         _miedo = miedo;
 
+        UtilitySystem();
+
         StartCoroutine(FOVRoutine());
     }
     private void Update()
@@ -170,6 +172,7 @@ public class Cocodrilo : MonoBehaviour
     public void HambreAction()
     {
         // BT de cuando el Cocodrilo tiene hambre
+        BT_Hambre.SetActive(true);
     }
 
     public void EnergiaAction()

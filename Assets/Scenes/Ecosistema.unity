@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748171, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -588,7 +588,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 122460971}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1681,14 +1681,14 @@ MonoBehaviour:
   castor: {fileID: 7077717063672759098, guid: f78f1d36fc7ebd748b39b30e95d663f4, type: 3}
   salamandra: {fileID: 5489956750369340815, guid: 8fbaf18edefc9b84e921f3cac4508485, type: 3}
   pato: {fileID: 5698116583432613237, guid: c1d9db48ff0b73042836e507fdf0a8cf, type: 3}
-  palo: {fileID: 0}
-  mosca: {fileID: 0}
+  palo: {fileID: 5656048564650677434, guid: cc04d654acd24d244808316233ee9eb8, type: 3}
+  mosca: {fileID: 473223151736451685, guid: 2612d0139ca15cd4487fb287783742ad, type: 3}
   nCocodrilos: 2
   nCastores: 6
   nSalamandras: 4
   nPatos: 6
-  nPalos: 0
-  nMoscas: 0
+  nPalos: 10
+  nMoscas: 10
 --- !u!4 &362074959
 Transform:
   m_ObjectHideFlags: 0

@@ -298,6 +298,9 @@ MonoBehaviour:
     blackboard: {fileID: 0}
     key: 
     constantValue: 0
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &8803786299050360606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,6 +332,9 @@ MonoBehaviour:
     blackboard: {fileID: 0}
     key: 
     constantValue: 0
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &1931743244945009217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -377,7 +383,6 @@ MonoBehaviour:
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
-  animalTarget: {fileID: 0}
 --- !u!1 &8848663780347430460
 GameObject:
   m_ObjectHideFlags: 0
@@ -630,23 +635,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ce6029a5c350e83478d0376855762c91, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.00000013767878
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ce6029a5c350e83478d0376855762c91, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.00000013767875
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ce6029a5c350e83478d0376855762c91, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7071069
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ce6029a5c350e83478d0376855762c91, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.70710665
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ce6029a5c350e83478d0376855762c91, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ce6029a5c350e83478d0376855762c91, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -759,6 +764,7 @@ MonoBehaviour:
   _hambre: 0
   _energia: 0
   _miedo: 0
+  animalTarget: {fileID: 0}
 --- !u!195 &5169368867478602403
 NavMeshAgent:
   m_ObjectHideFlags: 0
