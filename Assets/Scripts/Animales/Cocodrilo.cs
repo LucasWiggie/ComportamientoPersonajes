@@ -37,6 +37,7 @@ public class Cocodrilo : MonoBehaviour
     //Objetivos
     private Transform animalTarget; //animal que va a ser objetivo
     private Transform eggsTarget;//huevos objetivo
+    private Transform sandTarget;//arena
 
     //Collider el objeto con el que se ha chocado
     private Collider collidedObject;
@@ -345,5 +346,36 @@ public class Cocodrilo : MonoBehaviour
         }
         
         hambre = 0; //ya no hay hambre
+    }
+
+    //Acción huir a arena
+    public ChaseState RunToSand()
+    {
+        float stopDistance = crocNav.stoppingDistance;
+        crocNav.stoppingDistance = 0;
+        float minDist = crocNav.stoppingDistance;
+        if (sandTarget != null)
+        {
+            float dist = Vector3.Distance(sandTarget.position, transform.position);
+            
+            if (dist > minDist)
+            {
+                
+                    crocNav.speed = crocNav.speed + 1;
+                    crocNav.SetDestination(sandTarget.position); //se pone como punto de destino la posicion de la arena
+                
+            }
+            
+            crocNav.stoppingDistance = stopDistance;
+            return ChaseState.Finished;// se ha llegado al punto indicado aunque el animal ya no este (muerto o escondido)
+
+
+
+        }
+        else
+        {
+            crocNav.stoppingDistance = stopDistance;
+            return ChaseState.Failed; //no haya animal al que perseguir
+        }
     }
 }
