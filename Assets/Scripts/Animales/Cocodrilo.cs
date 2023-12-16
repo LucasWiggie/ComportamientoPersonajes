@@ -31,7 +31,8 @@ public class Cocodrilo : MonoBehaviour
     public float _miedo;
 
     //NavMeshAgent
-    private NavMeshAgent crocodrile;
+    private NavMeshAgent crocNav;
+    public Transform animalTarget;
 
     //Collider el objeto con el que se ha chocado
     private Collider collidedObject;
@@ -65,7 +66,7 @@ public class Cocodrilo : MonoBehaviour
     private void Start()
     {
         playerRef = this.gameObject;
-        crocodrile = GetComponent<NavMeshAgent>();
+        crocNav = GetComponent<NavMeshAgent>();
 
         hambre = 90;
         energia = 100;
@@ -77,7 +78,10 @@ public class Cocodrilo : MonoBehaviour
 
         StartCoroutine(FOVRoutine());
     }
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        collidedObject = collision.gameObject.GetComponent<Collider>();
+    }
     private IEnumerator FOVRoutine()
     {
         float delay = 0.2f;
@@ -128,10 +132,6 @@ public class Cocodrilo : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        collidedObject = collision.gameObject.GetComponent<Collider>();
-    }
     public void UtilitySystem()
     {
         _hambre = this.getHambre();
@@ -167,4 +167,10 @@ public class Cocodrilo : MonoBehaviour
         // BT de cuando el Cocodrilo tiene miedo
     }
 
+    //Acción perseguir
+    public void Chase()
+    {
+        crocNav.speed = crocNav.speed + 1;
+        crocNav.SetDestination(animalTarget.position);
+    }
 }

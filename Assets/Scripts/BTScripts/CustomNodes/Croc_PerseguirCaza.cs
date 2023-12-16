@@ -12,22 +12,19 @@ namespace CustomNodes
 
     public class Croc_PerseguirCaza : Leaf
     {
-        private NavMeshAgent crocodrile;
-        private Collider collidedObject;
-        public Transform animalTarget;
+ 
         
+        private Cocodrilo crocodile;
 
         // This is called every tick as long as node is executed
-        private void Start()
+        private void Awake()
         {
-            crocodrile = GetComponentInParent<NavMeshAgent>();
-            
+            crocodile= GetComponentInParent<Cocodrilo>();
         }
         public override NodeResult Execute()
         {
             // AQUI LA EJECUCIÓN DE QUE EL COCODRILO SE MUEVA A LA CAZA
-            crocodrile.speed = crocodrile.speed + 1;
-            crocodrile.SetDestination(animalTarget.position);
+            crocodile.Chase();
             return NodeResult.success;
         }
     }
