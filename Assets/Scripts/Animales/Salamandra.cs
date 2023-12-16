@@ -18,6 +18,9 @@ public class Salamandra : MonoBehaviour
     public float energia = 100;
     public float miedo = 0;
 
+    float hambreRate = 0.2f;
+    float energiaRate = 0.05f;
+
     //Getters y Setters
     public float getHambre()
     {
@@ -48,6 +51,19 @@ public class Salamandra : MonoBehaviour
     {
         playerRef = this.gameObject;
         StartCoroutine(FOVRoutine());
+    }
+
+    private void Update()
+    {
+        UpdateVariables();
+    }
+    private void UpdateVariables()
+    {
+        hambre += hambreRate * Time.deltaTime;
+        energia -= energiaRate * Time.deltaTime;
+
+        hambre = Mathf.Clamp(hambre, 0f, 100f);
+        energia = Mathf.Clamp(energia, 0f, 100f);
     }
 
     private IEnumerator FOVRoutine()

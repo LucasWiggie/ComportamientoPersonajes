@@ -29,6 +29,8 @@ public class Cocodrilo : MonoBehaviour
     public float _hambre;
     public float _energia;
     public float _miedo;
+    float hambreRate = 0.2f;
+    float energiaRate = 0.05f;
 
     //NavMeshAgent
     private NavMeshAgent crocNav;
@@ -78,6 +80,19 @@ public class Cocodrilo : MonoBehaviour
 
         StartCoroutine(FOVRoutine());
     }
+    private void Update()
+    {
+        UpdateVariables();
+    }
+    private void UpdateVariables()
+    {
+        hambre += hambreRate * Time.deltaTime;
+        energia -= energiaRate * Time.deltaTime;
+
+        hambre = Mathf.Clamp(hambre, 0f, 100f);
+        energia = Mathf.Clamp(energia, 0f, 100f);
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         collidedObject = collision.gameObject.GetComponent<Collider>();

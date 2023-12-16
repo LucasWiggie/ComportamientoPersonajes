@@ -28,6 +28,9 @@ public class Castor : MonoBehaviour
     public float _energia;
     public float _miedo;
 
+    float hambreRate = 0.2f;
+    float energiaRate = 0.05f; 
+
     //Getters y Setters
     public float getHambre()
     {
@@ -67,6 +70,19 @@ public class Castor : MonoBehaviour
         _miedo = miedo;
 
         StartCoroutine(FOVRoutine());
+    }
+
+    private void Update()
+    {
+        UpdateVariables();
+    }
+    private void UpdateVariables()
+    {
+        hambre += hambreRate * Time.deltaTime;
+        energia -= energiaRate * Time.deltaTime;
+
+        hambre = Mathf.Clamp(hambre, 0f, 100f);
+        energia = Mathf.Clamp(energia, 0f, 100f);
     }
 
     private IEnumerator FOVRoutine()

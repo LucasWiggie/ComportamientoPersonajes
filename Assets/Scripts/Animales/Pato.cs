@@ -16,7 +16,9 @@ public class Pato : MonoBehaviour
 
     public float hambre = 60; //Rango 0-100 las 3
     public float energia = 100;
-    public float miedo = 0;
+    public float miedo = 0; 
+    float hambreRate = 0.2f;
+    float energiaRate = 0.05f;
 
     //Getters y Setters
     public float getHambre()
@@ -49,7 +51,18 @@ public class Pato : MonoBehaviour
         playerRef = this.gameObject;
         StartCoroutine(FOVRoutine());
     }
+    private void Update()
+    {
+        UpdateVariables();
+    }
+    private void UpdateVariables()
+    {
+        hambre += hambreRate * Time.deltaTime;
+        energia -= energiaRate * Time.deltaTime;
 
+        hambre = Mathf.Clamp(hambre, 0f, 100f);
+        energia = Mathf.Clamp(energia, 0f, 100f);
+    }
     private IEnumerator FOVRoutine()
     {
         float delay = 0.2f;
