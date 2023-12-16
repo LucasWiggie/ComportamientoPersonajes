@@ -6,11 +6,13 @@ using UnityEngine;
 public class Castor : MonoBehaviour
 {
     public float radio;
+    public float radioPresa;
     [Range(0, 360)]
     public float angulo;
     public GameObject playerRef;
 
     public LayerMask targetMask;
+    public LayerMask targetMaskPresa;
     public LayerMask obstructionMask;
     public bool puedeVer;
 
@@ -98,7 +100,7 @@ public class Castor : MonoBehaviour
         }
     }
 
-    private void ComprobarVision()
+    public bool ComprobarVision()
     {
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
 
@@ -135,7 +137,49 @@ public class Castor : MonoBehaviour
         {
             puedeVer = false;
         }
+        return puedeVer;
     }
+
+    public bool HayPresa()
+    {
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radioPresa, targetMaskPresa);
+
+        if (rangeChecks.Length > 0)
+        {
+            Transform target = rangeChecks[0].transform;
+            Vector3 directionToTarget = (target.position - transform.position).normalized;
+
+            // Utilizar el producto punto para verificar el ángulo
+            float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
+
+            // Establecer un umbral para el ángulo (ajustar según sea necesario)
+            float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
+            if (dotProduct > angleThreshold)
+            {
+                float distanciaToTarget = Vector3.Distance(transform.position, target.position);
+
+                if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
+                {
+                    puedeVer = true;
+
+                }
+                else
+                {
+                    puedeVer = false;
+                }
+            }
+            else
+            {
+                puedeVer = false;
+            }
+        }
+        else if (puedeVer)
+        {
+            puedeVer = false;
+        }
+        return puedeVer;
+    }
+
 
     public void UtilitySystem()
     {

@@ -7,11 +7,13 @@ using UnityEngine.AI;
 public class Cocodrilo : MonoBehaviour
 {
     public float radio;
+    public float radioHuevos;
     [Range(0, 360)]
     public float angulo;
     public GameObject playerRef;
 
     public LayerMask targetMask;
+    public LayerMask targetMaskHuevos;
     public LayerMask obstructionMask;
     public bool puedeVer;
 
@@ -246,6 +248,44 @@ public class Cocodrilo : MonoBehaviour
                     puedeVer = false;
                 }
             }
+        }
+        else if (puedeVer)
+        {
+            puedeVer = false;
+        }
+        return puedeVer;
+    }
+
+    public bool HayHuevos()
+    {
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radioHuevos, targetMaskHuevos);
+
+        if (rangeChecks.Length > 0)
+        {
+            Transform target = rangeChecks[0].transform;
+
+                Vector3 directionToTarget = (target.position - transform.position).normalized;
+                float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
+                float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
+
+                if (dotProduct > angleThreshold)
+                {
+                    float distanciaToTarget = Vector3.Distance(transform.position, target.position);
+
+                    if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
+                    {
+                       puedeVer = true;
+
+                    }
+                    else
+                    {
+                       puedeVer = false;
+                    }
+                }
+                else
+                {
+                    puedeVer = false;
+                }
         }
         else if (puedeVer)
         {

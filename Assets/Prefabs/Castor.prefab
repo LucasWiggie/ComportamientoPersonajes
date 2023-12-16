@@ -732,11 +732,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radio: 8
+  radioPresa: 300
   angulo: 360
   playerRef: {fileID: 0}
   targetMask:
     serializedVersion: 2
     m_Bits: 1024
+  targetMaskPresa:
+    serializedVersion: 2
+    m_Bits: 8192
   obstructionMask:
     serializedVersion: 2
     m_Bits: 0

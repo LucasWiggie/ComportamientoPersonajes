@@ -139,9 +139,6 @@ MonoBehaviour:
     blackboard: {fileID: 0}
     key: 
     constantValue: 0
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!114 &4411069324201064268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,9 +170,6 @@ MonoBehaviour:
     blackboard: {fileID: 0}
     key: 
     constantValue: 0
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!114 &2885877203600626500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -452,11 +446,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radio: 8
+  radioHuevos: 300
   angulo: 360
   playerRef: {fileID: 0}
   targetMask:
     serializedVersion: 2
     m_Bits: 64
+  targetMaskHuevos:
+    serializedVersion: 2
+    m_Bits: 4096
   obstructionMask:
     serializedVersion: 2
     m_Bits: 0
@@ -470,7 +468,8 @@ MonoBehaviour:
   _hambre: 0
   _energia: 0
   _miedo: 0
-  animalTarget: {fileID: 0}
+  patoScript: {fileID: 0}
+  castorScript: {fileID: 0}
   movementInterval: 1.5
 --- !u!1 &7513183408252243350
 GameObject:
