@@ -32,6 +32,7 @@ namespace MBT
         public void OnEnable()
         {
             Restart();
+            Tick();
         }
 
         void Awake()
