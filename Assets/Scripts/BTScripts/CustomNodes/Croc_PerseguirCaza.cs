@@ -24,8 +24,17 @@ namespace CustomNodes
         public override NodeResult Execute()
         {
             // AQUI LA EJECUCIÓN DE QUE EL COCODRILO SE MUEVA A LA CAZA
-            crocodile.Chase();
-            return NodeResult.success;
+            Cocodrilo.ChaseState estadoPersecucion = crocodile.Chase();
+            switch (estadoPersecucion)
+            {
+                case Cocodrilo.ChaseState.Finished:
+                    return NodeResult.success;
+                case Cocodrilo.ChaseState.Failed:
+                    return NodeResult.failure;
+                default:
+                    return NodeResult.failure;
+            }
+           
         }
     }
 }

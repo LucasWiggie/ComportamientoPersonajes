@@ -186,9 +186,39 @@ public class Cocodrilo : MonoBehaviour
     }
 
     //Acción perseguir
-    public void Chase()
+    public enum ChaseState
     {
-        crocNav.speed = crocNav.speed + 1;
-        crocNav.SetDestination(animalTarget.position);
+        Finished,
+        Failed
+    }
+
+    public ChaseState Chase()
+    {
+        
+        float minDist = crocNav.stoppingDistance;
+        if (animalTarget != null)
+        {
+            float dist = Vector3.Distance(animalTarget.position, transform.position);
+            crocNav.speed = crocNav.speed + 1;
+            while (dist > minDist)
+            {
+                if(animalTarget == null) //si el animal se ha muerto por el camino
+                {
+                    break;//salimos del bucle
+                }
+                
+                crocNav.SetDestination(animalTarget.position); //se pone como punto de destino la posicion del animal
+                
+            }
+            return ChaseState.Finished;// se ha llegado al punto indicado aunque el animal ya no este (muerto o escondido)
+           
+       
+            
+        }
+        else
+        {
+            return ChaseState.Failed; //no haya animal al que perseguir
+        }
+        
     }
 }
