@@ -266,7 +266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 2600884774414839485}
+  selectedEditorNode: {fileID: 5515402326188212484}
   repeatOnFinish: 0
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
@@ -337,8 +337,8 @@ MonoBehaviour:
   title: Cast_HayPresa
   rect:
     serializedVersion: 2
-    x: 79
-    y: 417
+    x: 99
+    y: 414
     width: 160
     height: 45
   parent: {fileID: 5346261159624609150}
@@ -750,6 +750,7 @@ MonoBehaviour:
   _hambre: 0
   _energia: 0
   _miedo: 0
+  aSalvo: 0
 --- !u!4 &7598358202805115264 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8d8a7541d7c36de4e9985ddc99ac995d, type: 3}

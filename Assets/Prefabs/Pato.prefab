@@ -567,6 +567,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fa6d3e9aab92d3b4dbadc393b754dcd5, type: 3}
+      propertyPath: m_TagString
+      value: Pato
+      objectReference: {fileID: 0}
     - target: {fileID: 7335816240892044672, guid: fa6d3e9aab92d3b4dbadc393b754dcd5, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -653,3 +657,4 @@ MonoBehaviour:
   hambre: 60
   energia: 100
   miedo: 0
+  aSalvo: 0

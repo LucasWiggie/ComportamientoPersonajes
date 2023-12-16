@@ -88,8 +88,6 @@ public class Cocodrilo : MonoBehaviour
         _energia = energia;
         _miedo = miedo;
 
-        UtilitySystem();
-
         StartCoroutine(FOVRoutine());
     }
     private void Update()
@@ -170,6 +168,7 @@ public class Cocodrilo : MonoBehaviour
     public bool ComprobarVision()
     {
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
+        bool estaASalvo;
 
         if (rangeChecks.Length > 0)
         {
@@ -179,7 +178,7 @@ public class Cocodrilo : MonoBehaviour
             {
                 animalTarget = target; // ponemos el pato como objetivo
                 // Acceder a la variable aSalvo de Pato
-                bool estaASalvo = patoScript.aSalvo;
+                estaASalvo = animalTarget.GetComponent<Pato>().aSalvo;
 
                 Vector3 directionToTarget = (target.position - transform.position).normalized;
                 float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
@@ -216,7 +215,7 @@ public class Cocodrilo : MonoBehaviour
             {
                 animalTarget = target;// ponemos el castor como objetivo
                 // Acceder a la variable aSalvo de Castor
-                bool estaASalvo = castorScript.aSalvo;
+                estaASalvo = animalTarget.GetComponent<Castor>().aSalvo;
 
                 Vector3 directionToTarget = (target.position - transform.position).normalized;
                 float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
@@ -258,6 +257,8 @@ public class Cocodrilo : MonoBehaviour
 
     public void UtilitySystem()
     {
+        isDefaultMov = false;
+
         _hambre = this.getHambre();
         _energia = this.getEnergia();
         _miedo = this.getMiedo();
