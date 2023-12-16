@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Castor : MonoBehaviour
 {
@@ -26,6 +27,15 @@ public class Castor : MonoBehaviour
     public float hambre; //Rango 0-100 las 3
     public float energia;
     public float miedo;
+
+    //NavMeshAgent
+    private NavMeshAgent castNav;
+
+    //Objetivo
+    private Transform paloTarget;
+
+    private bool isDefaultMov = true;
+    private bool dirtyUS = false;
 
     // Utilidades
     public float _hambre;
@@ -66,6 +76,7 @@ public class Castor : MonoBehaviour
     private void Start()
     {
         playerRef = this.gameObject;
+        castNav = GetComponent<NavMeshAgent>();
 
         hambre = 50;
         energia = 100;
@@ -82,6 +93,19 @@ public class Castor : MonoBehaviour
     {
         UpdateVariables();
     }
+    private void FixedUpdate()
+    {
+        if (isDefaultMov)
+        {
+            BT_PalosPresa.SetActive(true);
+        }
+
+        if (dirtyUS)
+        {
+
+        }
+    }
+
     private void UpdateVariables()
     {
         hambre += hambreRate * Time.deltaTime;
@@ -102,13 +126,21 @@ public class Castor : MonoBehaviour
         }
     }
 
-    public bool ComprobarVision()
+    public enum ChaseState
+    {
+        Finished,
+        Failed
+    }
+
+    public ChaseState ComprobarVision()
     {
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
 
         if (rangeChecks.Length > 0)
         {
             Transform target = rangeChecks[0].transform;
+            paloTarget = target;
+
             Vector3 directionToTarget = (target.position - transform.position).normalized;
 
             // Utilizar el producto punto para verificar el ángulo
@@ -123,23 +155,28 @@ public class Castor : MonoBehaviour
                 if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
                 {
                     puedeVer = true;
+                    return ChaseState.Finished;
 
                 }
                 else
                 {
                     puedeVer = false;
+                    return ChaseState.Failed;
                 }
             }
             else
             {
                 puedeVer = false;
+                return ChaseState.Failed;
             }
+            
         }
         else if (puedeVer)
         {
             puedeVer = false;
+            return ChaseState.Failed;
         }
-        return puedeVer;
+        return ChaseState.Failed;
     }
 
     public bool HayPresa()
@@ -182,6 +219,32 @@ public class Castor : MonoBehaviour
         return puedeVerPresa;
     }
 
+
+    public ChaseState irPalo()
+    {
+        float stopDistance = castNav.stoppingDistance;
+        castNav.stoppingDistance = 0;
+        float minDist = castNav.stoppingDistance;
+        if (paloTarget != null)
+        {
+            float dist = Vector3.Distance(paloTarget.position, transform.position);
+
+            if (dist > minDist)
+            {
+
+                castNav.SetDestination(paloTarget.position); //se pone como punto de destino la posicion de los huevos
+
+            }
+
+            return ChaseState.Finished;// se ha llegado al punto indicado 
+
+        }
+        else
+        {
+            castNav.stoppingDistance = stopDistance;
+            return ChaseState.Failed; //no haya animal al que perseguir
+        }
+    }
 
     public void UtilitySystem()
     {

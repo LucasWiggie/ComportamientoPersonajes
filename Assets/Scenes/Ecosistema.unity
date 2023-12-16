@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1678,7 +1678,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cocodrilo: {fileID: 2533031792323007654, guid: 71dd7cc19c6847249946f8bd94552260, type: 3}
-  castor: {fileID: 7077717063672759098, guid: f78f1d36fc7ebd748b39b30e95d663f4, type: 3}
+  castor: {fileID: 8162882441454365111, guid: 3d9597b43e0789841834549bc9145508, type: 3}
   salamandra: {fileID: 5489956750369340815, guid: 8fbaf18edefc9b84e921f3cac4508485, type: 3}
   pato: {fileID: 5698116583432613237, guid: c1d9db48ff0b73042836e507fdf0a8cf, type: 3}
   palo: {fileID: 5656048564650677434, guid: cc04d654acd24d244808316233ee9eb8, type: 3}

@@ -220,8 +220,7 @@ public class Cocodrilo : MonoBehaviour
             {
                 animalTarget = target;// ponemos el castor como objetivo
                 // Acceder a la variable aSalvo de Castor
-                estaASalvo = animalTarget.GetComponent<Castor>().aSalvo;
-
+                estaASalvo = animalTarget.GetComponentInParent<Castor>().aSalvo;
                 Vector3 directionToTarget = (target.position - transform.position).normalized;
                 float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
                 float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
