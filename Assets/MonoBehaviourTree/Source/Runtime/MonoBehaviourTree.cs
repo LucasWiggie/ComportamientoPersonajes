@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Unity.Profiling;
+using System.IO;
+
 
 namespace MBT
 {
@@ -12,6 +14,8 @@ namespace MBT
     public class MonoBehaviourTree : MonoBehaviour
     {
         private static readonly ProfilerMarker _TickMarker = new ProfilerMarker("MonoBehaviourTree.Tick");
+
+        public Transform animal;
 
         [HideInInspector]
         public Node selectedEditorNode;
@@ -182,6 +186,16 @@ namespace MBT
             // Run this when execution stack is empty and BT should repeat
             if (repeatOnFinish) {
                 Restart();
+            }
+
+            if(animal.name == "Cocodrilo")
+            {
+                animal.GetComponent<Cocodrilo>().isDefaultMov = true;
+            }
+
+            if (animal.name == "Castor")
+            {
+                animal.GetComponent<Castor>().isDefaultMov = true;
             }
 
             LastTick = Time.time;
