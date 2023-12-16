@@ -20,6 +20,9 @@ public class Pato : MonoBehaviour
     float hambreRate = 0.2f;
     float energiaRate = 0.05f;
 
+    public bool aSalvo = false;
+    
+
     //Getters y Setters
     public float getHambre()
     {

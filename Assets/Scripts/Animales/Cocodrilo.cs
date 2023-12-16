@@ -42,6 +42,9 @@ public class Cocodrilo : MonoBehaviour
     private bool isDefaultMov = true;
     private bool dirtyUS = false;
 
+    //Para indicar si esta aSalvo
+    public Pato patoScript; // Asegúrate de asignar esto desde el Inspector
+    public Castor castorScript; 
 
     //Getters y Setters
     public float getHambre()
@@ -149,6 +152,7 @@ public class Cocodrilo : MonoBehaviour
     {
         collidedObject = collision.gameObject.GetComponent<Collider>();
     }
+
     private IEnumerator FOVRoutine()
     {
         float delay = 0.2f;
@@ -160,37 +164,83 @@ public class Cocodrilo : MonoBehaviour
         }
     }
 
-    private void ComprobarVision()
+    public void ComprobarVision()
     {
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
 
         if (rangeChecks.Length > 0)
         {
             Transform target = rangeChecks[0].transform;
-            Vector3 directionToTarget = (target.position - transform.position).normalized;
 
-            // Utilizar el producto punto para verificar el ángulo
-            float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
-
-            // Establecer un umbral para el ángulo (ajustar según sea necesario)
-            float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
-            if (dotProduct > angleThreshold)
+            if (target.CompareTag("Pato"))
             {
-                float distanciaToTarget = Vector3.Distance(transform.position, target.position);
+                // Acceder a la variable aSalvo de Pato
+                bool estaASalvo = patoScript.aSalvo;
 
-                if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
+                Vector3 directionToTarget = (target.position - transform.position).normalized;
+                float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
+                float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
+
+                if (dotProduct > angleThreshold)
                 {
-                    puedeVer = true;
+                    float distanciaToTarget = Vector3.Distance(transform.position, target.position);
 
+                    if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
+                    {
+
+                        // Verificar si el tag es "Castor" o "Pato"
+                        if (estaASalvo == false)
+                        {
+                            puedeVer = true;
+                        }
+                        else
+                        {
+                            puedeVer = false;
+                        }
+                    }
+                    else
+                    {
+                        puedeVer = false;
+                    }
                 }
                 else
                 {
                     puedeVer = false;
                 }
             }
-            else
+            else if (target.CompareTag("Castor"))
             {
-                puedeVer = false;
+                // Acceder a la variable aSalvo de Castor
+                bool estaASalvo = castorScript.aSalvo;
+
+                Vector3 directionToTarget = (target.position - transform.position).normalized;
+                float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
+                float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
+
+                if (dotProduct > angleThreshold)
+                {
+                    float distanciaToTarget = Vector3.Distance(transform.position, target.position);
+
+                    if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
+                    {
+                        if (estaASalvo == false)
+                        {
+                            puedeVer = true;
+                        }
+                        else
+                        {
+                            puedeVer = false;
+                        }
+                    }
+                    else
+                    {
+                        puedeVer = false;
+                    }
+                }
+                else
+                {
+                    puedeVer = false;
+                }
             }
         }
         else if (puedeVer)
@@ -198,6 +248,7 @@ public class Cocodrilo : MonoBehaviour
             puedeVer = false;
         }
     }
+
 
     public void UtilitySystem()
     {

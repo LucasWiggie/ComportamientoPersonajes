@@ -11,7 +11,6 @@ namespace CustomNodes
     {
         public Abort abort;
         public BoolReference somePropertyRef = new BoolReference(VarRefMode.DisableConstant);
-        public LayerMask targetMask; // Nueva variable para la capa del objetivo
         private Cocodrilo cocodriloScript; // Referencia al script Cocodrilo
 
         private void Start()
@@ -22,33 +21,20 @@ namespace CustomNodes
 
         public override bool Check()
         {
-            // AQUÍ LA COMPROBACIÓN DE SI HAY CAZA Y QUE ESTA NO ESTÁ A SALVO
-            //return somePropertyRef.Value == true;
-            return HayCaza();
-        }
-
-
-        private bool HayCaza() //DE MOMENTO NO TENGO EN CUENTA SI EL ENEMIGO ESTA A SALVO O NO, MAÑANA LO VEO, NO CREO QUE SEA DIFICIL BESOS MUAK MUAK MUAK 
-        {
-            // Verificar si el script Cocodrilo está adjunto
-            if (cocodriloScript == null)
+            if (cocodriloScript != null)
             {
-                Debug.LogError("El script Cocodrilo no está adjunto.");
+                cocodriloScript.ComprobarVision();
+            }
+            if(cocodriloScript.puedeVer == true)
+            {
+                return somePropertyRef.Value == true; // Hay un enemigo con la capa "targetCocodrilo" cerca
+            }
+            else
+            {
                 return somePropertyRef.Value == false;
             }
-
-            Collider[] enemigosCercanos = Physics.OverlapSphere(transform.position, cocodriloScript.radio, targetMask);
-
-            foreach (var enemigo in enemigosCercanos)
-            {
-                if (enemigo.gameObject.layer == LayerMask.NameToLayer("targetCocodrilo"))
-                {
-                    return somePropertyRef.Value == true; // Hay un enemigo con la capa "targetCocodrilo" cerca
-                }
-            }
-
-            return somePropertyRef.Value == false; // No hay enemigo con la capa "targetCocodrilo" cerca
         }
+
 
         public override void OnAllowInterrupt()
         {

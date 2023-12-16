@@ -29,7 +29,9 @@ public class Castor : MonoBehaviour
     public float _miedo;
 
     float hambreRate = 0.2f;
-    float energiaRate = 0.05f; 
+    float energiaRate = 0.05f;
+
+    public bool aSalvo = false;
 
     //Getters y Setters
     public float getHambre()
