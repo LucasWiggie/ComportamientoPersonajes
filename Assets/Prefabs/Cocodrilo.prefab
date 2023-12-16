@@ -134,12 +134,6 @@ MonoBehaviour:
   runtimePriority: 0
   breakpoint: 0
   abort: 0
-  somePropertyRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 0}
-    key: 
-    constantValue: 0
 --- !u!114 &4411069324201064268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,12 +159,6 @@ MonoBehaviour:
   runtimePriority: 0
   breakpoint: 0
   abort: 0
-  somePropertyRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 0}
-    key: 
-    constantValue: 0
 --- !u!114 &2885877203600626500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,12 +337,6 @@ MonoBehaviour:
   runtimePriority: 0
   breakpoint: 0
   abort: 0
-  somePropertyRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 0}
-    key: 
-    constantValue: 0
 --- !u!114 &8140374517441532176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -464,6 +446,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   puedeVer: 0
+  puedeVerArena: 0
   BT_Hambre: {fileID: 1356444491322341819}
   BT_Energia: {fileID: 8047508290797537765}
   BT_Miedo: {fileID: 2010351796279996322}
@@ -473,6 +456,7 @@ MonoBehaviour:
   _hambre: 0
   _energia: 0
   _miedo: 0
+  isDefaultMov: 1
   patoScript: {fileID: 0}
   castorScript: {fileID: 0}
   movementInterval: 1.5
@@ -720,12 +704,6 @@ MonoBehaviour:
   runtimePriority: 0
   breakpoint: 0
   abort: 0
-  somePropertyRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 0}
-    key: 
-    constantValue: 0
 --- !u!114 &8245001560411285685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -775,12 +753,6 @@ MonoBehaviour:
   runtimePriority: 0
   breakpoint: 0
   abort: 0
-  somePropertyRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 0}
-    key: 
-    constantValue: 0
 --- !u!114 &2316516888871363047
 MonoBehaviour:
   m_ObjectHideFlags: 0

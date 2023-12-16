@@ -92,6 +92,7 @@ public class Castor : MonoBehaviour
     private void Update()
     {
         UpdateVariables();
+        aSalvo = false;
     }
     private void FixedUpdate()
     {

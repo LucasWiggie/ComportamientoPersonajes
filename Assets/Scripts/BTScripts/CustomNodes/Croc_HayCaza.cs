@@ -7,21 +7,42 @@ namespace CustomNodes
 {
     [AddComponentMenu("")]
     [MBTNode(name = "CustomNodes/Croc_HayCaza")]
-    public class Croc_HayCaza : Condition
+    public class Croc_HayCaza : Leaf
     {
         public Abort abort;
-        public BoolReference somePropertyRef = new BoolReference(VarRefMode.DisableConstant);
         private Cocodrilo cocodriloScript; // Referencia al script Cocodrilo
 
         private void Start()
         {
             // Obtener el componente Cocodrilo adjunto al mismo objeto
-            cocodriloScript = GetComponent<Cocodrilo>();
+            cocodriloScript = GetComponentInParent<Cocodrilo>();
         }
 
-        public override bool Check()
+        public override NodeResult Execute()
         {
-            return cocodriloScript.ComprobarVision();
+            if (cocodriloScript == null)
+            {
+                cocodriloScript = GetComponentInParent<Cocodrilo>();
+                if (cocodriloScript == null)
+                {
+                    Debug.LogError("crocodile is still null!");
+                    return NodeResult.failure;
+                }
+            }
+            
+            Cocodrilo.ChaseState estadoCaza = cocodriloScript.ComprobarVision();
+            switch (estadoCaza)
+            {
+                case Cocodrilo.ChaseState.Finished:
+                    Debug.Log("bien");
+                    return NodeResult.success;
+                case Cocodrilo.ChaseState.Failed:
+                    Debug.Log("mal");
+                    return NodeResult.failure;
+                default:
+                    Debug.Log("maldefault");
+                    return NodeResult.failure;
+            }
             /*if(cocodriloScript.puedeVer == true)
             {
                 return somePropertyRef.Value == true; // Hay un enemigo con la capa "targetCocodrilo" cerca
@@ -33,7 +54,7 @@ namespace CustomNodes
         }
 
 
-        public override void OnAllowInterrupt()
+        /*public override void OnAllowInterrupt()
         {
             // Do not listen any changes if abort is disabled
             if (abort != Abort.None)
@@ -60,7 +81,7 @@ namespace CustomNodes
         {
             // Reevaluate Check() and abort tree when needed
             EvaluateConditionAndTryAbort(abort);
-        }
+        }*/
     }
 }
 

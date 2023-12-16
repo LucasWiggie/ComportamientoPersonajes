@@ -7,10 +7,10 @@ namespace CustomNodes
 {
     [AddComponentMenu("")]
     [MBTNode(name = "CustomNodes/Croc_HayHuevos")]
-    public class Croc_HayHuevos : Condition
+    public class Croc_HayHuevos : Leaf
     {
         public Abort abort;
-        public BoolReference somePropertyRef = new BoolReference(VarRefMode.DisableConstant);
+        
         private Cocodrilo cocodriloScript; // Referencia al script Cocodrilo
 
         private void Start()
@@ -19,13 +19,31 @@ namespace CustomNodes
             cocodriloScript = GetComponent<Cocodrilo>();
         }
 
-        public override bool Check()
+        public override NodeResult Execute()
         {
+            if (cocodriloScript == null)
+            {
+                cocodriloScript = GetComponentInParent<Cocodrilo>();
+                if (cocodriloScript == null)
+                {
+                    Debug.LogError("crocodile is still null!");
+                    return NodeResult.failure;
+                }
+            }
             // AQUÍ LA COMPROBACIÓN DE SI HAY HUEVOS
-            return cocodriloScript.HayHuevos();
+            Cocodrilo.ChaseState estadoCaminar = cocodriloScript.HayHuevos();
+            switch (estadoCaminar)
+            {
+                case Cocodrilo.ChaseState.Finished:
+                    return NodeResult.success;
+                case Cocodrilo.ChaseState.Failed:
+                    return NodeResult.failure;
+                default:
+                    return NodeResult.failure;
+            }
         }
 
-        public override void OnAllowInterrupt()
+       /* public override void OnAllowInterrupt()
         {
             // Do not listen any changes if abort is disabled
             if (abort != Abort.None)
@@ -52,6 +70,6 @@ namespace CustomNodes
         {
             // Reevaluate Check() and abort tree when needed
             EvaluateConditionAndTryAbort(abort);
-        }
+        }*/
     }
 }

@@ -20,6 +20,15 @@ namespace CustomNodes
         }
         public override NodeResult Execute()
         {
+            if (crocodile == null)
+            {
+                crocodile = GetComponentInParent<Cocodrilo>();
+                if (crocodile == null)
+                {
+                    Debug.LogError("crocodile is still null!");
+                    return NodeResult.failure;
+                }
+            }
             // AQUI LA EJECUCIÓN DE QUE EL COCODRILO SE MUEVA A LOS HUEVOS
             Cocodrilo.ChaseState estadoIr = crocodile.IrAHuevos();
             switch (estadoIr)

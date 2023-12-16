@@ -188,15 +188,15 @@ namespace MBT
                 Restart();
             }
 
-            if(animal.name == "Cocodrilo")
+           /* if(animal.name == "Cocodrilo")
             {
-                animal.GetComponent<Cocodrilo>().isDefaultMov = true;
+               // animal.GetComponent<Cocodrilo>().isDefaultMov = true;
             }
 
             if (animal.name == "Castor")
             {
-                animal.GetComponent<Castor>().isDefaultMov = true;
-            }
+               // animal.GetComponent<Castor>().isDefaultMov = true;
+            }*/
 
             LastTick = Time.time;
             _TickMarker.End();

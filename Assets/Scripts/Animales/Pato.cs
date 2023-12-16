@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using static Cocodrilo;
 
 public class Pato : MonoBehaviour
 {
@@ -24,7 +26,11 @@ public class Pato : MonoBehaviour
     float energiaRate = 0.05f;
 
     public bool aSalvo = false;
-    
+    //NavMeshAgent
+    private NavMeshAgent patoNav;
+    //objetivos
+    private Transform nenufarTarget;//huevos objetivo
+
 
     //Getters y Setters
     public float getHambre()
@@ -158,6 +164,38 @@ public class Pato : MonoBehaviour
             puedeVerNenufar = false;
         }
         return puedeVerNenufar;
+    }
+
+    //Acción ir a nenufares
+    public enum CaminoState
+    {
+        Finished,
+        Failed
+    }
+    public CaminoState IrNenufares()
+    {
+        float stopDistance = patoNav.stoppingDistance;
+        patoNav.stoppingDistance = 0;
+        float minDist = patoNav.stoppingDistance;
+        if (nenufarTarget != null)
+        {
+            float dist = Vector3.Distance(nenufarTarget.position, transform.position);
+
+            if (dist > minDist)
+            {
+
+                patoNav.SetDestination(nenufarTarget.position); //se pone como punto de destino la posicion del nenufar
+
+            }
+
+            return CaminoState.Finished;// se ha llegado al punto indicado 
+
+        }
+        else
+        {
+            patoNav.stoppingDistance = stopDistance;
+            return CaminoState.Failed; 
+        }
     }
 
 }

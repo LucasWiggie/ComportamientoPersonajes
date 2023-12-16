@@ -47,7 +47,7 @@ public class Cocodrilo : MonoBehaviour
     //Collider el objeto con el que se ha chocado
     private Collider collidedObject;
 
-    private bool isDefaultMov = true;
+    public bool isDefaultMov = true;
     private bool dirtyUS = false;
 
     //Para indicar si esta aSalvo
@@ -169,16 +169,22 @@ public class Cocodrilo : MonoBehaviour
             ComprobarVision();
         }
     }
-
-    public bool ComprobarVision()
+    public enum ChaseState
     {
+        Finished,
+        Failed
+    }
+
+    public ChaseState ComprobarVision()
+    {
+        
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
         bool estaASalvo;
 
         if (rangeChecks.Length > 0)
         {
             Transform target = rangeChecks[0].transform;
-
+            Debug.Log("HayTargets");
             if (target.CompareTag("Pato"))
             {
                 animalTarget = target; // ponemos el pato como objetivo
@@ -199,25 +205,31 @@ public class Cocodrilo : MonoBehaviour
                         // Verificar si el tag es "Castor" o "Pato"
                         if (estaASalvo == false)
                         {
+                            
                             puedeVer = true;
+                            //return ChaseState.Finished;
                         }
                         else
                         {
                             puedeVer = false;
+                           // return ChaseState.Failed;
                         }
                     }
                     else
                     {
                         puedeVer = false;
+                       // return ChaseState.Failed;
                     }
                 }
                 else
                 {
                     puedeVer = false;
+                    //return ChaseState.Failed;
                 }
             }
-            else if (target.CompareTag("Castor"))
+            if (target.CompareTag("Castor"))
             {
+                Debug.Log("HayCastor");
                 animalTarget = target;// ponemos el castor como objetivo
                 // Acceder a la variable aSalvo de Castor
                 estaASalvo = animalTarget.GetComponentInParent<Castor>().aSalvo;
@@ -233,32 +245,40 @@ public class Cocodrilo : MonoBehaviour
                     {
                         if (estaASalvo == false)
                         {
+                            Debug.Log("No esta a salvo");
+                            
                             puedeVer = true;
+                            Debug.Log("No esta a salvo2");
+                            return ChaseState.Finished;
                         }
                         else
                         {
+                            Debug.Log(" esta a salvo");
                             puedeVer = false;
+                            return ChaseState.Failed;
                         }
                     }
                     else
                     {
+                        Debug.Log("mal1");
                         puedeVer = false;
+                        return ChaseState.Failed;
                     }
                 }
                 else
                 {
+                    Debug.Log("mal2");
                     puedeVer = false;
+                    return ChaseState.Failed;
                 }
             }
         }
-        else if (puedeVer)
-        {
-            puedeVer = false;
-        }
-        return puedeVer;
+        
+        Debug.Log("mal4");
+        return ChaseState.Failed;
     }
 
-    public bool HayHuevos()
+    public ChaseState HayHuevos()
     {
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radioHuevos, targetMaskHuevos);
 
@@ -277,26 +297,31 @@ public class Cocodrilo : MonoBehaviour
                     if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
                     {
                         puedeVerArena = true;
+                        return ChaseState.Finished;
 
                     }
                     else
                     {
                         puedeVerArena = false;
+                        return ChaseState.Failed;
+
                     }
                 }
                 else
                 {
                     puedeVerArena = false;
+                    return ChaseState.Failed;
                 }
         }
         else if (puedeVerArena)
         {
             puedeVerArena = false;
+            return ChaseState.Failed;
         }
-        return puedeVerArena;
+        return ChaseState.Failed;
     }
 
-    public bool HayArena()
+    public ChaseState HayArena()
     {
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radioHuevos, targetMaskArena);
 
@@ -315,23 +340,27 @@ public class Cocodrilo : MonoBehaviour
                 if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
                 {
                     puedeVer = true;
+                    return ChaseState.Finished;
 
                 }
                 else
                 {
                     puedeVer = false;
+                    return ChaseState.Failed;
                 }
             }
             else
             {
                 puedeVer = false;
+                return ChaseState.Failed;
             }
         }
         else if (puedeVer)
         {
             puedeVer = false;
+            return ChaseState.Failed;
         }
-        return puedeVer;
+        return ChaseState.Failed;
     }
 
 
@@ -374,11 +403,7 @@ public class Cocodrilo : MonoBehaviour
     }
 
     //Acción perseguir animales
-    public enum ChaseState
-    {
-        Finished,
-        Failed
-    }
+    
 
     public ChaseState Chase()
     {
