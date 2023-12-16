@@ -318,6 +318,7 @@ public class Cocodrilo : MonoBehaviour
                 crocNav.SetDestination(animalTarget.position); //se pone como punto de destino la posicion del animal
                 
             }
+            crocNav.speed--;
             return ChaseState.Finished;// se ha llegado al punto indicado aunque el animal ya no este (muerto o escondido)
            
        
@@ -325,6 +326,7 @@ public class Cocodrilo : MonoBehaviour
         }
         else
         {
+            crocNav.speed--;
             return ChaseState.Failed; //no haya animal al que perseguir
         }
         
@@ -364,13 +366,54 @@ public class Cocodrilo : MonoBehaviour
                 
                     crocNav.speed = crocNav.speed + 1;
                     crocNav.SetDestination(sandTarget.position); //se pone como punto de destino la posicion de la arena
+
+                while (transform.position != sandTarget.position)
+                {
+                    energia -= 5;
+                    energia = Mathf.Clamp(energia, 0f, 100f);
+                }
                 
             }
-            
+
+            miedo = 0; //reducimos el miedo
+            crocNav.isStopped = true;//paramos el movimiento
+            StartCoroutine(ReaunadarMovimiento()); //corutina para reanudar el movimiento despues de x tiempo
             crocNav.stoppingDistance = stopDistance;
+            crocNav.speed--;
             return ChaseState.Finished;// se ha llegado al punto indicado aunque el animal ya no este (muerto o escondido)
 
+        }
+        else
+        {
+            crocNav.stoppingDistance = stopDistance;
+            crocNav.speed--;
+            return ChaseState.Failed; //no haya animal al que perseguir
+        }
+    }
 
+    public IEnumerator ReaunadarMovimiento()
+    {
+        yield return new WaitForSeconds(20);
+        crocNav.isStopped = false; //reanudamos el movimiento despues de x segundos
+    }
+
+    public ChaseState IrAHuevos()
+    {
+        float stopDistance = crocNav.stoppingDistance;
+        crocNav.stoppingDistance = 0;
+        float minDist = crocNav.stoppingDistance;
+        if (eggsTarget != null)
+        {
+            float dist = Vector3.Distance(eggsTarget.position, transform.position);
+
+            if (dist > minDist)
+            {
+
+                crocNav.SetDestination(eggsTarget.position); //se pone como punto de destino la posicion de los huevos
+ 
+            }
+
+            return ChaseState.Finished;// se ha llegado al punto indicado 
 
         }
         else
