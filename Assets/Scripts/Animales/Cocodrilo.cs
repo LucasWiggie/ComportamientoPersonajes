@@ -34,7 +34,9 @@ public class Cocodrilo : MonoBehaviour
 
     //NavMeshAgent
     private NavMeshAgent crocNav;
-    public Transform animalTarget;
+    //Objetivos
+    private Transform animalTarget; //animal que va a ser objetivo
+    private Transform eggsTarget;//huevos objetivo
 
     //Collider el objeto con el que se ha chocado
     private Collider collidedObject;
@@ -174,6 +176,7 @@ public class Cocodrilo : MonoBehaviour
 
             if (target.CompareTag("Pato"))
             {
+                animalTarget = target; // ponemos el pato como objetivo
                 // Acceder a la variable aSalvo de Pato
                 bool estaASalvo = patoScript.aSalvo;
 
@@ -210,6 +213,7 @@ public class Cocodrilo : MonoBehaviour
             }
             else if (target.CompareTag("Castor"))
             {
+                animalTarget = target;// ponemos el castor como objetivo
                 // Acceder a la variable aSalvo de Castor
                 bool estaASalvo = castorScript.aSalvo;
 
@@ -286,7 +290,7 @@ public class Cocodrilo : MonoBehaviour
         // BT de cuando el Cocodrilo tiene miedo
     }
 
-    //Acción perseguir
+    //Acción perseguir animales
     public enum ChaseState
     {
         Finished,
@@ -321,5 +325,24 @@ public class Cocodrilo : MonoBehaviour
             return ChaseState.Failed; //no haya animal al que perseguir
         }
         
+    }
+
+    //Acción comer tanto huevos como animales
+    public void Eat(bool animal, bool eggs)
+    {
+        GameObject target;
+        if (animal) //si vamos a comer un animal
+        {
+            target = animalTarget.GetComponentInParent<GameObject>();
+            GameObject.Destroy(target);//destruimos el gameobject del animal que se ha comido
+        }else if (eggs) //si comer huevos de salamandra
+        {
+            target = eggsTarget.GetComponentInParent<GameObject>();
+            GameObject.Destroy(target);//destruimos el gameobject de los huevos que se ha comido
+            energia += 20; //aumentamos la energía
+            energia = Mathf.Clamp(energia, 0f, 100f);
+        }
+        
+        hambre = 0; //ya no hay hambre
     }
 }
