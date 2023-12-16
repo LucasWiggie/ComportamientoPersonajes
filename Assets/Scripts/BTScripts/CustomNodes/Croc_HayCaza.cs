@@ -21,18 +21,15 @@ namespace CustomNodes
 
         public override bool Check()
         {
-            if (cocodriloScript != null)
-            {
-                cocodriloScript.ComprobarVision();
-            }
-            if(cocodriloScript.puedeVer == true)
+            return cocodriloScript.ComprobarVision();
+            /*if(cocodriloScript.puedeVer == true)
             {
                 return somePropertyRef.Value == true; // Hay un enemigo con la capa "targetCocodrilo" cerca
             }
             else
             {
                 return somePropertyRef.Value == false;
-            }
+            }*/
         }
 
 

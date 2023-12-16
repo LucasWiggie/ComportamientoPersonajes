@@ -166,7 +166,7 @@ public class Cocodrilo : MonoBehaviour
         }
     }
 
-    public void ComprobarVision()
+    public bool ComprobarVision()
     {
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
 
@@ -251,6 +251,7 @@ public class Cocodrilo : MonoBehaviour
         {
             puedeVer = false;
         }
+        return puedeVer;
     }
 
 
