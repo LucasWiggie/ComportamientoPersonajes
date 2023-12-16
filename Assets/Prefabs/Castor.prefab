@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 6384150623594599636}
+  selectedEditorNode: {fileID: 1381572509571395564}
   repeatOnFinish: 0
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
@@ -154,8 +154,8 @@ MonoBehaviour:
   title: Cast_IrPalo
   rect:
     serializedVersion: 2
-    x: 120
-    y: 380
+    x: 112
+    y: 378
     width: 160
     height: 45
   parent: {fileID: 5531909167830443237}
@@ -209,8 +209,8 @@ MonoBehaviour:
   title: Cast_LlevarPaloPresa
   rect:
     serializedVersion: 2
-    x: 537
-    y: 373
+    x: 520
+    y: 380
     width: 160
     height: 45
   parent: {fileID: 5531909167830443237}
@@ -266,7 +266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 0}
+  selectedEditorNode: {fileID: 2600884774414839485}
   repeatOnFinish: 0
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
@@ -285,8 +285,8 @@ MonoBehaviour:
   title: Root
   rect:
     serializedVersion: 2
-    x: 264
-    y: 183
+    x: 260
+    y: 180
     width: 160
     height: 45
   parent: {fileID: 0}
@@ -427,7 +427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 4600686690931119035}
+  selectedEditorNode: {fileID: 0}
   repeatOnFinish: 0
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}

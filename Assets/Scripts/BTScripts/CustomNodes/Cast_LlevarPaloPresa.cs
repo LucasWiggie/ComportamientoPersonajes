@@ -15,7 +15,7 @@ namespace CustomNodes
         // This is called every tick as long as node is executed
         public override NodeResult Execute()
         {
-            // AQUI LA EJECUCIÓN DE QUE EL COCODRILO SE MUEVA A LA ARENA
+            // AQUI LA EJECUCIÓN DE QUE EL CASTOR LLEVE EL PALO A LA PRESA
             return NodeResult.success;
         }
     }

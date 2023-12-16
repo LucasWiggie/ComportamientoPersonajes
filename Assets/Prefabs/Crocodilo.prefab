@@ -150,8 +150,8 @@ MonoBehaviour:
   title: Croc_IrArena
   rect:
     serializedVersion: 2
-    x: 435
-    y: 358
+    x: 440
+    y: 360
     width: 160
     height: 45
   parent: {fileID: 1748277432791939197}
@@ -282,8 +282,8 @@ MonoBehaviour:
   title: Croc_HayCaza
   rect:
     serializedVersion: 2
-    x: -42
-    y: 315
+    x: -40
+    y: 320
     width: 160
     height: 45
   parent: {fileID: 8531161285983354118}
@@ -368,8 +368,8 @@ MonoBehaviour:
   title: Croc_PerseguirCaza
   rect:
     serializedVersion: 2
-    x: 159
-    y: 318
+    x: 160
+    y: 320
     width: 160
     height: 45
   parent: {fileID: 8531161285983354118}
@@ -428,7 +428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 6066673945394651381}
+  selectedEditorNode: {fileID: 0}
   repeatOnFinish: 0
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
