@@ -15,6 +15,8 @@ public class Castor : MonoBehaviour
     public LayerMask targetMaskPresa;
     public LayerMask obstructionMask;
     public bool puedeVer;
+    public bool puedeVerPresa;
+
 
     // BTs de cada acción
     public GameObject BT_Hambre;
@@ -160,24 +162,24 @@ public class Castor : MonoBehaviour
 
                 if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
                 {
-                    puedeVer = true;
+                    puedeVerPresa = true;
 
                 }
                 else
                 {
-                    puedeVer = false;
+                    puedeVerPresa = false;
                 }
             }
             else
             {
-                puedeVer = false;
+                puedeVerPresa = false;
             }
         }
-        else if (puedeVer)
+        else if (puedeVerPresa)
         {
-            puedeVer = false;
+            puedeVerPresa = false;
         }
-        return puedeVer;
+        return puedeVerPresa;
     }
 
 

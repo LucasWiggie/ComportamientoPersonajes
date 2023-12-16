@@ -11,11 +11,18 @@ namespace CustomNodes
     {
         public Abort abort;
         public BoolReference somePropertyRef = new BoolReference(VarRefMode.DisableConstant);
+        private Cocodrilo cocodriloScript; // Referencia al script Cocodrilo
+
+        private void Start()
+        {
+            // Obtener el componente Cocodrilo adjunto al mismo objeto
+            cocodriloScript = GetComponent<Cocodrilo>();
+        }
 
         public override bool Check()
         {
             // AQUÍ LA COMPROBACIÓN DE SI HAY ARENA
-            return somePropertyRef.Value == true; // quitar esto
+            return cocodriloScript.HayArena();
         }
 
         public override void OnAllowInterrupt()

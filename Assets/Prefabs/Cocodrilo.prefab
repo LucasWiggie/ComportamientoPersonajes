@@ -455,6 +455,9 @@ MonoBehaviour:
   targetMaskHuevos:
     serializedVersion: 2
     m_Bits: 4096
+  targetMaskArena:
+    serializedVersion: 2
+    m_Bits: 16384
   obstructionMask:
     serializedVersion: 2
     m_Bits: 0

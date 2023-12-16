@@ -645,15 +645,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radio: 8
+  radioNenufar: 0
   angulo: 360
   playerRef: {fileID: 0}
   targetMask:
     serializedVersion: 2
     m_Bits: 256
+  targetMaskNenufar:
+    serializedVersion: 2
+    m_Bits: 32768
   obstructionMask:
     serializedVersion: 2
     m_Bits: 0
   puedeVer: 0
+  puedeVerNenufar: 0
   hambre: 60
   energia: 100
   miedo: 0

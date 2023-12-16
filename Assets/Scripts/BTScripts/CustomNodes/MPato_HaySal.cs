@@ -11,11 +11,18 @@ namespace CustomNodes
     {
         public Abort abort;
         public BoolReference somePropertyRef = new BoolReference(VarRefMode.DisableConstant);
+        private Pato patoScript; // Referencia al script Salamandra
+
+        private void Start()
+        {
+            // Obtener el componente Cocodrilo adjunto al mismo objeto
+            patoScript = GetComponent<Pato>();
+        }
 
         public override bool Check()
         {
             // AQUÍ LA COMPROBACIÓN DE SI HAY SALAMANDRA
-            return somePropertyRef.Value == true;
+            return patoScript.ComprobarVision();
         }
 
         public override void OnAllowInterrupt()

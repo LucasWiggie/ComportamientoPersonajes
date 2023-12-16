@@ -6,13 +6,16 @@ using UnityEngine;
 public class Pato : MonoBehaviour
 {
     public float radio;
+    public float radioNenufar;
     [Range(0, 360)]
     public float angulo;
     public GameObject playerRef;
 
     public LayerMask targetMask;
+    public LayerMask targetMaskNenufar;
     public LayerMask obstructionMask;
     public bool puedeVer;
+    public bool puedeVerNenufar;
 
     public float hambre = 60; //Rango 0-100 las 3
     public float energia = 100;
@@ -77,7 +80,7 @@ public class Pato : MonoBehaviour
         }
     }
 
-    private void ComprobarVision()
+    public bool ComprobarVision()
     {
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
 
@@ -114,6 +117,48 @@ public class Pato : MonoBehaviour
         {
             puedeVer = false;
         }
+        return puedeVer;
     }
+
+    public bool HayNenufares()
+    {
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radioNenufar, targetMaskNenufar);
+
+        if (rangeChecks.Length > 0)
+        {
+            Transform target = rangeChecks[0].transform;
+            Vector3 directionToTarget = (target.position - transform.position).normalized;
+
+            // Utilizar el producto punto para verificar el ángulo
+            float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
+
+            // Establecer un umbral para el ángulo (ajustar según sea necesario)
+            float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
+            if (dotProduct > angleThreshold)
+            {
+                float distanciaToTarget = Vector3.Distance(transform.position, target.position);
+
+                if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
+                {
+                    puedeVerNenufar = true;
+
+                }
+                else
+                {
+                    puedeVerNenufar = false;
+                }
+            }
+            else
+            {
+                puedeVerNenufar = false;
+            }
+        }
+        else if (puedeVerNenufar)
+        {
+            puedeVerNenufar = false;
+        }
+        return puedeVerNenufar;
+    }
+
 }
 
