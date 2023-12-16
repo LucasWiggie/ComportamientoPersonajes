@@ -33,7 +33,8 @@ public class GeneracionAleatoria : MonoBehaviour
                 randomPoint = GetRandomPointOnNavMesh(2.77f); //No bajar de 2.77 que se cuelga
             }
 
-            Instantiate(cocodrilo, hit.position, new Quaternion(90f, 0f, 0f, -90f));
+            Instantiate(cocodrilo, hit.position, new Quaternion(0f, 0f, 0f, 0f));
+
 
         }
 
