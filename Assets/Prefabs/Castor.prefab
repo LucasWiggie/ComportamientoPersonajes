@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 4135439964892121966}
   - component: {fileID: 3865291111655414643}
   - component: {fileID: 8505856938961270853}
-  - component: {fileID: 8831103821868996482}
   - component: {fileID: 2687580973120299419}
   m_Layer: 6
   m_Name: BT Palos Presa
@@ -50,7 +49,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 0}
+  animal: {fileID: 0}
+  selectedEditorNode: {fileID: 8505856938961270853}
   repeatOnFinish: 0
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
@@ -69,8 +69,8 @@ MonoBehaviour:
   title: Root
   rect:
     serializedVersion: 2
-    x: 260
-    y: 140
+    x: 240
+    y: 120
     width: 160
     height: 44
   parent: {fileID: 0}
@@ -94,15 +94,14 @@ MonoBehaviour:
   title: Sequence
   rect:
     serializedVersion: 2
-    x: 259
-    y: 230
+    x: 251
+    y: 218
     width: 160
     height: 44
   parent: {fileID: 5491301373270869018}
   children:
   - {fileID: 3865291111655414643}
   - {fileID: 8505856938961270853}
-  - {fileID: 8831103821868996482}
   - {fileID: 2687580973120299419}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -148,8 +147,8 @@ MonoBehaviour:
   title: Cast_IrPalo
   rect:
     serializedVersion: 2
-    x: 112
-    y: 378
+    x: 260
+    y: 383
     width: 160
     height: 44
   parent: {fileID: 4135439964892121966}
@@ -157,31 +156,6 @@ MonoBehaviour:
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
---- !u!114 &8831103821868996482
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 375552894631194235}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f45879248489fae46886abd594c163fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: Cast_HayPalo
-  rect:
-    serializedVersion: 2
-    x: 300
-    y: 380
-    width: 160
-    height: 44
-  parent: {fileID: 4135439964892121966}
-  children: []
-  behaviourTree: {fileID: 0}
-  runtimePriority: 0
-  breakpoint: 0
-  abort: 0
 --- !u!114 &2687580973120299419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,6 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animal: {fileID: 0}
   selectedEditorNode: {fileID: 0}
   repeatOnFinish: 0
   maxExecutionsPerTick: 1000
@@ -460,6 +435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animal: {fileID: 0}
   selectedEditorNode: {fileID: 2148104507857666939}
   repeatOnFinish: 0
   maxExecutionsPerTick: 1000
@@ -631,12 +607,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   puedeVer: 0
+  puedeVerPresa: 0
   BT_Hambre: {fileID: 574407034648764920}
   BT_EnergiaMiedo: {fileID: 5381213649540830934}
   BT_PalosPresa: {fileID: 375552894631194235}
   hambre: 50
   energia: 100
   miedo: 0
+  cogePalo: 0
+  dejaPalo: 0
   _hambre: 0
   _energia: 0
   _miedo: 0

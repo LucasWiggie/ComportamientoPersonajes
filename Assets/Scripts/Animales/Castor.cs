@@ -28,14 +28,20 @@ public class Castor : MonoBehaviour
     public float energia;
     public float miedo;
 
+    public bool cogePalo = false;
+    public bool dejaPalo = false;
+    public bool llegaDestino = false;
+
     //NavMeshAgent
-    private NavMeshAgent castNav;
+    public NavMeshAgent castNav;
 
     //Objetivo
-    private Transform paloTarget;
+    public Transform paloTarget;
+    public Transform presaTarget;
 
     private bool isDefaultMov = true;
     private bool dirtyUS = false;
+
 
     // Utilidades
     public float _hambre;
@@ -93,6 +99,21 @@ public class Castor : MonoBehaviour
     {
         UpdateVariables();
         aSalvo = false;
+
+        if (paloTarget != null) { 
+            if (transform.position.x == paloTarget.position.x && transform.position.z == paloTarget.position.z && !cogePalo)
+            {              
+                CogerPalo(); 
+            }
+        }
+
+        if (presaTarget != null)
+        {
+            if (transform.position.x == presaTarget.position.x && transform.position.z == presaTarget.position.z && !dejaPalo)
+            {
+                SoltarPalo();
+            }
+        }
     }
     private void FixedUpdate()
     {
@@ -126,11 +147,11 @@ public class Castor : MonoBehaviour
             ComprobarVision();
         }
     }
-
     public enum ChaseState
     {
         Finished,
-        Failed
+        Failed, 
+        Enproceso
     }
 
     public ChaseState ComprobarVision()
@@ -155,7 +176,8 @@ public class Castor : MonoBehaviour
 
                 if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
                 {
-                    puedeVer = true;
+                    puedeVer = true;                   
+
                     return ChaseState.Finished;
 
                 }
@@ -187,6 +209,7 @@ public class Castor : MonoBehaviour
         if (rangeChecks.Length > 0)
         {
             Transform target = rangeChecks[0].transform;
+            presaTarget = target;
             Vector3 directionToTarget = (target.position - transform.position).normalized;
 
             // Utilizar el producto punto para verificar el ángulo
@@ -221,30 +244,84 @@ public class Castor : MonoBehaviour
     }
 
 
-    public ChaseState irPalo()
+    /*public ChaseState irPalo()
     {
-        float stopDistance = castNav.stoppingDistance;
+
         castNav.stoppingDistance = 0;
-        float minDist = castNav.stoppingDistance;
+
         if (paloTarget != null)
         {
-            float dist = Vector3.Distance(paloTarget.position, transform.position);
-
-            if (dist > minDist)
+            castNav.SetDestination(paloTarget.position);
+            //StartCoroutine(EsperarLlegada());
+            if (cogePalo)
             {
-
-                castNav.SetDestination(paloTarget.position); //se pone como punto de destino la posicion de los huevos
-
+                return ChaseState.Finished;
             }
-
-            return ChaseState.Finished;// se ha llegado al punto indicado 
-
+            Debug.Log("en proceso");
+            return ChaseState.Enproceso;
         }
         else
         {
-            castNav.stoppingDistance = stopDistance;
-            return ChaseState.Failed; //no haya animal al que perseguir
+            ComprobarVision();
+            return ChaseState.Failed;
         }
+    }*/
+
+
+    public ChaseState llevarAPresa()
+    {
+        
+        if (transform.position.x == paloTarget.position.x && transform.position.z == paloTarget.position.z && HayPresa())
+        {
+            float stopDistance = castNav.stoppingDistance;
+            castNav.stoppingDistance = 0;
+            float minDist = castNav.stoppingDistance;
+            if (presaTarget != null)
+            {
+                castNav.SetDestination(presaTarget.position);
+                if (dejaPalo)
+                {
+                    Debug.Log("finished");
+                    return ChaseState.Finished;
+                }
+                else
+                {
+                    Debug.Log("no deja palo");
+                    return ChaseState.Failed;
+                }
+
+            }
+            else { Debug.Log("presa null"); return ChaseState.Failed; }
+        }
+        else
+        {
+            Debug.Log("no hay presa");
+            return ChaseState.Failed;
+        }
+        
+    }
+
+    public IEnumerator EsperarLlegada() 
+    { 
+        yield return new WaitUntil(()=> castNav.remainingDistance <= castNav.stoppingDistance);
+    }
+
+    void SoltarPalo()
+    {
+        if (paloTarget != null && paloTarget.parent == transform)
+        {
+            paloTarget.parent = null;
+            dejaPalo = true;
+            paloTarget = null;
+        }
+    }
+
+    void CogerPalo()
+    {        
+        paloTarget.parent = transform;
+        cogePalo = true;
+        Debug.Log("coge palo");
+        //paloTarget = null;
     }
 
     public void UtilitySystem()

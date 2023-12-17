@@ -12,11 +12,50 @@ namespace CustomNodes
     public class Cast_LlevarPaloPresa : Leaf
     {
 
+        private Castor castorScript;
         // This is called every tick as long as node is executed
+        private void Awake()
+        {
+            castorScript = GetComponentInParent<Castor>();
+            if (castorScript == null) { Debug.Log("no hay castor en llevarPaloPresa"); }
+        }
+
+        private void Start()
+        {
+
+            StartCoroutine(EsperarLlegada());
+
+        }
+
+        public IEnumerator EsperarLlegada()
+        {
+            yield return new WaitUntil(() => castorScript.castNav.remainingDistance <= castorScript.castNav.stoppingDistance);
+        }
+
         public override NodeResult Execute()
         {
-            // AQUI LA EJECUCIÓN DE QUE EL CASTOR LLEVE EL PALO A LA PRESA
-            return NodeResult.success;
+            if (castorScript == null)
+            {
+                castorScript = GetComponentInParent<Castor>();
+                if (castorScript == null)
+                {
+                    Debug.LogError("castorScript is still null!");
+                    return NodeResult.failure;
+                }
+            }
+
+
+            Castor.ChaseState estadoHuida = castorScript.llevarAPresa();
+            Debug.Log("lleva palo a presa");
+            switch (estadoHuida)
+            {
+                case Castor.ChaseState.Finished:
+                    return NodeResult.success;
+                case Castor.ChaseState.Failed:
+                    return NodeResult.failure;
+                default:
+                    return NodeResult.failure;
+            }
         }
     }
 }
