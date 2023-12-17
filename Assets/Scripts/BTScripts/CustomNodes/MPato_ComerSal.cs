@@ -11,11 +11,25 @@ namespace CustomNodes
 
     public class MPato_ComerSal : Leaf
     {
-
+        private Pato pato;
         // This is called every tick as long as node is executed
+        private void Awake()
+        {
+            pato = GetComponentInParent<Pato>();
+        }
         public override NodeResult Execute()
         {
+            if (pato == null)
+            {
+                pato = GetComponentInParent<Pato>();
+                if (pato == null)
+                {
+                    Debug.LogError("pato is still null!");
+                    return NodeResult.failure;
+                }
+            }
             // AQUI LA EJECUCIÓN DE QUE EL PATO SE COMA LA SALAMANDRA
+            pato.ComerSal();
             return NodeResult.success;
         }
     }

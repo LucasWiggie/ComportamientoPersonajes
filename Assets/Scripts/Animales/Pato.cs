@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using static Cocodrilo;
+using static UnityEngine.GraphicsBuffer;
 
 public class Pato : MonoBehaviour
 {
@@ -30,6 +31,7 @@ public class Pato : MonoBehaviour
     private NavMeshAgent patoNav;
     //objetivos
     private Transform nenufarTarget;//huevos objetivo
+    private Transform salTarget;
 
     public bool isDefaultMov = true;
     private bool dirtyUS = false;
@@ -216,36 +218,93 @@ public class Pato : MonoBehaviour
     }
 
     //Acción ir a nenufares
-    public enum CaminoState
+    public enum ChaseState
     {
         Finished,
         Failed
     }
-    public CaminoState IrNenufares()
+    public ChaseState IrNenufares()
     {
         float stopDistance = patoNav.stoppingDistance;
         patoNav.stoppingDistance = 0;
         float minDist = patoNav.stoppingDistance;
         if (nenufarTarget != null)
         {
-            float dist = Vector3.Distance(nenufarTarget.position, transform.position);
+            float dist = Vector3.Distance(nenufarTarget.position, transform.position); //calcular distancia
 
-            if (dist > minDist)
+            if (dist > minDist) //si no está en el nenufar
             {
 
                 patoNav.SetDestination(nenufarTarget.position); //se pone como punto de destino la posicion del nenufar
 
             }
 
-            return CaminoState.Finished;// se ha llegado al punto indicado 
+            //esperar a que llegue al nenufar
+            StartCoroutine(EsperarLlegada());
+            //aumentarle la energía una vez llegue al nenufar
+            energia = 100;
+            patoNav.isStopped= true;
+            //esperar a que el pato descanse
+            StartCoroutine(ReaunadarMovimiento()); //corutina para reanudar el movimiento despues de x tiempo
+            patoNav.stoppingDistance = stopDistance;
+            return ChaseState.Finished;// se ha llegado al punto indicado 
 
         }
         else
         {
             patoNav.stoppingDistance = stopDistance;
-            return CaminoState.Failed; 
+            return ChaseState.Failed; 
         }
     }
+    //Esperar a llegar al destino
+    public IEnumerator EsperarLlegada()
+    {
+        yield return new WaitUntil(()=>patoNav.remainingDistance <= patoNav.stoppingDistance); //esperar a que el pato llegue a su destino
+    }
+    //Esperar x  tiempo
+    public IEnumerator ReaunadarMovimiento()
+    {
+        yield return new WaitForSeconds(10);
+        patoNav.isStopped = false; //reanudamos el movimiento despues de x segundos
+    }
 
+    //Acción Comer Salamandra
+    public void ComerSal()
+    {
+        
+        GameObject.Destroy(salTarget.GetComponentInParent<GameObject>());//destruimos el gameobject de la salamandra que se ha comido
+        hambre = 0;//ya ha comido
+    }
+
+    //Acción Perseguir Salamandra
+    public ChaseState PerseguirSal()
+    {
+        float minDist = patoNav.stoppingDistance;
+        if (salTarget != null)
+        {
+            float dist = Vector3.Distance(salTarget.position, transform.position);
+            patoNav.speed = patoNav.speed + 1;
+            while (dist > minDist)
+            {
+                if (salTarget == null) //si el animal se ha muerto por el camino
+                {
+                    break;//salimos del bucle
+                }
+
+                patoNav.SetDestination(salTarget.position); //se pone como punto de destino la posicion de la salamandra
+
+            }
+            patoNav.speed--;
+            return ChaseState.Finished;// se ha llegado al punto indicado aunque la salamandra ya no este (muerto o escondido)
+
+
+
+        }
+        else
+        {
+            patoNav.speed--;
+            return ChaseState.Failed; //no haya animal al que perseguir
+        }
+    }
 }
 
