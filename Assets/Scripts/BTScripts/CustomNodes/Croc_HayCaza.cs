@@ -10,19 +10,17 @@ namespace CustomNodes
     public class Croc_HayCaza : Leaf
     {
         public Abort abort;
+        private GameObject crocParent;
         private Cocodrilo cocodriloScript; // Referencia al script Cocodrilo
-
-        private void Start()
-        {
-            // Obtener el componente Cocodrilo adjunto al mismo objeto
-            cocodriloScript = GetComponentInParent<Cocodrilo>();
-        }
 
         public override NodeResult Execute()
         {
+            crocParent = transform.parent.parent.gameObject;
+            cocodriloScript = crocParent.GetComponent<Cocodrilo>();
+
             if (cocodriloScript == null)
             {
-                cocodriloScript = GetComponentInParent<Cocodrilo>();
+                cocodriloScript = crocParent.GetComponent<Cocodrilo>();
                 if (cocodriloScript == null)
                 {
                     Debug.LogError("crocodile is still null!");

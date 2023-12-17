@@ -429,7 +429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5885c41659d5d48429f799eee670450c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radio: 8
+  radio: 300
   radioHuevos: 300
   angulo: 360
   playerRef: {fileID: 0}
@@ -453,12 +453,9 @@ MonoBehaviour:
   hambre: 70
   energia: 100
   miedo: 0
-  _hambre: 0
-  _energia: 0
-  _miedo: 0
   isDefaultMov: 1
-  patoScript: {fileID: 0}
-  castorScript: {fileID: 0}
+  patoScript: {fileID: 337089070920801554, guid: 0e0713aa9ebc07640b01992d3fa21da8, type: 3}
+  castorScript: {fileID: 423394064896345906, guid: 3d9597b43e0789841834549bc9145508, type: 3}
   movementInterval: 1.5
 --- !u!1 &7513183408252243350
 GameObject:
