@@ -73,9 +73,9 @@ GameObject:
   - component: {fileID: 1082670175291508270}
   - component: {fileID: 337089070920801554}
   - component: {fileID: 4023073068378583411}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pato
-  m_TagString: Untagged
+  m_TagString: Pato
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

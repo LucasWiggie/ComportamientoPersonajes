@@ -92,7 +92,7 @@ public class Pato : MonoBehaviour
         {
             Vector3 randomPoint = RandomNavmeshLocation(60f); // Obtener un punto aleatorio en el NavMesh
             patoNav.SetDestination(randomPoint); // Establecer el punto como destino
-            Debug.Log("pato se mueve");
+            //Debug.Log("pato se mueve");
             nextRandomMovementTime = Time.time + movementInterval; // Actualizar el tiempo para el próximo movimiento
         }
     }

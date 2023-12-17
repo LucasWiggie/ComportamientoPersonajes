@@ -59,6 +59,13 @@ public class Cocodrilo : MonoBehaviour
     private float nextRandomMovementTime = 0f;
     public float movementInterval = 7.0f;
 
+
+    public enum ChaseState
+    {
+        Finished,
+        Failed
+    }
+
     //Getters y Setters
     public float getHambre()
     {
@@ -165,20 +172,16 @@ public class Cocodrilo : MonoBehaviour
         while (true)
         {
             yield return wait;
-            ComprobarVision();
+            HayCaza();
         }
     }
-    public enum ChaseState
-    {
-        Finished,
-        Failed
-    }
 
-    public ChaseState ComprobarVision()
+    public bool HayCaza()
     {
         Debug.Log("ENTRA EN COMPROBAR VISION");
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
         bool estaASalvo;
+        puedeVer = false;
 
         if (rangeChecks.Length > 0)
         {
@@ -188,7 +191,7 @@ public class Cocodrilo : MonoBehaviour
                 animalTarget = target; // ponemos el pato como objetivo
                 // Acceder a la variable aSalvo de Pato
                 estaASalvo = animalTarget.GetComponentInParent<Pato>().aSalvo;
-
+                Debug.Log("estaASalvo: " + estaASalvo);
 
                 Vector3 directionToTarget = (target.position - transform.position).normalized;
                 float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
@@ -204,20 +207,19 @@ public class Cocodrilo : MonoBehaviour
                         // Verificar si el tag es "Castor" o "Pato"
                         if (estaASalvo == false)
                         {
-
                             puedeVer = true;
                             //return ChaseState.Finished;
                         }
                         else
                         {
                             puedeVer = false;
-                            // return ChaseState.Failed;
+                            //return ChaseState.Failed;
                         }
                     }
                     else
                     {
                         puedeVer = false;
-                        // return ChaseState.Failed;
+                        //return ChaseState.Failed;
                     }
                 }
                 else
@@ -226,49 +228,50 @@ public class Cocodrilo : MonoBehaviour
                     //return ChaseState.Failed;
                 }
             }
-            if (target.CompareTag("Castor"))
-            {
-                animalTarget = target;// ponemos el castor como objetivo
-                // Acceder a la variable aSalvo de Castor
-                estaASalvo = animalTarget.GetComponentInParent<Castor>().aSalvo;
-                Vector3 directionToTarget = (target.position - transform.position).normalized;
-                float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
-                float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
+            //if (target.CompareTag("Castor"))
+            //{
+            //    animalTarget = target;// ponemos el castor como objetivo
+            //    // Acceder a la variable aSalvo de Castor
+            //    estaASalvo = animalTarget.GetComponentInParent<Castor>().aSalvo;
+            //    Vector3 directionToTarget = (target.position - transform.position).normalized;
+            //    float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
+            //    float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
 
-                if (dotProduct > angleThreshold)
-                {
-                    float distanciaToTarget = Vector3.Distance(transform.position, target.position);
+            //    if (dotProduct > angleThreshold)
+            //    {
+            //        float distanciaToTarget = Vector3.Distance(transform.position, target.position);
 
-                    if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
-                    {
-                        if (estaASalvo == false)
-                        {
+            //        if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
+            //        {
+            //            if (estaASalvo == false)
+            //            {
 
-                            puedeVer = true;
-                            return ChaseState.Finished;
-                        }
-                        else
-                        {
-                            puedeVer = false;
-                            return ChaseState.Failed;
-                        }
-                    }
-                    else
-                    {
-                        Debug.Log("mal1");
-                        puedeVer = false;
-                        return ChaseState.Failed;
-                    }
-                }
-                else
-                {
-                    puedeVer = false;
-                    return ChaseState.Failed;
-                }
-            }
+            //                puedeVer = true;
+            //                return ChaseState.Finished;
+            //            }
+            //            else
+            //            {
+            //                puedeVer = false;
+            //                return ChaseState.Failed;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            Debug.Log("mal1");
+            //            puedeVer = false;
+            //            return ChaseState.Failed;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        puedeVer = false;
+            //        return ChaseState.Failed;
+            //    }
+            //}
         }
 
-        return ChaseState.Failed;
+        //return ChaseState.Failed;
+        return puedeVer;
     }
 
     public ChaseState HayHuevos()

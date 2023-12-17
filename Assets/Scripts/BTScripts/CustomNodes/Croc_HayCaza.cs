@@ -27,14 +27,16 @@ namespace CustomNodes
                     return NodeResult.failure;
                 }
             }
-            
-            Cocodrilo.ChaseState estadoCaza = cocodriloScript.ComprobarVision();
+
+            //Cocodrilo.ChaseState estadoCaza = cocodriloScript.HayCaza();
+            bool estadoCaza = cocodriloScript.HayCaza();
+            Debug.Log("HA PETADO?");
             switch (estadoCaza)
             {
-                case Cocodrilo.ChaseState.Finished:
+                case true:
                     Debug.Log("bien");
                     return NodeResult.success;
-                case Cocodrilo.ChaseState.Failed:
+                case false:
                     Debug.Log("mal");
                     return NodeResult.failure;
                 default:
