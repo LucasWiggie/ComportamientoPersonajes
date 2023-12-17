@@ -1,3 +1,4 @@
+using MBT;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -111,6 +112,7 @@ public class Castor : MonoBehaviour
         {
             if (transform.position.x == presaTarget.position.x && transform.position.z == presaTarget.position.z && !dejaPalo)
             {
+                Debug.Log("update dejapalo");
                 SoltarPalo();
             }
         }
@@ -120,6 +122,7 @@ public class Castor : MonoBehaviour
         if (isDefaultMov)
         {
             BT_PalosPresa.SetActive(true);
+            BT_PalosPresa.GetComponent<MonoBehaviourTree>().Tick();
         }
 
         if (dirtyUS)
@@ -244,7 +247,7 @@ public class Castor : MonoBehaviour
     }
 
 
-    /*public ChaseState irPalo()
+    public ChaseState irPalo()
     {
 
         castNav.stoppingDistance = 0;
@@ -255,9 +258,9 @@ public class Castor : MonoBehaviour
             //StartCoroutine(EsperarLlegada());
             if (cogePalo)
             {
+                Debug.Log("cogepalo");
                 return ChaseState.Finished;
             }
-            Debug.Log("en proceso");
             return ChaseState.Enproceso;
         }
         else
@@ -265,39 +268,30 @@ public class Castor : MonoBehaviour
             ComprobarVision();
             return ChaseState.Failed;
         }
-    }*/
+    }
 
 
     public ChaseState llevarAPresa()
     {
-        
-        if (transform.position.x == paloTarget.position.x && transform.position.z == paloTarget.position.z && HayPresa())
-        {
-            float stopDistance = castNav.stoppingDistance;
-            castNav.stoppingDistance = 0;
-            float minDist = castNav.stoppingDistance;
-            if (presaTarget != null)
-            {
-                castNav.SetDestination(presaTarget.position);
-                if (dejaPalo)
-                {
-                    Debug.Log("finished");
-                    return ChaseState.Finished;
-                }
-                else
-                {
-                    Debug.Log("no deja palo");
-                    return ChaseState.Failed;
-                }
 
-            }
-            else { Debug.Log("presa null"); return ChaseState.Failed; }
-        }
-        else
+        HayPresa();
+        
+        castNav.stoppingDistance = 0;
+
+        if (presaTarget != null)
         {
-            Debug.Log("no hay presa");
-            return ChaseState.Failed;
+            castNav.SetDestination(presaTarget.position);
+            if (dejaPalo)
+            {
+                Debug.Log("finished");
+                return ChaseState.Finished;
+            }
+            Debug.Log("en proceso");
+            return ChaseState.Enproceso;
+
         }
+        else { Debug.Log("presa null"); return ChaseState.Failed; }
+        
         
     }
 
@@ -310,6 +304,7 @@ public class Castor : MonoBehaviour
     {
         if (paloTarget != null && paloTarget.parent == transform)
         {
+            Debug.Log("suelta palo");
             paloTarget.parent = null;
             dejaPalo = true;
             paloTarget = null;

@@ -12,23 +12,16 @@ namespace CustomNodes
         public Abort abort;
         private Castor castorScript;
 
-        private void Start()
-        {
-            castorScript = GetComponentInParent<Castor>();
-            if (castorScript != null ) { Debug.Log("hay castor"); }
-        }
 
         public override NodeResult Execute()
         {
+            castorScript = GetComponentInParent<Castor>();
             if (castorScript == null)
             {
-                castorScript = GetComponentInParent<Castor>();
-                if (castorScript == null)
-                {
-                    Debug.LogError("castorScript is still null!");
-                    return NodeResult.failure;
-                }
+                Debug.LogError("castorScript is still null!");
+                return NodeResult.failure;
             }
+            
             // AQUI LA EJECUCIÓN DE QUE EL COCODRILO SE MUEVA A LA ARENA
             Castor.ChaseState estadoHuida = castorScript.ComprobarVision();
             switch (estadoHuida)

@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 3865291111655414643}
   - component: {fileID: 8505856938961270853}
   - component: {fileID: 2687580973120299419}
+  - component: {fileID: 1349989962333975639}
+  - component: {fileID: 55358805430423195}
   m_Layer: 6
   m_Name: BT Palos Presa
   m_TagString: Untagged
@@ -49,8 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animal: {fileID: 0}
-  selectedEditorNode: {fileID: 0}
+  selectedEditorNode: {fileID: 55358805430423195}
   repeatOnFinish: 0
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
@@ -72,7 +73,7 @@ MonoBehaviour:
     x: 240
     y: 120
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 0}
   children:
   - {fileID: 4135439964892121966}
@@ -97,12 +98,12 @@ MonoBehaviour:
     x: 251
     y: 218
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 5491301373270869018}
   children:
   - {fileID: 3865291111655414643}
-  - {fileID: 8505856938961270853}
-  - {fileID: 2687580973120299419}
+  - {fileID: 1349989962333975639}
+  - {fileID: 55358805430423195}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
@@ -125,7 +126,7 @@ MonoBehaviour:
     x: -100
     y: 380
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 4135439964892121966}
   children: []
   behaviourTree: {fileID: 0}
@@ -147,11 +148,11 @@ MonoBehaviour:
   title: Cast_IrPalo
   rect:
     serializedVersion: 2
-    x: 260
-    y: 383
+    x: 252
+    y: 406
     width: 160
-    height: 45
-  parent: {fileID: 4135439964892121966}
+    height: 44
+  parent: {fileID: 1349989962333975639}
   children: []
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -171,15 +172,95 @@ MonoBehaviour:
   title: Cast_LlevarPaloPresa
   rect:
     serializedVersion: 2
-    x: 520
-    y: 380
+    x: 474
+    y: 404
     width: 160
-    height: 45
-  parent: {fileID: 4135439964892121966}
+    height: 44
+  parent: {fileID: 55358805430423195}
   children: []
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
+--- !u!114 &1349989962333975639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375552894631194235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8595d37ac5b0f340b7f64ca227f8860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Loop
+  rect:
+    serializedVersion: 2
+    x: 252
+    y: 326.3
+    width: 160
+    height: 44
+  parent: {fileID: 4135439964892121966}
+  children:
+  - {fileID: 8505856938961270853}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  loops:
+    useConstant: 1
+    mode: 0
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 3
+  infinite:
+    useConstant: 1
+    mode: 0
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0
+  breakOnStatus: 1
+  resultOnFinish: 0
+  resultOnBreak: 1
+--- !u!114 &55358805430423195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375552894631194235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8595d37ac5b0f340b7f64ca227f8860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Loop
+  rect:
+    serializedVersion: 2
+    x: 474
+    y: 328.3
+    width: 160
+    height: 44
+  parent: {fileID: 4135439964892121966}
+  children:
+  - {fileID: 2687580973120299419}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  loops:
+    useConstant: 1
+    mode: 0
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 3
+  infinite:
+    useConstant: 1
+    mode: 0
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0
+  breakOnStatus: 1
+  resultOnFinish: 0
+  resultOnBreak: 1
 --- !u!1 &574407034648764920
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,7 +311,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animal: {fileID: 0}
   selectedEditorNode: {fileID: 0}
   repeatOnFinish: 0
   maxExecutionsPerTick: 1000
@@ -435,7 +515,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animal: {fileID: 0}
   selectedEditorNode: {fileID: 2148104507857666939}
   repeatOnFinish: 0
   maxExecutionsPerTick: 1000

@@ -49,6 +49,8 @@ namespace CustomNodes
             Debug.Log("lleva palo a presa");
             switch (estadoHuida)
             {
+                case Castor.ChaseState.Enproceso:
+                    return NodeResult.running;
                 case Castor.ChaseState.Finished:
                     return NodeResult.success;
                 case Castor.ChaseState.Failed:
