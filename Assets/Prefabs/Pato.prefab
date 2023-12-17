@@ -679,7 +679,7 @@ GameObject:
   - component: {fileID: 3499843115908937866}
   - component: {fileID: 630212625465408658}
   - component: {fileID: 467306413643125144}
-  - component: {fileID: 7893818878850120509}
+  - component: {fileID: 1966581857357772927}
   m_Layer: 6
   m_Name: BT Miedo
   m_TagString: Untagged
@@ -715,7 +715,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animal: {fileID: 0}
-  selectedEditorNode: {fileID: 0}
+  selectedEditorNode: {fileID: 1966581857357772927}
   repeatOnFinish: 0
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
@@ -766,7 +766,7 @@ MonoBehaviour:
   parent: {fileID: 3499843115908937866}
   children:
   - {fileID: 467306413643125144}
-  - {fileID: 7893818878850120509}
+  - {fileID: 1966581857357772927}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
@@ -802,7 +802,7 @@ MonoBehaviour:
     blackboard: {fileID: 0}
     key: 
     constantValue: 0
---- !u!114 &7893818878850120509
+--- !u!114 &1966581857357772927
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -811,14 +811,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 5958547077724282190}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc497c05c825e0c4a94c9a0282ec20e9, type: 3}
+  m_Script: {fileID: 11500000, guid: 1e1a2b3c9dec028429f4621b95144c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: MPato_IrNenufares
+  title: MPato_HuirNenufares
   rect:
     serializedVersion: 2
-    x: 373
-    y: 407
+    x: 361.5
+    y: 399.5
     width: 160
     height: 45
   parent: {fileID: 630212625465408658}

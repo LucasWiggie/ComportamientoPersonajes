@@ -268,6 +268,54 @@ public class Pato : MonoBehaviour
         patoNav.isStopped = false; //reanudamos el movimiento despues de x segundos
     }
 
+    public ChaseState HuirNenufares()
+    {
+        float stopDistance = patoNav.stoppingDistance;
+        patoNav.stoppingDistance = 0;
+        float minDist = patoNav.stoppingDistance;
+        if (nenufarTarget != null)
+        {
+            float dist = Vector3.Distance(nenufarTarget.position, transform.position); //calcular distancia
+
+            if (dist > minDist) //si no está en el nenufar
+            {
+
+                patoNav.speed = patoNav.speed + 1;
+                patoNav.SetDestination(salTarget.position); //se pone como punto de destino la posicion del nenufar
+
+                while (transform.position != salTarget.position)
+                {
+                    energia -= 10;
+                    energia = Mathf.Clamp(energia, 0f, 100f);
+                    if(energia == 0)
+                    {
+                        break;
+                    }
+                }
+
+            }
+            if (transform.position != salTarget.position)
+            {
+                patoNav.speed--; //no tiene energía para correr
+                //esperar a que llegue al nenufar
+                StartCoroutine(EsperarLlegada());
+            }
+            //aumentarle la energía una vez llegue al nenufar
+            miedo = 0;
+            patoNav.isStopped = true;
+            //esperar a que el pato descanse
+            StartCoroutine(ReaunadarMovimiento()); //corutina para reanudar el movimiento despues de x tiempo
+            patoNav.stoppingDistance = stopDistance;
+            return ChaseState.Finished;// se ha llegado al punto indicado 
+
+        }
+        else
+        {
+            patoNav.stoppingDistance = stopDistance;
+            return ChaseState.Failed;
+        }
+    }
+
     //Acción Comer Salamandra
     public void ComerSal()
     {

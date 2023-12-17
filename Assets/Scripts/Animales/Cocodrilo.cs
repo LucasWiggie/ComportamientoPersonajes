@@ -476,10 +476,19 @@ public class Cocodrilo : MonoBehaviour
                 {
                     energia -= 5;
                     energia = Mathf.Clamp(energia, 0f, 100f);
+                    if (energia == 0)
+                    {
+                        break;
+                    }
                 }
                 
             }
-
+            if (transform.position != sandTarget.position)
+            {
+                crocNav.speed--; //no tiene energía para correr
+                //esperar a que llegue al nenufar
+                StartCoroutine(EsperarLlegada());
+            }
             miedo = 0; //reducimos el miedo
             crocNav.isStopped = true;//paramos el movimiento
             StartCoroutine(ReaunadarMovimiento()); //corutina para reanudar el movimiento despues de x tiempo
@@ -494,6 +503,11 @@ public class Cocodrilo : MonoBehaviour
             crocNav.speed--;
             return ChaseState.Failed; //no haya animal al que perseguir
         }
+    }
+    //Esperar a llegar al destino
+    public IEnumerator EsperarLlegada()
+    {
+        yield return new WaitUntil(() => crocNav.remainingDistance <= crocNav.stoppingDistance); //esperar a que el pato llegue a su destino
     }
 
     public IEnumerator ReaunadarMovimiento()
