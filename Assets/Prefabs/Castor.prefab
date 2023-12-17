@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animal: {fileID: 0}
-  selectedEditorNode: {fileID: 8505856938961270853}
+  selectedEditorNode: {fileID: 0}
   repeatOnFinish: 0
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
@@ -72,7 +72,7 @@ MonoBehaviour:
     x: 240
     y: 120
     width: 160
-    height: 44
+    height: 45
   parent: {fileID: 0}
   children:
   - {fileID: 4135439964892121966}
@@ -97,7 +97,7 @@ MonoBehaviour:
     x: 251
     y: 218
     width: 160
-    height: 44
+    height: 45
   parent: {fileID: 5491301373270869018}
   children:
   - {fileID: 3865291111655414643}
@@ -125,7 +125,7 @@ MonoBehaviour:
     x: -100
     y: 380
     width: 160
-    height: 44
+    height: 45
   parent: {fileID: 4135439964892121966}
   children: []
   behaviourTree: {fileID: 0}
@@ -150,7 +150,7 @@ MonoBehaviour:
     x: 260
     y: 383
     width: 160
-    height: 44
+    height: 45
   parent: {fileID: 4135439964892121966}
   children: []
   behaviourTree: {fileID: 0}
@@ -174,7 +174,7 @@ MonoBehaviour:
     x: 520
     y: 380
     width: 160
-    height: 44
+    height: 45
   parent: {fileID: 4135439964892121966}
   children: []
   behaviourTree: {fileID: 0}
@@ -616,6 +616,10 @@ MonoBehaviour:
   miedo: 0
   cogePalo: 0
   dejaPalo: 0
+  llegaDestino: 0
+  castNav: {fileID: 0}
+  paloTarget: {fileID: 0}
+  presaTarget: {fileID: 0}
   _hambre: 0
   _energia: 0
   _miedo: 0
