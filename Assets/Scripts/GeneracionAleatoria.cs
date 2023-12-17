@@ -74,7 +74,7 @@ public class GeneracionAleatoria : MonoBehaviour
             }
 
             GameObject instance = Instantiate(pato, hit.position, new Quaternion(0f, 0f, 0f, 0f));
-            instance.transform.position = new Vector3(hit.position.x, -0.373f, hit.position.z);
+            instance.transform.position = new Vector3(hit.position.x, 1.48f, hit.position.z);
         }
 
         for (int i = 0; i < nPalos; i++)

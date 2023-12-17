@@ -84,6 +84,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: -6803186898478926095, guid: cceb8eb4a1f9b6c4db19b93c751099c9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.46
+      objectReference: {fileID: 0}
+    - target: {fileID: -6803186898478926095, guid: cceb8eb4a1f9b6c4db19b93c751099c9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.86
+      objectReference: {fileID: 0}
     - target: {fileID: -6798710179281345633, guid: cceb8eb4a1f9b6c4db19b93c751099c9, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -140,6 +148,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 1441877184221417581, guid: cceb8eb4a1f9b6c4db19b93c751099c9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.0295494
+      objectReference: {fileID: 0}
+    - target: {fileID: 1441877184221417581, guid: cceb8eb4a1f9b6c4db19b93c751099c9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.08268881
+      objectReference: {fileID: 0}
     - target: {fileID: 1974075651506509930, guid: cceb8eb4a1f9b6c4db19b93c751099c9, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -194,6 +210,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cceb8eb4a1f9b6c4db19b93c751099c9, type: 3}
       insertIndex: -1
       addedObject: {fileID: -5968839395692330149}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cceb8eb4a1f9b6c4db19b93c751099c9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 783188113347528045}
   m_SourcePrefab: {fileID: 100100000, guid: cceb8eb4a1f9b6c4db19b93c751099c9, type: 3}
 --- !u!1 &5489956750369340815 stripped
 GameObject:
@@ -219,10 +238,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.4347868
-  m_Height: 1.5222716
+  m_Radius: 0.40218067
+  m_Height: 1.6630054
   m_Direction: 1
-  m_Center: {x: 0, y: 3.0172474, z: -2.3042126}
+  m_Center: {x: 0, y: 1.4738595, z: -0.04347515}
 --- !u!114 &-5968839395692330149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,3 +267,27 @@ MonoBehaviour:
   hambre: 70
   energia: 100
   miedo: 0
+  isDefaultMov: 1
+  movementInterval: 3
+--- !u!195 &783188113347528045
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5489956750369340815}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 0.81
+  m_BaseOffset: -1.44
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

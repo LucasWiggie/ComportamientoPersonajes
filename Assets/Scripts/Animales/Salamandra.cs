@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Salamandra : MonoBehaviour
 {
@@ -20,6 +21,15 @@ public class Salamandra : MonoBehaviour
 
     float hambreRate = 0.2f;
     float energiaRate = 0.05f;
+
+    public bool isDefaultMov = true;
+    private bool dirtyUS = false;
+
+    private NavMeshAgent salamandraNav;
+
+    // Variables para controlar el intervalo de movimiento
+    private float nextRandomMovementTime = 0f;
+    public float movementInterval = 5f;
 
     //Getters y Setters
     public float getHambre()
@@ -49,6 +59,9 @@ public class Salamandra : MonoBehaviour
 
     private void Start()
     {
+        salamandraNav = GetComponent<NavMeshAgent>();
+        InvokeRepeating("NuevoDestinoAleatorio", 0f, movementInterval);
+
         playerRef = this.gameObject;
         StartCoroutine(FOVRoutine());
     }
@@ -56,6 +69,47 @@ public class Salamandra : MonoBehaviour
     private void Update()
     {
         UpdateVariables();
+    }
+
+    private void FixedUpdate()
+    {
+        if (isDefaultMov)
+        {
+        }
+
+        if (dirtyUS)
+        {
+
+        }
+    }
+
+    private void NuevoDestinoAleatorio()
+    {
+        if (isDefaultMov)
+        {
+            Vector3 randomPoint = RandomNavmeshLocation(60f); // Obtener un punto aleatorio en el NavMesh
+            salamandraNav.SetDestination(randomPoint); // Establecer el punto como destino
+        }
+        
+    }
+
+    
+
+    // Función para encontrar un punto aleatorio en el NavMesh dentro de un radio dado
+    private Vector3 RandomNavmeshLocation(float radius)
+    {
+        Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
+        randomDirection += transform.position;
+
+        NavMeshHit hit;
+        Vector3 finalPosition = Vector3.zero;
+
+        if (NavMesh.SamplePosition(randomDirection, out hit, radius, 1))
+        {
+            finalPosition = hit.position;
+        }
+
+        return finalPosition;
     }
     private void UpdateVariables()
     {
