@@ -20,9 +20,15 @@ public class Pato : MonoBehaviour
     public bool puedeVer;
     public bool puedeVerNenufar;
 
-    public float hambre = 60; //Rango 0-100 las 3
-    public float energia = 100;
-    public float miedo = 0; 
+    public float hambre; //Rango 0-100 las 3
+    public float energia;
+    public float miedo;
+
+    //Utilidades
+    public float _hambre;
+    public float _energia;
+    public float _miedo;
+
     float hambreRate = 0.2f;
     float energiaRate = 0.05f;
 
@@ -65,13 +71,22 @@ public class Pato : MonoBehaviour
     private void Start()
     {
         patoNav = GetComponent<NavMeshAgent>();
-
         playerRef = this.gameObject;
+
+        hambre = 60;
+        energia = 100;
+        miedo = 0;
+
+        _hambre = hambre;
+        _energia = energia;
+        _miedo = miedo;
+
         StartCoroutine(FOVRoutine());
     }
     private void Update()
     {
         UpdateVariables();
+        
     }
 
     private void FixedUpdate()
@@ -137,13 +152,14 @@ public class Pato : MonoBehaviour
         }
     }
 
-    public bool ComprobarVision()
+    public ChaseState ComprobarVision()
     {
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
 
         if (rangeChecks.Length > 0)
         {
             Transform target = rangeChecks[0].transform;
+            salTarget= target;  
             Vector3 directionToTarget = (target.position - transform.position).normalized;
 
             // Utilizar el producto punto para verificar el ángulo
@@ -158,32 +174,37 @@ public class Pato : MonoBehaviour
                 if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
                 {
                     puedeVer = true;
+                    return ChaseState.Finished;
 
                 }
                 else
                 {
                     puedeVer = false;
+                    return ChaseState.Failed;
                 }
             }
             else
             {
                 puedeVer = false;
+                return ChaseState.Failed;
             }
         }
         else if (puedeVer)
         {
             puedeVer = false;
+            return ChaseState.Failed;
         }
-        return puedeVer;
+        return ChaseState.Failed; 
     }
 
-    public bool HayNenufares()
+    public ChaseState HayNenufares()
     {
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radioNenufar, targetMaskNenufar);
 
         if (rangeChecks.Length > 0)
         {
             Transform target = rangeChecks[0].transform;
+            nenufarTarget = target;
             Vector3 directionToTarget = (target.position - transform.position).normalized;
 
             // Utilizar el producto punto para verificar el ángulo
@@ -198,61 +219,60 @@ public class Pato : MonoBehaviour
                 if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
                 {
                     puedeVerNenufar = true;
+                    return ChaseState.Finished;
 
                 }
                 else
                 {
                     puedeVerNenufar = false;
+                    return ChaseState.Failed;
                 }
             }
             else
             {
                 puedeVerNenufar = false;
+                return ChaseState.Failed;
             }
         }
         else if (puedeVerNenufar)
         {
             puedeVerNenufar = false;
+            return ChaseState.Failed;
         }
-        return puedeVerNenufar;
+        return ChaseState.Failed;
     }
 
     //Acción ir a nenufares
     public enum ChaseState
     {
         Finished,
+        Enproceso,
         Failed
     }
     public ChaseState IrNenufares()
     {
-        float stopDistance = patoNav.stoppingDistance;
-        patoNav.stoppingDistance = 0;
-        float minDist = patoNav.stoppingDistance;
+        
         if (nenufarTarget != null)
         {
-            float dist = Vector3.Distance(nenufarTarget.position, transform.position); //calcular distancia
 
-            if (dist > minDist) //si no está en el nenufar
+            patoNav.SetDestination(nenufarTarget.position); //se pone como punto de destino la posicion del nenufar
+
+            if (transform.position.x == nenufarTarget.position.x && transform.position.z == nenufarTarget.position.z)
             {
-
-                patoNav.SetDestination(nenufarTarget.position); //se pone como punto de destino la posicion del nenufar
-
+                Debug.Log("pato en nenufar");
+                energia = 100;//vuelve a tener energia
+                patoNav.isStopped= true;   
+                StartCoroutine(EsperarLlegada());
+                return ChaseState.Finished;
             }
+            Debug.Log("en proceso");
+            return ChaseState.Enproceso;
 
-            //esperar a que llegue al nenufar
-            StartCoroutine(EsperarLlegada());
-            //aumentarle la energía una vez llegue al nenufar
-            energia = 100;
-            patoNav.isStopped= true;
-            //esperar a que el pato descanse
-            StartCoroutine(ReaunadarMovimiento()); //corutina para reanudar el movimiento despues de x tiempo
-            patoNav.stoppingDistance = stopDistance;
-            return ChaseState.Finished;// se ha llegado al punto indicado 
 
         }
         else
         {
-            patoNav.stoppingDistance = stopDistance;
+            Debug.Log("nenufar null");
             return ChaseState.Failed; 
         }
     }
@@ -264,64 +284,58 @@ public class Pato : MonoBehaviour
     //Esperar x  tiempo
     public IEnumerator ReaunadarMovimiento()
     {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(5f);
         patoNav.isStopped = false; //reanudamos el movimiento despues de x segundos
     }
 
     public ChaseState HuirNenufares()
     {
-        float stopDistance = patoNav.stoppingDistance;
-        patoNav.stoppingDistance = 0;
-        float minDist = patoNav.stoppingDistance;
+        
         if (nenufarTarget != null)
         {
-            float dist = Vector3.Distance(nenufarTarget.position, transform.position); //calcular distancia
+        
+                patoNav.SetDestination(nenufarTarget.position); //se pone como punto de destino la posicion del nenufar
+                patoNav.speed = patoNav.speed + 2f;
+                energia -= 2;
+                energia = Mathf.Clamp(energia, 0f, 100f);
 
-            if (dist > minDist) //si no está en el nenufar
+            if (transform.position.x == nenufarTarget.position.x && transform.position.z == nenufarTarget.position.z)
             {
-
-                patoNav.speed = patoNav.speed + 1;
-                patoNav.SetDestination(salTarget.position); //se pone como punto de destino la posicion del nenufar
-
-                while (transform.position != salTarget.position)
-                {
-                    energia -= 10;
-                    energia = Mathf.Clamp(energia, 0f, 100f);
-                    if(energia == 0)
-                    {
-                        break;
-                    }
-                }
-
+                Debug.Log("pato en nenufar");
+                miedo = 0;//reducir el miedo
+                patoNav.isStopped = true;//paramos movimiento
+                StartCoroutine(ReaunadarMovimiento());
+                patoNav.speed = patoNav.speed - 2f;
+                return ChaseState.Finished;
             }
-            if (transform.position != salTarget.position)
-            {
-                patoNav.speed--; //no tiene energía para correr
-                //esperar a que llegue al nenufar
-                StartCoroutine(EsperarLlegada());
-            }
-            //aumentarle la energía una vez llegue al nenufar
-            miedo = 0;
-            patoNav.isStopped = true;
-            //esperar a que el pato descanse
-            StartCoroutine(ReaunadarMovimiento()); //corutina para reanudar el movimiento despues de x tiempo
-            patoNav.stoppingDistance = stopDistance;
-            return ChaseState.Finished;// se ha llegado al punto indicado 
+            patoNav.speed = patoNav.speed - 2f;
+            return ChaseState.Enproceso; 
+
+
 
         }
         else
         {
-            patoNav.stoppingDistance = stopDistance;
+            patoNav.stoppingDistance = 0;
+            patoNav.speed--;
             return ChaseState.Failed;
         }
     }
 
     //Acción Comer Salamandra
-    public void ComerSal()
+    public ChaseState ComerSal()
     {
-        
-        GameObject.Destroy(salTarget.GetComponentInParent<GameObject>());//destruimos el gameobject de la salamandra que se ha comido
-        hambre = 0;//ya ha comido
+        if (salTarget != null)
+        {
+            Destroy(salTarget.gameObject);//destruimos el gameobject de la salamandra que se ha comido
+            hambre -= 30;//baja el hambre
+            return ChaseState.Finished;
+        }
+        else
+        {
+            Debug.Log("no hay salamandra");
+            return ChaseState.Failed;
+        }
     }
 
     //Acción Perseguir Salamandra
