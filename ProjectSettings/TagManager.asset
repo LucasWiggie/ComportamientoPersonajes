@@ -10,6 +10,8 @@ TagManager:
   - Cocodrilo
   - Presa
   - Pato
+  - Palo
+  - Huevo
   layers:
   - Default
   - TransparentFX

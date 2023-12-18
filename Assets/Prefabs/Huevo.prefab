@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 4228598821186494499}
   - component: {fileID: -7625833318841799888}
   - component: {fileID: 7968679378519121202}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Huevo
-  m_TagString: Untagged
+  m_TagString: Huevo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 2295779056263190461}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0044196, y: 0.10186, z: -0.00000045467}
-  m_LocalScale: {x: 0.046487585, y: 0.046487585, z: 0.046487585}
+  m_LocalPosition: {x: 0.0039873, y: 0.091896, z: -0.00000041019}
+  m_LocalScale: {x: 0.13976029, y: 0.13976029, z: 0.13976029}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3723172690050801349}
@@ -95,7 +95,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 2.81
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -150,6 +150,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 1db5621cceb1a2e45942a543ec24bafe, type: 3}
       propertyPath: m_Name
       value: Huevo
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1db5621cceb1a2e45942a543ec24bafe, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: 1db5621cceb1a2e45942a543ec24bafe, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
