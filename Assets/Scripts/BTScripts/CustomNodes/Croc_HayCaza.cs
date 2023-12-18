@@ -10,78 +10,33 @@ namespace CustomNodes
     public class Croc_HayCaza : Leaf
     {
         public Abort abort;
-        private GameObject crocParent;
         private Cocodrilo cocodriloScript; // Referencia al script Cocodrilo
 
         public override NodeResult Execute()
         {
-            crocParent = transform.parent.parent.gameObject;
-            cocodriloScript = crocParent.GetComponent<Cocodrilo>();
+            cocodriloScript = GetComponentInParent<Cocodrilo>();
 
             if (cocodriloScript == null)
             {
-                cocodriloScript = crocParent.GetComponent<Cocodrilo>();
-                if (cocodriloScript == null)
-                {
-                    Debug.LogError("crocodile is still null!");
-                    return NodeResult.failure;
-                }
+                Debug.LogError("crocodile is still null!");
+                return NodeResult.failure;
             }
 
-            //Cocodrilo.ChaseState estadoCaza = cocodriloScript.HayCaza();
-            bool estadoCaza = cocodriloScript.HayCaza();
-            Debug.Log("HA PETADO?");
+
+            Cocodrilo.ChaseState estadoCaza = cocodriloScript.HayCaza();
             switch (estadoCaza)
             {
-                case true:
+                case Cocodrilo.ChaseState.Finished:
                     Debug.Log("bien");
                     return NodeResult.success;
-                case false:
+                case Cocodrilo.ChaseState.Failed:
                     Debug.Log("mal");
                     return NodeResult.failure;
                 default:
-                    Debug.Log("maldefault");
+                    Debug.Log("default");
                     return NodeResult.failure;
             }
-            /*if(cocodriloScript.puedeVer == true)
-            {
-                return somePropertyRef.Value == true; // Hay un enemigo con la capa "targetCocodrilo" cerca
-            }
-            else
-            {
-                return somePropertyRef.Value == false;
-            }*/
         }
-
-
-        /*public override void OnAllowInterrupt()
-        {
-            // Do not listen any changes if abort is disabled
-            if (abort != Abort.None)
-            {
-                // This method cache current tree state used later by abort system
-                ObtainTreeSnapshot();
-                // If somePropertyRef is constant, then null exception will be thrown.
-                // Use somePropertyRef.isConstant in case you need constant enabled.
-                // Constant variable is disabled here, so it is safe to do this.
-                somePropertyRef.GetVariable().AddListener(OnVariableChange);
-            }
-        }
-
-        public override void OnDisallowInterrupt()
-        {
-            if (abort != Abort.None)
-            {
-                // Remove listener
-                somePropertyRef.GetVariable().RemoveListener(OnVariableChange);
-            }
-        }
-
-        private void OnVariableChange(bool oldValue, bool newValue)
-        {
-            // Reevaluate Check() and abort tree when needed
-            EvaluateConditionAndTryAbort(abort);
-        }*/
     }
 }
 

@@ -64,7 +64,7 @@ public class GeneracionAleatoria : MonoBehaviour
             instance.transform.position = new Vector3(hit.position.x, -0.35f, hit.position.z);
         }
 
-        /*for (int i = 0; i < nPatos; i++)
+        for (int i = 0; i < nPatos; i++)
         {
             NavMeshHit hit;
             Vector3 randomPoint = GetRandomPointOnNavMeshPato(2.77f);//No bajar de 2.63 que se cuelga
@@ -75,7 +75,7 @@ public class GeneracionAleatoria : MonoBehaviour
 
             GameObject instance = Instantiate(pato, hit.position, new Quaternion(0f, 0f, 0f, 0f));
             instance.transform.position = new Vector3(hit.position.x, 1.48f, hit.position.z);
-        }*/
+        }
 
         for (int i = 0; i < nPalos; i++)
         {

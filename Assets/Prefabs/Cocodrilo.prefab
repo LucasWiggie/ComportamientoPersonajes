@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 2974379919908795566}
   - component: {fileID: 3091200139714302525}
   - component: {fileID: 2373260619739271618}
-  - component: {fileID: 4411069324201064268}
   - component: {fileID: 2885877203600626500}
   - component: {fileID: 6130088508703859964}
+  - component: {fileID: 2501280412931262177}
   m_Layer: 11
   m_Name: BT Hambre
   m_TagString: Untagged
@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 0}
+  selectedEditorNode: {fileID: 2501280412931262177}
   repeatOnFinish: 0
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
@@ -72,7 +72,7 @@ MonoBehaviour:
     x: 260
     y: 60
     width: 160
-    height: 44
+    height: 45
   parent: {fileID: 0}
   children:
   - {fileID: 3091200139714302525}
@@ -97,12 +97,11 @@ MonoBehaviour:
     x: 260
     y: 160
     width: 160
-    height: 44
+    height: 45
   parent: {fileID: 2974379919908795566}
   children:
   - {fileID: 2373260619739271618}
-  - {fileID: 6130088508703859964}
-  - {fileID: 4411069324201064268}
+  - {fileID: 2501280412931262177}
   - {fileID: 2885877203600626500}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -123,35 +122,10 @@ MonoBehaviour:
   title: Croc_HayCaza
   rect:
     serializedVersion: 2
-    x: -40
+    x: 40
     y: 320
     width: 160
-    height: 44
-  parent: {fileID: 3091200139714302525}
-  children: []
-  behaviourTree: {fileID: 0}
-  runtimePriority: 0
-  breakpoint: 0
-  abort: 0
---- !u!114 &4411069324201064268
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1356444491322341819}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 568bfee1c090a494e89cabb7e26ebcde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: Croc_HayCaza
-  rect:
-    serializedVersion: 2
-    x: 360
-    y: 320
-    width: 160
-    height: 44
+    height: 45
   parent: {fileID: 3091200139714302525}
   children: []
   behaviourTree: {fileID: 0}
@@ -173,10 +147,10 @@ MonoBehaviour:
   title: Croc_Comer
   rect:
     serializedVersion: 2
-    x: 560
+    x: 500
     y: 320
     width: 160
-    height: 44
+    height: 45
   parent: {fileID: 3091200139714302525}
   children: []
   behaviourTree: {fileID: 0}
@@ -197,15 +171,55 @@ MonoBehaviour:
   title: Croc_PerseguirCaza
   rect:
     serializedVersion: 2
-    x: 160
+    x: 260
     y: 320
     width: 160
-    height: 44
-  parent: {fileID: 3091200139714302525}
+    height: 45
+  parent: {fileID: 2501280412931262177}
   children: []
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
+--- !u!114 &2501280412931262177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356444491322341819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8595d37ac5b0f340b7f64ca227f8860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Loop
+  rect:
+    serializedVersion: 2
+    x: 264
+    y: 260
+    width: 160
+    height: 45
+  parent: {fileID: 3091200139714302525}
+  children:
+  - {fileID: 6130088508703859964}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  loops:
+    useConstant: 1
+    mode: 0
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 3
+  infinite:
+    useConstant: 1
+    mode: 0
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0
+  breakOnStatus: 2
+  resultOnFinish: 0
+  resultOnBreak: 1
 --- !u!1 &2010351796279996322
 GameObject:
   m_ObjectHideFlags: 0
@@ -468,7 +482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5885c41659d5d48429f799eee670450c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radio: 5
+  radio: 300
   radioHuevos: 300
   angulo: 360
   playerRef: {fileID: 0}

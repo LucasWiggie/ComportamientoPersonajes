@@ -26,6 +26,11 @@ public class Cocodrilo : MonoBehaviour
     public GameObject BT_Energia;
     public GameObject BT_Miedo;
 
+    //Bool bts
+    private bool Bool_Hambre = false;
+    private bool Bool_Energia = false;
+    private bool Bool_Miedo = false;
+
     //Rango 0-100 las 3 
     public float hambre;
     public float energia;
@@ -108,8 +113,8 @@ public class Cocodrilo : MonoBehaviour
         _uEnergia = energia;
         _uMiedo = miedo;
 
-        InvokeRepeating("NuevoDestinoAleatorio", 0f, movementInterval);
-        InvokeRepeating("UtilitySystem", 0f, 2.0f);
+        //InvokeRepeating("NuevoDestinoAleatorio", 0f, movementInterval);
+        //InvokeRepeating("UtilitySystem", 0f, 2.0f);
         //StartCoroutine(FOVRoutine());
     }
     private void Update()
@@ -119,16 +124,29 @@ public class Cocodrilo : MonoBehaviour
 
     private void FixedUpdate()
     {
-        /*if (!BT_Hambre.active && !BT_Energia.active && !BT_Miedo.active)
+        UtilitySystem();
+        if (!Bool_Hambre && !Bool_Energia && !Bool_Miedo)
         {
             isDefaultMov = true;
         }
-        else isDefaultMov = false;*/
-        BT_Miedo.SetActive(true);
-        BT_Miedo.GetComponent<MonoBehaviourTree>().Tick();
+        else if (Bool_Hambre) {
+            isDefaultMov = false;
+            BT_Hambre.GetComponent<MonoBehaviourTree>().Tick();
 
+        }
+        else if (Bool_Energia)
+        {
+            isDefaultMov = false;
+            BT_Energia.GetComponent<MonoBehaviourTree>().Tick();
+        }
+        else if (Bool_Miedo)
+        {
+            isDefaultMov = false;
+            BT_Miedo.GetComponent<MonoBehaviourTree>().Tick();
+        }
     }
 
+    # region "Movimiento"
     private void NuevoDestinoAleatorio()
     {
         if (isDefaultMov)
@@ -155,128 +173,164 @@ public class Cocodrilo : MonoBehaviour
 
         return finalPosition;
     }
-
-    private void UpdateVariables()
+    #endregion 
+    
+    #region "Utility system"
+    public void UtilitySystem()
     {
-        hambre += hambreRate * Time.deltaTime;
-        energia -= energiaRate * Time.deltaTime;
+        _uHambre = this.getHambre();
+        _uEnergia = this.getEnergia();
+        _uMiedo = this.getMiedo();
 
-        hambre = Mathf.Clamp(hambre, 0f, 100f);
-        energia = Mathf.Clamp(energia, 0f, 100f);
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        collidedObject = collision.gameObject.GetComponent<Collider>();
-    }
-
-    private IEnumerator FOVRoutine()
-    {
-        float delay = 0.2f;
-        WaitForSeconds wait = new WaitForSeconds(delay);
-        while (true)
+        if (_uEnergia < 50)
         {
-            yield return wait;
-            HayCaza();
+            Bool_Energia = true;
+            Bool_Hambre = false;
+            Bool_Miedo = false;
+            BT_Energia.SetActive(true);
+            BT_Hambre.SetActive(false);
+            BT_Miedo.SetActive(false);
+        }
+        else if (_uHambre > 70 && _uHambre > _uMiedo && _uEnergia > 50)
+        {
+            Bool_Energia = false;
+            Bool_Hambre = true;
+            Bool_Miedo = false;
+            BT_Hambre.SetActive(true);
+            //BT_Energia.SetActive(false);
+            //BT_Miedo.SetActive(false);
+        }
+        else if (_uMiedo > 70 && _uMiedo > _uHambre && _uEnergia > 50)
+        {
+            Bool_Energia = false;
+            Bool_Hambre = false;
+            Bool_Miedo = true;
+            BT_Miedo.SetActive(true);
+            BT_Hambre.SetActive(false);
+            BT_Energia.SetActive(false);
         }
     }
 
-    public bool HayCaza()
+    public void HambreAction()
     {
-        Debug.Log("ENTRA EN COMPROBAR VISION");
-        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
-        bool estaASalvo;
-        puedeVer = false;
+        // BT de cuando el Cocodrilo tiene hambre
+        Debug.Log("Activo BT Hambre");
+        
+    }
 
+    public void EnergiaAction()
+    {
+        
+    }
+    
+    public void MiedoAction()
+    {
+        
+    }
+    #endregion
+
+    #region "Acciones"
+    public ChaseState HayCaza()
+    {
+        Debug.Log("ENTRO EN HAY CAZA");
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
+        Debug.Log(rangeChecks.Length);
         if (rangeChecks.Length > 0)
         {
             Transform target = rangeChecks[0].transform;
-            if (target.CompareTag("Pato"))
+            animalTarget = target;
+
+            Vector3 directionToTarget = (target.position - transform.position).normalized;
+
+            // Utilizar el producto punto para verificar el ángulo
+            float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
+
+            // Establecer un umbral para el ángulo (ajustar según sea necesario)
+            float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
+            if (dotProduct > angleThreshold)
             {
-                animalTarget = target; // ponemos el pato como objetivo
-                // Acceder a la variable aSalvo de Pato
-                estaASalvo = animalTarget.GetComponentInParent<Pato>().aSalvo;
-                Debug.Log("estaASalvo: " + estaASalvo);
+                float distanciaToTarget = Vector3.Distance(transform.position, target.position);
 
-                Vector3 directionToTarget = (target.position - transform.position).normalized;
-                float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
-                float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
-
-                if (dotProduct > angleThreshold)
+                if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
                 {
-                    float distanciaToTarget = Vector3.Distance(transform.position, target.position);
+                    puedeVer = true;
 
-                    if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
-                    {
+                    return ChaseState.Finished;
 
-                        // Verificar si el tag es "Castor" o "Pato"
-                        if (estaASalvo == false)
-                        {
-                            puedeVer = true;
-                            //return ChaseState.Finished;
-                        }
-                        else
-                        {
-                            puedeVer = false;
-                            //return ChaseState.Failed;
-                        }
-                    }
-                    else
-                    {
-                        puedeVer = false;
-                        //return ChaseState.Failed;
-                    }
                 }
                 else
                 {
                     puedeVer = false;
-                    //return ChaseState.Failed;
+                    return ChaseState.Failed;
                 }
             }
-            //if (target.CompareTag("Castor"))
-            //{
-            //    animalTarget = target;// ponemos el castor como objetivo
-            //    // Acceder a la variable aSalvo de Castor
-            //    estaASalvo = animalTarget.GetComponentInParent<Castor>().aSalvo;
-            //    Vector3 directionToTarget = (target.position - transform.position).normalized;
-            //    float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
-            //    float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
+            else
+            {
+                puedeVer = false;
+                return ChaseState.Failed;
+            }
 
-            //    if (dotProduct > angleThreshold)
-            //    {
-            //        float distanciaToTarget = Vector3.Distance(transform.position, target.position);
-
-            //        if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
-            //        {
-            //            if (estaASalvo == false)
-            //            {
-
-            //                puedeVer = true;
-            //                return ChaseState.Finished;
-            //            }
-            //            else
-            //            {
-            //                puedeVer = false;
-            //                return ChaseState.Failed;
-            //            }
-            //        }
-            //        else
-            //        {
-            //            Debug.Log("mal1");
-            //            puedeVer = false;
-            //            return ChaseState.Failed;
-            //        }
-            //    }
-            //    else
-            //    {
-            //        puedeVer = false;
-            //        return ChaseState.Failed;
-            //    }
-            //}
         }
+        else if (puedeVer)
+        {
+            puedeVer = false;
+            return ChaseState.Failed;
+        }
+        return ChaseState.Failed;
+        /*
+        //Debug.Log("ENTRA EN COMPROBAR VISION");
+        //Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
+        //bool estaASalvo;
+        //puedeVer = false;
+        //Debug.Log(rangeChecks.Length);
+        //if (rangeChecks.Length > 0)
+        //{
+        //    Transform target = rangeChecks[0].transform;
+        //    Debug.Log(target.name);
+        //    if (target.CompareTag("Pato"))
+        //    {
+        //        animalTarget = target; // ponemos el pato como objetivo
+        //        // Acceder a la variable aSalvo de Pato
+        //        estaASalvo = animalTarget.GetComponentInParent<Pato>().aSalvo;
+        //        Debug.Log("estaASalvo: " + estaASalvo);
 
+        //        Vector3 directionToTarget = (target.position - transform.position).normalized;
+        //        float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
+        //        float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
+
+        //        if (dotProduct > angleThreshold)
+        //        {
+        //            float distanciaToTarget = Vector3.Distance(transform.position, target.position);
+
+        //            if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
+        //            {
+        //                // Verificar si el tag es "Castor" o "Pato"
+        //                if (estaASalvo == false)
+        //                {
+        //                    puedeVer = true;
+        //                    return ChaseState.Finished;
+        //                }
+        //                else
+        //                {
+        //                    puedeVer = false;
+        //                    return ChaseState.Failed;
+        //                }
+        //            }
+        //            else
+        //            {
+        //                puedeVer = false;
+        //                return ChaseState.Failed;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            puedeVer = false;
+        //            return ChaseState.Failed;
+        //        }
+        //    }           
+        //}
         //return ChaseState.Failed;
-        return puedeVer;
+        */
     }
 
     public ChaseState HayHuevos()
@@ -365,52 +419,7 @@ public class Cocodrilo : MonoBehaviour
         return ChaseState.Failed;
     }
 
-
-    public void UtilitySystem()
-    {
-        _uHambre = this.getHambre();
-        _uEnergia = this.getEnergia();
-        _uMiedo = this.getMiedo();
-
-        if (_uEnergia < 50)
-        {
-            Debug.Log("Entro en bt energia");
-            EnergiaAction();
-        }
-        else if (_uHambre > 70 && _uHambre > _uMiedo && _uEnergia > 50)
-        {
-            Debug.Log("Entro en bt hambre");
-            HambreAction();
-        }
-        else if (_uMiedo > 80 && _uMiedo > _uHambre && _uEnergia > 50)
-        {
-            Debug.Log("Entro en bt miedo");
-            MiedoAction();
-        }
-    }
-
-    public void HambreAction()
-    {
-        // BT de cuando el Cocodrilo tiene hambre
-        Debug.Log("Activo BT Hambre");
-        BT_Hambre.SetActive(true);
-    }
-
-    public void EnergiaAction()
-    {
-        BT_Energia.SetActive(true);
-        // BT de cuando el Cocodrilo tiene poca energía
-    }
-
-    public void MiedoAction()
-    {
-        BT_Miedo.SetActive(true);
-        // BT de cuando el Cocodrilo tiene miedo
-    }
-
     //Acción perseguir animales
-
-
     public ChaseState Chase()
     {
 
@@ -531,4 +540,32 @@ public class Cocodrilo : MonoBehaviour
             return ChaseState.Failed; //no haya animal al que perseguir
         }
     }
+    #endregion
+
+    #region "Otros"
+    private void UpdateVariables()
+    {
+        hambre += hambreRate * Time.deltaTime;
+        energia -= energiaRate * Time.deltaTime;
+
+        hambre = Mathf.Clamp(hambre, 0f, 100f);
+        energia = Mathf.Clamp(energia, 0f, 100f);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        collidedObject = collision.gameObject.GetComponent<Collider>();
+    }
+
+    private IEnumerator FOVRoutine()
+    {
+        float delay = 0.2f;
+        WaitForSeconds wait = new WaitForSeconds(delay);
+        while (true)
+        {
+            yield return wait;
+            HayCaza();
+        }
+    }
+    #endregion
 }
