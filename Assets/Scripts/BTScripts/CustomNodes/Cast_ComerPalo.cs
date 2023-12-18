@@ -1,3 +1,4 @@
+using BehaviourAPI.UtilitySystems;
 using MBT;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,12 +12,43 @@ namespace CustomNodes
 
     public class Cast_ComerPalo : Leaf
     {
-
+        private Castor castor;
         // This is called every tick as long as node is executed
         public override NodeResult Execute()
         {
-            // AQUI LA EJECUCIÓN DE QUE EL COCODRILO SE MUEVA A LA ARENA
-            return NodeResult.success;
+
+            if (castor == null)
+            {
+                castor = GetComponentInParent<Castor>();
+                if (castor == null)
+                {
+                    Debug.LogError("castorScript is still null!");
+                    return NodeResult.failure;
+                }
+            }
+
+            if (castor == null)
+            {
+                castor = GetComponentInParent<Castor>();
+                if (castor == null)
+                {
+                    Debug.LogError("castorScript is still null!");
+                    return NodeResult.failure;
+                }
+            }
+
+            Castor.ChaseState estadoHuida = castor.comerPalo();
+            switch (estadoHuida)
+            {
+                case Castor.ChaseState.Enproceso:
+                    return NodeResult.running;
+                case Castor.ChaseState.Finished:
+                    return NodeResult.success;
+                case Castor.ChaseState.Failed:
+                    return NodeResult.failure;
+                default:
+                    return NodeResult.failure;
+            }
         }
     }
 }

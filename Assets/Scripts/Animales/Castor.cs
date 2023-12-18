@@ -2,6 +2,7 @@ using MBT;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -123,6 +124,12 @@ public class Castor : MonoBehaviour
         {
             BT_PalosPresa.SetActive(true);
             BT_PalosPresa.GetComponent<MonoBehaviourTree>().Tick();
+
+            //BT_Hambre.SetActive(true);
+            //BT_Hambre.GetComponent<MonoBehaviourTree>().Tick();
+
+            //BT_EnergiaMiedo.SetActive(true);
+            //BT_EnergiaMiedo.GetComponent<MonoBehaviourTree>().Tick();
         }
 
         if (dirtyUS)
@@ -138,6 +145,8 @@ public class Castor : MonoBehaviour
 
         hambre = Mathf.Clamp(hambre, 0f, 100f);
         energia = Mathf.Clamp(energia, 0f, 100f);
+
+        if(hambre<= 20) { }
     }
 
     private IEnumerator FOVRoutine()
@@ -205,7 +214,7 @@ public class Castor : MonoBehaviour
         return ChaseState.Failed;
     }
 
-    public bool HayPresa()
+    public ChaseState HayPresa()
     {
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radioPresa, targetMaskPresa);
 
@@ -227,23 +236,26 @@ public class Castor : MonoBehaviour
                 if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
                 {
                     puedeVerPresa = true;
-
+                    return ChaseState.Finished;
                 }
                 else
                 {
                     puedeVerPresa = false;
+                    return ChaseState.Failed;
                 }
             }
             else
             {
                 puedeVerPresa = false;
+                return ChaseState.Failed;
             }
         }
         else if (puedeVerPresa)
         {
             puedeVerPresa = false;
+            return ChaseState.Failed;
         }
-        return puedeVerPresa;
+        return ChaseState.Failed;
     }
 
 
@@ -270,7 +282,22 @@ public class Castor : MonoBehaviour
         }
     }
 
+    public ChaseState irPresa()
+    {
+        if (presaTarget != null)
+        {
+            castNav.SetDestination(presaTarget.position);
+            if (transform.position.x == presaTarget.position.x && transform.position.z == presaTarget.position.z)
+            {
+                Debug.Log("en presa");
+                return ChaseState.Finished;
+            }
+            Debug.Log("en proceso");
+            return ChaseState.Enproceso;
 
+        }
+        else { Debug.Log("presa null"); return ChaseState.Failed; }
+    }
     public ChaseState llevarAPresa()
     {
 
@@ -295,6 +322,22 @@ public class Castor : MonoBehaviour
         
     }
 
+    public ChaseState comerPalo()
+    {
+
+        if (cogePalo)
+        {
+            SoltarPalo();
+            Destroy(paloTarget.gameObject);
+            hambre -= 20;
+            return ChaseState.Finished;
+
+        }
+        else { Debug.Log("no hay palo cogio"); return ChaseState.Failed; }
+
+
+    }
+
     public IEnumerator EsperarLlegada() 
     { 
         yield return new WaitUntil(()=> castNav.remainingDistance <= castNav.stoppingDistance);
@@ -307,7 +350,6 @@ public class Castor : MonoBehaviour
             Debug.Log("suelta palo");
             paloTarget.parent = null;
             dejaPalo = true;
-            paloTarget = null;
         }
     }
 
