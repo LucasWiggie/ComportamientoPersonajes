@@ -22,7 +22,7 @@ namespace CustomNodes
         public override bool Check()
         {
             // AQUÍ LA COMPROBACIÓN DE SI HAY NENÚFARES
-            return patoScript.HayNenufares();
+            return true;//patoScript.HayNenufares();
         }
 
         public override void OnAllowInterrupt()

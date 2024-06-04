@@ -111,9 +111,9 @@ public class Castor : MonoBehaviour
 
         if (presaTarget != null)
         {
-            if (transform.position.x == presaTarget.position.x && transform.position.z == presaTarget.position.z && !dejaPalo)
+            if ((transform.position.x - presaTarget.position.x) < 0.5 && (transform.position.z - presaTarget.position.z)<0.5 && !dejaPalo)
             {
-                Debug.Log("update dejapalo");
+                Debug.Log("!!!!!!!!!!!!update dejapalo");
                 SoltarPalo();
             }
         }
@@ -124,6 +124,7 @@ public class Castor : MonoBehaviour
         {
             BT_PalosPresa.SetActive(true);
             BT_PalosPresa.GetComponent<MonoBehaviourTree>().Tick();
+            Debug.Log("isdefaultmov:"+ isDefaultMov);
 
             //BT_Hambre.SetActive(true);
             //BT_Hambre.GetComponent<MonoBehaviourTree>().Tick();
@@ -345,20 +346,23 @@ public class Castor : MonoBehaviour
 
     void SoltarPalo()
     {
-        if (paloTarget != null && paloTarget.parent == transform)
-        {
             Debug.Log("suelta palo");
             paloTarget.parent = null;
+            Debug.Log("palo1:" + paloTarget);
             dejaPalo = true;
-        }
+            cogePalo = false;
+            //Destroy(paloTarget.gameObject);
+            //paloTarget = null;
+            Debug.Log("palo2:" + paloTarget);
+            
     }
 
     void CogerPalo()
     {        
         paloTarget.parent = transform;
+        dejaPalo = false;
         cogePalo = true;
         Debug.Log("coge palo");
-        //paloTarget = null;
     }
 
     public void UtilitySystem()
@@ -380,6 +384,8 @@ public class Castor : MonoBehaviour
     public void HambreAction()
     {
         // BT de cuando el Cocodrilo tiene hambre
+        //moverse a palo
+        //_hambre = 0;
     }
 
     public void EnergiaMiedoAction()

@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 2687580973120299419}
   - component: {fileID: 1349989962333975639}
   - component: {fileID: 55358805430423195}
+  - component: {fileID: 3342241229029080187}
   m_Layer: 6
   m_Name: BT Palos Presa
   m_TagString: Untagged
@@ -51,7 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 55358805430423195}
+  selectedEditorNode: {fileID: 3342241229029080187}
   repeatOnFinish: 0
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
@@ -71,12 +72,12 @@ MonoBehaviour:
   rect:
     serializedVersion: 2
     x: 240
-    y: 120
+    y: 100
     width: 160
     height: 44
   parent: {fileID: 0}
   children:
-  - {fileID: 4135439964892121966}
+  - {fileID: 3342241229029080187}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
@@ -95,11 +96,11 @@ MonoBehaviour:
   title: Sequence
   rect:
     serializedVersion: 2
-    x: 251
-    y: 218
+    x: 234
+    y: 232
     width: 160
     height: 44
-  parent: {fileID: 5491301373270869018}
+  parent: {fileID: 3342241229029080187}
   children:
   - {fileID: 3865291111655414643}
   - {fileID: 1349989962333975639}
@@ -123,8 +124,8 @@ MonoBehaviour:
   title: Cast_HayPalo
   rect:
     serializedVersion: 2
-    x: -100
-    y: 380
+    x: -40
+    y: 300
     width: 160
     height: 44
   parent: {fileID: 4135439964892121966}
@@ -148,8 +149,8 @@ MonoBehaviour:
   title: Cast_IrPalo
   rect:
     serializedVersion: 2
-    x: 252
-    y: 406
+    x: 200
+    y: 400
     width: 160
     height: 44
   parent: {fileID: 1349989962333975639}
@@ -172,8 +173,8 @@ MonoBehaviour:
   title: Cast_LlevarPaloPresa
   rect:
     serializedVersion: 2
-    x: 474
-    y: 404
+    x: 440
+    y: 400
     width: 160
     height: 44
   parent: {fileID: 55358805430423195}
@@ -196,8 +197,8 @@ MonoBehaviour:
   title: Loop
   rect:
     serializedVersion: 2
-    x: 252
-    y: 326.3
+    x: 220
+    y: 320
     width: 160
     height: 44
   parent: {fileID: 4135439964892121966}
@@ -236,13 +237,53 @@ MonoBehaviour:
   title: Loop
   rect:
     serializedVersion: 2
-    x: 474
-    y: 328.3
+    x: 440
+    y: 300
     width: 160
     height: 44
   parent: {fileID: 4135439964892121966}
   children:
   - {fileID: 2687580973120299419}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  loops:
+    useConstant: 1
+    mode: 0
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 3
+  infinite:
+    useConstant: 1
+    mode: 0
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0
+  breakOnStatus: 1
+  resultOnFinish: 0
+  resultOnBreak: 1
+--- !u!114 &3342241229029080187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375552894631194235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8595d37ac5b0f340b7f64ca227f8860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Loop
+  rect:
+    serializedVersion: 2
+    x: 240
+    y: 160
+    width: 160
+    height: 44
+  parent: {fileID: 5491301373270869018}
+  children:
+  - {fileID: 4135439964892121966}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0

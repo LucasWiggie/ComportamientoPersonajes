@@ -22,7 +22,7 @@ namespace CustomNodes
         public override bool Check()
         {
             // AQUÍ LA COMPROBACIÓN DE SI HAY SALAMANDRA
-            return patoScript.ComprobarVision();
+            return true;//patoScript.ComprobarVision();
         }
 
         public override void OnAllowInterrupt()
