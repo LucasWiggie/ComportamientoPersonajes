@@ -35,15 +35,6 @@ namespace CustomNodes
                 }
             }
 
-            if (castor == null)
-            {
-                castor = GetComponentInParent<Castor>();
-                if (castor == null)
-                {
-                    Debug.LogError("castorScript is still null!");
-                    return NodeResult.failure;
-                }
-            }
 
             Castor.ChaseState estadoHuida = castor.irPresa();
             switch (estadoHuida)

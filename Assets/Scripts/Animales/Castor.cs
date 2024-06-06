@@ -2,6 +2,7 @@ using MBT;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -104,16 +105,15 @@ public class Castor : MonoBehaviour
 
         if (paloTarget != null) { 
             if (transform.position.x == paloTarget.position.x && transform.position.z == paloTarget.position.z && !cogePalo)
-            {              
-                CogerPalo(); 
+            {
+                CogerPalo();
             }
         }
 
         if (presaTarget != null)
         {
-            if ((transform.position.x - presaTarget.position.x) < 0.5 && (transform.position.z - presaTarget.position.z)<0.5 && !dejaPalo)
+            if (transform.position.x == presaTarget.position.x && transform.position.z == presaTarget.position.z && !dejaPalo)
             {
-                Debug.Log("!!!!!!!!!!!!update dejapalo");
                 SoltarPalo();
             }
         }
@@ -122,15 +122,14 @@ public class Castor : MonoBehaviour
     {
         if (isDefaultMov)
         {
-            BT_PalosPresa.SetActive(true);
-            BT_PalosPresa.GetComponent<MonoBehaviourTree>().Tick();
-            Debug.Log("isdefaultmov:"+ isDefaultMov);
+            //BT_PalosPresa.SetActive(true);
+            //BT_PalosPresa.GetComponent<MonoBehaviourTree>().Tick();
 
             //BT_Hambre.SetActive(true);
             //BT_Hambre.GetComponent<MonoBehaviourTree>().Tick();
 
-            //BT_EnergiaMiedo.SetActive(true);
-            //BT_EnergiaMiedo.GetComponent<MonoBehaviourTree>().Tick();
+            BT_EnergiaMiedo.SetActive(true);
+            BT_EnergiaMiedo.GetComponent<MonoBehaviourTree>().Tick();
         }
 
         if (dirtyUS)
@@ -170,7 +169,7 @@ public class Castor : MonoBehaviour
     public ChaseState ComprobarVision()
     {
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
-
+        Debug.Log("cuenta " + rangeChecks.Count());
         if (rangeChecks.Length > 0)
         {
             Transform target = rangeChecks[0].transform;
@@ -262,7 +261,7 @@ public class Castor : MonoBehaviour
 
     public ChaseState irPalo()
     {
-
+        Debug.Log("irpalo");
         castNav.stoppingDistance = 0;
 
         if (paloTarget != null)
@@ -271,13 +270,13 @@ public class Castor : MonoBehaviour
             //StartCoroutine(EsperarLlegada());
             if (cogePalo)
             {
-                Debug.Log("cogepalo");
                 return ChaseState.Finished;
             }
             return ChaseState.Enproceso;
         }
         else
         {
+            Debug.Log("fallo");
             ComprobarVision();
             return ChaseState.Failed;
         }
@@ -293,7 +292,6 @@ public class Castor : MonoBehaviour
                 Debug.Log("en presa");
                 return ChaseState.Finished;
             }
-            Debug.Log("en proceso");
             return ChaseState.Enproceso;
 
         }
@@ -301,7 +299,7 @@ public class Castor : MonoBehaviour
     }
     public ChaseState llevarAPresa()
     {
-
+        Debug.Log("lleva palo a presa");
         HayPresa();
         
         castNav.stoppingDistance = 0;
@@ -311,10 +309,9 @@ public class Castor : MonoBehaviour
             castNav.SetDestination(presaTarget.position);
             if (dejaPalo)
             {
-                Debug.Log("finished");
+                Debug.Log("finished llevarapresa");
                 return ChaseState.Finished;
             }
-            Debug.Log("en proceso");
             return ChaseState.Enproceso;
 
         }
@@ -325,11 +322,9 @@ public class Castor : MonoBehaviour
 
     public ChaseState comerPalo()
     {
-
         if (cogePalo)
         {
             SoltarPalo();
-            Destroy(paloTarget.gameObject);
             hambre -= 20;
             return ChaseState.Finished;
 
@@ -346,23 +341,20 @@ public class Castor : MonoBehaviour
 
     void SoltarPalo()
     {
-            Debug.Log("suelta palo");
             paloTarget.parent = null;
-            Debug.Log("palo1:" + paloTarget);
             dejaPalo = true;
             cogePalo = false;
-            //Destroy(paloTarget.gameObject);
-            //paloTarget = null;
-            Debug.Log("palo2:" + paloTarget);
+            Destroy(paloTarget.gameObject);
+            paloTarget = null;
             
     }
 
     void CogerPalo()
-    {        
+    {
+        Debug.Log("cogio");
         paloTarget.parent = transform;
         dejaPalo = false;
         cogePalo = true;
-        Debug.Log("coge palo");
     }
 
     public void UtilitySystem()
@@ -371,14 +363,14 @@ public class Castor : MonoBehaviour
         _energia = this.getEnergia();
         _miedo = this.getMiedo();
 
-        if (_energia < 50 || _miedo > 80)
+        /*if (_energia < 50 || _miedo > 80)
         {
             EnergiaMiedoAction();
         }
         else if (_hambre > 70 && _hambre > _miedo && _energia > 50)
         {
             HambreAction();
-        }
+        }*/
     }
 
     public void HambreAction()
