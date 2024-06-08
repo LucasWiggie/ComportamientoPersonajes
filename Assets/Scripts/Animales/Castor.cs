@@ -27,6 +27,12 @@ public class Castor : MonoBehaviour
     public GameObject BT_EnergiaMiedo;
     public GameObject BT_PalosPresa; // *Acción por defecto
 
+    //Bool bts
+    private bool bool_Hambre = false;
+    private bool bool_Energia = false;
+    private bool bool_Miedo = false;
+
+
     public float hambre; //Rango 0-100 las 3
     public float energia;
     public float miedo;
@@ -87,7 +93,7 @@ public class Castor : MonoBehaviour
         playerRef = this.gameObject;
         castNav = GetComponent<NavMeshAgent>();
 
-        hambre = 50;
+        hambre = 30;
         energia = 100;
         miedo = 0;
 
@@ -101,7 +107,7 @@ public class Castor : MonoBehaviour
     private void Update()
     {
         UpdateVariables();
-        aSalvo = false;
+        //aSalvo = false;
 
         if (paloTarget != null) { 
             if (transform.position.x == paloTarget.position.x && transform.position.z == paloTarget.position.z && !cogePalo)
@@ -120,15 +126,25 @@ public class Castor : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        UtilitySystem();
         if (isDefaultMov)
         {
             //BT_PalosPresa.SetActive(true);
-            //BT_PalosPresa.GetComponent<MonoBehaviourTree>().Tick();
+            BT_PalosPresa.GetComponent<MonoBehaviourTree>().Tick();
 
             //BT_Hambre.SetActive(true);
             //BT_Hambre.GetComponent<MonoBehaviourTree>().Tick();
 
-            BT_EnergiaMiedo.SetActive(true);
+            //BT_EnergiaMiedo.SetActive(true);
+            //BT_EnergiaMiedo.GetComponent<MonoBehaviourTree>().Tick();
+        }
+        else if (bool_Hambre)
+        {
+            Debug.Log("Tengo Hambre");
+            BT_Hambre.GetComponent<MonoBehaviourTree>().Tick();
+        }
+        else if (bool_Miedo || bool_Energia)
+        {
             BT_EnergiaMiedo.GetComponent<MonoBehaviourTree>().Tick();
         }
 
@@ -146,7 +162,7 @@ public class Castor : MonoBehaviour
         hambre = Mathf.Clamp(hambre, 0f, 100f);
         energia = Mathf.Clamp(energia, 0f, 100f);
 
-        if(hambre<= 20) { }
+       // if(hambre<= 20) { }
     }
 
     private IEnumerator FOVRoutine()
@@ -363,14 +379,47 @@ public class Castor : MonoBehaviour
         _energia = this.getEnergia();
         _miedo = this.getMiedo();
 
-        /*if (_energia < 50 || _miedo > 80)
+        if (_energia < 60)
         {
-            EnergiaMiedoAction();
+            bool_Hambre = false;
+            bool_Miedo = false;
+            isDefaultMov = false;
+            bool_Energia = true;
+            BT_Hambre.SetActive(false);
+            BT_PalosPresa.SetActive(false);
+            BT_EnergiaMiedo.SetActive(true);
+
         }
-        else if (_hambre > 70 && _hambre > _miedo && _energia > 50)
+        else if (_miedo > 70)
         {
-            HambreAction();
-        }*/
+            bool_Energia = false;
+            bool_Hambre = false;
+            isDefaultMov = false;
+            bool_Miedo = true;
+            BT_Hambre.SetActive(false);
+            BT_PalosPresa.SetActive(false);
+            BT_EnergiaMiedo.SetActive(true); //mirar esto, creo que si huye a presa se cansa, pero si va por cansancio no
+        }
+        else if (_hambre > 50)
+        {
+            bool_Energia = false;
+            bool_Miedo = false;
+            isDefaultMov = false;
+            bool_Hambre = true;
+            BT_PalosPresa.SetActive(false);
+            BT_EnergiaMiedo.SetActive(false);
+            BT_Hambre.SetActive(true);
+        }
+        else
+        {
+            bool_Energia = false;
+            bool_Hambre = false;
+            bool_Miedo = false;
+            isDefaultMov = true;
+            BT_EnergiaMiedo.SetActive(false);
+            BT_Hambre.SetActive(false);
+            BT_PalosPresa.SetActive(true);
+        }
     }
 
     public void HambreAction()

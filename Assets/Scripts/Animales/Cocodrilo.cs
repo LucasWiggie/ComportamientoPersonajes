@@ -125,35 +125,36 @@ public class Cocodrilo : MonoBehaviour
     private void FixedUpdate()
     {
         UtilitySystem();
-        if (!Bool_Hambre && !Bool_Energia && !Bool_Miedo)
+        if (isDefaultMov)
         {
-            isDefaultMov = true;
+            NuevoDestinoAleatorio();
         }
         else if (Bool_Hambre) {
-            isDefaultMov = false;
-            BT_Hambre.GetComponent<MonoBehaviourTree>().Tick();
+            
+            //BT_Hambre.GetComponent<MonoBehaviourTree>().Tick();
 
         }
         else if (Bool_Energia)
         {
-            isDefaultMov = false;
+            
             BT_Energia.GetComponent<MonoBehaviourTree>().Tick();
         }
         else if (Bool_Miedo)
         {
-            isDefaultMov = false;
-            BT_Miedo.GetComponent<MonoBehaviourTree>().Tick();
+            
+           BT_Miedo.GetComponent<MonoBehaviourTree>().Tick();
         }
     }
 
     # region "Movimiento"
     private void NuevoDestinoAleatorio()
     {
-        if (isDefaultMov)
+        if (Time.time >= nextRandomMovementTime)
         {
             Vector3 randomPoint = RandomNavmeshLocation(60f); // Obtener un punto aleatorio en el NavMesh
             crocNav.SetDestination(randomPoint); // Establecer el punto como destino
-            //Debug.Log("Nuevo destino");
+            //Debug.Log("croc se mueve");
+            nextRandomMovementTime = Time.time + movementInterval; // Actualizar el tiempo para el próximo movimiento
         }
     }
 
@@ -184,30 +185,43 @@ public class Cocodrilo : MonoBehaviour
 
         if (_uEnergia < 50)
         {
-            Bool_Energia = true;
             Bool_Hambre = false;
             Bool_Miedo = false;
-            BT_Energia.SetActive(true);
+            isDefaultMov= false;
+            Bool_Energia = true;
             BT_Hambre.SetActive(false);
             BT_Miedo.SetActive(false);
+            BT_Energia.SetActive(true);
         }
         else if (_uHambre > 70 && _uHambre > _uMiedo && _uEnergia > 50)
         {
             Bool_Energia = false;
-            Bool_Hambre = true;
             Bool_Miedo = false;
+            isDefaultMov = false;
+            Bool_Hambre = true;
+            BT_Energia.SetActive(false);
+            BT_Miedo.SetActive(false);
             BT_Hambre.SetActive(true);
-            //BT_Energia.SetActive(false);
-            //BT_Miedo.SetActive(false);
         }
         else if (_uMiedo > 70 && _uMiedo > _uHambre && _uEnergia > 50)
         {
             Bool_Energia = false;
             Bool_Hambre = false;
+            isDefaultMov = false;
             Bool_Miedo = true;
-            BT_Miedo.SetActive(true);
             BT_Hambre.SetActive(false);
             BT_Energia.SetActive(false);
+            BT_Miedo.SetActive(true);
+        }
+        else
+        {
+            Bool_Energia = false;
+            Bool_Hambre = false;
+            Bool_Miedo = false;
+            isDefaultMov = true;
+            BT_Hambre.SetActive(false);
+            BT_Energia.SetActive(false);
+            BT_Miedo.SetActive(false);
         }
     }
 
