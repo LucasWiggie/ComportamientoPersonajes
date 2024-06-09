@@ -126,6 +126,9 @@ MonoBehaviour:
   hambre: 60
   energia: 100
   miedo: 0
+  _hambre: 0
+  _energia: 0
+  _miedo: 0
   aSalvo: 0
   isDefaultMov: 1
   movementInterval: 3
@@ -201,7 +204,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animal: {fileID: 0}
   selectedEditorNode: {fileID: 2437773349234617882}
   repeatOnFinish: 0
   maxExecutionsPerTick: 1000
@@ -586,7 +588,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animal: {fileID: 0}
   selectedEditorNode: {fileID: 0}
   repeatOnFinish: 0
   maxExecutionsPerTick: 1000
@@ -714,7 +715,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animal: {fileID: 0}
   selectedEditorNode: {fileID: 1966581857357772927}
   repeatOnFinish: 0
   maxExecutionsPerTick: 1000

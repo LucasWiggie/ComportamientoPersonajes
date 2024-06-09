@@ -1,5 +1,762 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &188259396673268546
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9082057787989036437}
+  - component: {fileID: 2195379030181308911}
+  - component: {fileID: 1796828248497319912}
+  - component: {fileID: 11449761297182596}
+  - component: {fileID: 8810637957499471702}
+  - component: {fileID: 6198804323563081297}
+  - component: {fileID: 2701432703818327778}
+  m_Layer: 6
+  m_Name: BT Miedo Huevos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &9082057787989036437
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188259396673268546}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.00000026822093, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.048359536, y: 0.052894406, z: 0.04425065}
+  m_LocalScale: {x: 0.20581694, y: 0.20581695, z: 0.20581695}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7018700374007281199}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2195379030181308911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188259396673268546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedEditorNode: {fileID: 8810637957499471702}
+  repeatOnFinish: 1
+  maxExecutionsPerTick: 1000
+  parent: {fileID: 0}
+--- !u!114 &1796828248497319912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188259396673268546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 538645f2f9090fd43bc6154b2e89e2d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Root
+  rect:
+    serializedVersion: 2
+    x: 260
+    y: 140
+    width: 160
+    height: 45
+  parent: {fileID: 0}
+  children:
+  - {fileID: 11449761297182596}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+--- !u!114 &11449761297182596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188259396673268546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c78c7da6b00e1b46bad07949050f82f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Sequence
+  rect:
+    serializedVersion: 2
+    x: 259
+    y: 230
+    width: 160
+    height: 45
+  parent: {fileID: 1796828248497319912}
+  children:
+  - {fileID: 6198804323563081297}
+  - {fileID: 8810637957499471702}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  random: 0
+--- !u!114 &8810637957499471702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188259396673268546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8595d37ac5b0f340b7f64ca227f8860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Loop
+  rect:
+    serializedVersion: 2
+    x: 380
+    y: 325
+    width: 160
+    height: 45
+  parent: {fileID: 11449761297182596}
+  children:
+  - {fileID: 2701432703818327778}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  loops:
+    useConstant: 1
+    mode: 0
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 3
+  infinite:
+    useConstant: 1
+    mode: 0
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0
+  breakOnStatus: 1
+  resultOnFinish: 0
+  resultOnBreak: 1
+--- !u!114 &6198804323563081297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188259396673268546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8552e2230ed0b714cbf96f3706a7e165, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Sal_HayHuevos
+  rect:
+    serializedVersion: 2
+    x: 40
+    y: 400
+    width: 160
+    height: 45
+  parent: {fileID: 11449761297182596}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+--- !u!114 &2701432703818327778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188259396673268546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6875408baf3e7694e9d9516d2078aa5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Sal_IrHuevos
+  rect:
+    serializedVersion: 2
+    x: 380
+    y: 400
+    width: 160
+    height: 45
+  parent: {fileID: 8810637957499471702}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+--- !u!1 &735421246916199322
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1279539314126507427}
+  - component: {fileID: 4170046975100294355}
+  - component: {fileID: 6405501984806629876}
+  - component: {fileID: 4771704715980220848}
+  - component: {fileID: 3077093483856937987}
+  - component: {fileID: 7333378090629432950}
+  - component: {fileID: 6259082330948417709}
+  m_Layer: 6
+  m_Name: BT Energia
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1279539314126507427
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735421246916199322}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.00000026822093, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.048359536, y: 0.052894406, z: 0.04425065}
+  m_LocalScale: {x: 0.20581694, y: 0.20581695, z: 0.20581695}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7018700374007281199}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4170046975100294355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735421246916199322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedEditorNode: {fileID: 6259082330948417709}
+  repeatOnFinish: 1
+  maxExecutionsPerTick: 1000
+  parent: {fileID: 0}
+--- !u!114 &6405501984806629876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735421246916199322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 538645f2f9090fd43bc6154b2e89e2d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Root
+  rect:
+    serializedVersion: 2
+    x: 232
+    y: 103
+    width: 160
+    height: 45
+  parent: {fileID: 0}
+  children:
+  - {fileID: 4771704715980220848}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+--- !u!114 &4771704715980220848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735421246916199322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c78c7da6b00e1b46bad07949050f82f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Sequence
+  rect:
+    serializedVersion: 2
+    x: 231
+    y: 185
+    width: 160
+    height: 45
+  parent: {fileID: 6405501984806629876}
+  children:
+  - {fileID: 7333378090629432950}
+  - {fileID: 3077093483856937987}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  random: 0
+--- !u!114 &3077093483856937987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735421246916199322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8595d37ac5b0f340b7f64ca227f8860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Loop
+  rect:
+    serializedVersion: 2
+    x: 380
+    y: 280
+    width: 160
+    height: 45
+  parent: {fileID: 4771704715980220848}
+  children:
+  - {fileID: 6259082330948417709}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  loops:
+    useConstant: 1
+    mode: 0
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 3
+  infinite:
+    useConstant: 1
+    mode: 0
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0
+  breakOnStatus: 1
+  resultOnFinish: 0
+  resultOnBreak: 1
+--- !u!114 &7333378090629432950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735421246916199322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dedaf4b8357838344b9ce3150ecbed6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Sal_HayArena
+  rect:
+    serializedVersion: 2
+    x: 40
+    y: 300
+    width: 160
+    height: 45
+  parent: {fileID: 4771704715980220848}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+--- !u!114 &6259082330948417709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735421246916199322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0df38c5eb619e7b42b0762121374e41a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Sal_IrArena
+  rect:
+    serializedVersion: 2
+    x: 380
+    y: 360
+    width: 160
+    height: 45
+  parent: {fileID: 3077093483856937987}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+--- !u!1 &1821917573401748153
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1971323408843143503}
+  - component: {fileID: 9121336078086842711}
+  - component: {fileID: 5525650746379001160}
+  - component: {fileID: 1706056741336568944}
+  - component: {fileID: 5381792532696612569}
+  - component: {fileID: 3311054906263832701}
+  - component: {fileID: 5429760114110347867}
+  m_Layer: 6
+  m_Name: BT Huir Arena
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1971323408843143503
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821917573401748153}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.00000026822093, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.048359536, y: 0.052894406, z: 0.04425065}
+  m_LocalScale: {x: 0.20581694, y: 0.20581695, z: 0.20581695}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7018700374007281199}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9121336078086842711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821917573401748153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedEditorNode: {fileID: 3311054906263832701}
+  repeatOnFinish: 0
+  maxExecutionsPerTick: 1000
+  parent: {fileID: 0}
+--- !u!114 &5525650746379001160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821917573401748153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 538645f2f9090fd43bc6154b2e89e2d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Root
+  rect:
+    serializedVersion: 2
+    x: 260
+    y: 180
+    width: 160
+    height: 45
+  parent: {fileID: 0}
+  children:
+  - {fileID: 5429760114110347867}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+--- !u!114 &1706056741336568944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821917573401748153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8595d37ac5b0f340b7f64ca227f8860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Loop
+  rect:
+    serializedVersion: 2
+    x: 360
+    y: 320
+    width: 160
+    height: 45
+  parent: {fileID: 5429760114110347867}
+  children:
+  - {fileID: 5381792532696612569}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  loops:
+    useConstant: 1
+    mode: 0
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 3
+  infinite:
+    useConstant: 1
+    mode: 0
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0
+  breakOnStatus: 1
+  resultOnFinish: 0
+  resultOnBreak: 1
+--- !u!114 &5381792532696612569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821917573401748153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0df38c5eb619e7b42b0762121374e41a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Sal_IrArena
+  rect:
+    serializedVersion: 2
+    x: 360
+    y: 400
+    width: 160
+    height: 45
+  parent: {fileID: 1706056741336568944}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+--- !u!114 &3311054906263832701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821917573401748153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dedaf4b8357838344b9ce3150ecbed6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Sal_HayArena
+  rect:
+    serializedVersion: 2
+    x: 120
+    y: 400
+    width: 160
+    height: 45
+  parent: {fileID: 5429760114110347867}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+--- !u!114 &5429760114110347867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821917573401748153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c78c7da6b00e1b46bad07949050f82f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Sequence
+  rect:
+    serializedVersion: 2
+    x: 260
+    y: 240
+    width: 160
+    height: 45
+  parent: {fileID: 5525650746379001160}
+  children:
+  - {fileID: 3311054906263832701}
+  - {fileID: 1706056741336568944}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  random: 0
+--- !u!1 &4751725006468547131
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2905706558305599561}
+  - component: {fileID: 8128416136601717904}
+  - component: {fileID: 5329238140034893541}
+  - component: {fileID: 5446916442109756939}
+  - component: {fileID: 2501909298327853965}
+  - component: {fileID: 2310530645337935234}
+  - component: {fileID: 3293533415623846258}
+  m_Layer: 6
+  m_Name: BT Hambre
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &2905706558305599561
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4751725006468547131}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.00000026822093, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.048359536, y: 0.052894406, z: 0.04425065}
+  m_LocalScale: {x: 0.20581694, y: 0.20581695, z: 0.20581695}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7018700374007281199}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8128416136601717904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4751725006468547131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedEditorNode: {fileID: 5329238140034893541}
+  repeatOnFinish: 1
+  maxExecutionsPerTick: 1000
+  parent: {fileID: 0}
+--- !u!114 &5329238140034893541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4751725006468547131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 538645f2f9090fd43bc6154b2e89e2d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Root
+  rect:
+    serializedVersion: 2
+    x: 220
+    y: 100
+    width: 160
+    height: 45
+  parent: {fileID: 0}
+  children:
+  - {fileID: 5446916442109756939}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+--- !u!114 &5446916442109756939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4751725006468547131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c78c7da6b00e1b46bad07949050f82f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Sequence
+  rect:
+    serializedVersion: 2
+    x: 220
+    y: 180
+    width: 160
+    height: 45
+  parent: {fileID: 5329238140034893541}
+  children:
+  - {fileID: 2501909298327853965}
+  - {fileID: 3293533415623846258}
+  - {fileID: 2310530645337935234}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  random: 0
+--- !u!114 &2501909298327853965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4751725006468547131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fde67c44d491c6941bdff5d59a1b3471, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Sal_HayMosca
+  rect:
+    serializedVersion: 2
+    x: 40
+    y: 320
+    width: 160
+    height: 45
+  parent: {fileID: 5446916442109756939}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+--- !u!114 &2310530645337935234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4751725006468547131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b85139f3e6978eb4296e6dd800128942, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Sal_ComerMosca
+  rect:
+    serializedVersion: 2
+    x: 420
+    y: 320
+    width: 160
+    height: 45
+  parent: {fileID: 5446916442109756939}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+--- !u!114 &3293533415623846258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4751725006468547131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 908e866a8f893184d80bc62c6d0abbf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Sal_IrMosca
+  rect:
+    serializedVersion: 2
+    x: 220
+    y: 320
+    width: 160
+    height: 45
+  parent: {fileID: 5446916442109756939}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
 --- !u!1001 &4679617429700640990
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -202,7 +959,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -6803186898478926095, guid: cceb8eb4a1f9b6c4db19b93c751099c9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1971323408843143503}
+    - targetCorrespondingSourceObject: {fileID: -6803186898478926095, guid: cceb8eb4a1f9b6c4db19b93c751099c9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9082057787989036437}
+    - targetCorrespondingSourceObject: {fileID: -6803186898478926095, guid: cceb8eb4a1f9b6c4db19b93c751099c9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1279539314126507427}
+    - targetCorrespondingSourceObject: {fileID: -6803186898478926095, guid: cceb8eb4a1f9b6c4db19b93c751099c9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2905706558305599561}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cceb8eb4a1f9b6c4db19b93c751099c9, type: 3}
       insertIndex: -1
@@ -291,3 +1060,8 @@ NavMeshAgent:
   m_BaseOffset: -1.44
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!4 &7018700374007281199 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -6803186898478926095, guid: cceb8eb4a1f9b6c4db19b93c751099c9, type: 3}
+  m_PrefabInstance: {fileID: 4679617429700640990}
+  m_PrefabAsset: {fileID: 0}
