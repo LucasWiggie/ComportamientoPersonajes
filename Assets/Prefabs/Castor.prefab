@@ -73,7 +73,7 @@ MonoBehaviour:
     x: 232
     y: 103
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 0}
   children:
   - {fileID: 4135439964892121966}
@@ -98,7 +98,7 @@ MonoBehaviour:
     x: 231
     y: 185
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 5491301373270869018}
   children:
   - {fileID: 3865291111655414643}
@@ -126,7 +126,7 @@ MonoBehaviour:
     x: -40
     y: 300
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 4135439964892121966}
   children: []
   behaviourTree: {fileID: 0}
@@ -151,7 +151,7 @@ MonoBehaviour:
     x: 200
     y: 400
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 1349989962333975639}
   children: []
   behaviourTree: {fileID: 0}
@@ -175,7 +175,7 @@ MonoBehaviour:
     x: 440
     y: 400
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 55358805430423195}
   children: []
   behaviourTree: {fileID: 0}
@@ -199,7 +199,7 @@ MonoBehaviour:
     x: 220
     y: 320
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 4135439964892121966}
   children:
   - {fileID: 8505856938961270853}
@@ -239,7 +239,7 @@ MonoBehaviour:
     x: 440
     y: 300
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 4135439964892121966}
   children:
   - {fileID: 2687580973120299419}
@@ -333,7 +333,7 @@ MonoBehaviour:
     x: 260
     y: 140
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 0}
   children:
   - {fileID: 3546488175222063647}
@@ -358,7 +358,7 @@ MonoBehaviour:
     x: 259
     y: 230
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 3252424564459011762}
   children:
   - {fileID: 3914728544963375176}
@@ -386,7 +386,7 @@ MonoBehaviour:
     x: -20
     y: 360
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 3546488175222063647}
   children: []
   behaviourTree: {fileID: 0}
@@ -411,7 +411,7 @@ MonoBehaviour:
     x: 261
     y: 403
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 545600845141582236}
   children: []
   behaviourTree: {fileID: 0}
@@ -435,7 +435,7 @@ MonoBehaviour:
     x: 620
     y: 360
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 3546488175222063647}
   children: []
   behaviourTree: {fileID: 0}
@@ -459,7 +459,7 @@ MonoBehaviour:
     x: 260.8
     y: 318.3
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 3546488175222063647}
   children:
   - {fileID: 6261645223540365598}
@@ -552,7 +552,7 @@ MonoBehaviour:
     x: 260
     y: 180
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 0}
   children:
   - {fileID: 3597288464035288021}
@@ -577,7 +577,7 @@ MonoBehaviour:
     x: 260
     y: 280
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 535072482462932436}
   children:
   - {fileID: 2148104507857666939}
@@ -601,10 +601,10 @@ MonoBehaviour:
   title: Cast_HayPresa
   rect:
     serializedVersion: 2
-    x: 108
-    y: 370
+    x: 110
+    y: 367
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 3597288464035288021}
   children: []
   behaviourTree: {fileID: 0}
@@ -629,7 +629,7 @@ MonoBehaviour:
     x: 376
     y: 436
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 8437860030781652200}
   children: []
   behaviourTree: {fileID: 0}
@@ -653,7 +653,7 @@ MonoBehaviour:
     x: 375.8
     y: 366.3
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 3597288464035288021}
   children:
   - {fileID: 7165013280557853598}
@@ -734,8 +734,12 @@ MonoBehaviour:
   obstructionMask:
     serializedVersion: 2
     m_Bits: 0
+  huirCocodrilo:
+    serializedVersion: 2
+    m_Bits: 2048
   puedeVer: 0
   puedeVerPresa: 0
+  distanciaMaxima: 25
   BT_Hambre: {fileID: 574407034648764920}
   BT_EnergiaMiedo: {fileID: 5381213649540830934}
   BT_PalosPresa: {fileID: 375552894631194235}

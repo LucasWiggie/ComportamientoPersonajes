@@ -1,26 +1,19 @@
 using MBT;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace CustomNodes
 {
-    // Empty Menu attribute prevents Node to show up in "Add Component" menu.
     [AddComponentMenu("")]
     [MBTNode(name = "CustomNodes/Croc_PerseguirCaza")]
-
     public class Croc_PerseguirCaza : Leaf
     {
- 
-        
         private Cocodrilo crocodile;
 
-        // This is called every tick as long as node is executed
         private void Awake()
         {
-            crocodile= GetComponentInParent<Cocodrilo>();
+            crocodile = GetComponentInParent<Cocodrilo>();
         }
+
         public override NodeResult Execute()
         {
             if (crocodile == null)
@@ -28,22 +21,27 @@ namespace CustomNodes
                 crocodile = GetComponentInParent<Cocodrilo>();
                 if (crocodile == null)
                 {
-                    Debug.LogError("crocodile is still null!");
+                    Debug.LogError("Crocodile is still null!");
                     return NodeResult.failure;
                 }
             }
-            // AQUI LA EJECUCI覰 DE QUE EL COCODRILO SE MUEVA A LA CAZA
-            Cocodrilo.ChaseState estadoPersecucion = crocodile.Chase();
-            switch (estadoPersecucion)
+
+            Cocodrilo.ChaseState chaseState = crocodile.Chase();
+            switch (chaseState)
             {
                 case Cocodrilo.ChaseState.Finished:
-                    return NodeResult.success;
+                    Debug.Log("Persecution finished: moving to eat.");
+                    return NodeResult.success; // La persecuci贸n ha terminado
                 case Cocodrilo.ChaseState.Failed:
-                    return NodeResult.failure;
+                    Debug.Log("Persecution failed.");
+                    return NodeResult.failure; // La persecuci贸n fall贸
+                case Cocodrilo.ChaseState.Enproceso:
+                    Debug.Log("Persecution in process.");
+                    return NodeResult.running; // La persecuci贸n est谩 en curso
                 default:
-                    return NodeResult.failure;
+                    Debug.LogError("Unexpected chase state.");
+                    return NodeResult.failure; // Estado inesperado
             }
-           
         }
     }
 }

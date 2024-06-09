@@ -18,14 +18,21 @@ public class Castor : MonoBehaviour
     public LayerMask targetMask;
     public LayerMask targetMaskPresa;
     public LayerMask obstructionMask;
+    public LayerMask huirCocodrilo;
+
     public bool puedeVer;
     public bool puedeVerPresa;
 
+    //Lista con los cocodrilos cercanos al castor
+    private List<Transform> cocodrilosCercanos = new List<Transform>();
+    public float distanciaMaxima = 1f;
 
-    // BTs de cada acción
+
+
+    // BTs de cada acciï¿½n
     public GameObject BT_Hambre;
     public GameObject BT_EnergiaMiedo;
-    public GameObject BT_PalosPresa; // *Acción por defecto
+    public GameObject BT_PalosPresa; // *Acciï¿½n por defecto
 
     //Bool bts
     private bool bool_Hambre = false;
@@ -107,7 +114,8 @@ public class Castor : MonoBehaviour
     private void Update()
     {
         UpdateVariables();
-        //aSalvo = false;
+        DetectarObjetivos();
+        ActualizarMiedo();
 
         if (paloTarget != null) { 
             if (transform.position.x == paloTarget.position.x && transform.position.z == paloTarget.position.z && !cogePalo)
@@ -193,10 +201,10 @@ public class Castor : MonoBehaviour
 
             Vector3 directionToTarget = (target.position - transform.position).normalized;
 
-            // Utilizar el producto punto para verificar el ángulo
+            // Utilizar el producto punto para verificar el ï¿½ngulo
             float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
 
-            // Establecer un umbral para el ángulo (ajustar según sea necesario)
+            // Establecer un umbral para el ï¿½ngulo (ajustar segï¿½n sea necesario)
             float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
             if (dotProduct > angleThreshold)
             {
@@ -240,10 +248,10 @@ public class Castor : MonoBehaviour
             presaTarget = target;
             Vector3 directionToTarget = (target.position - transform.position).normalized;
 
-            // Utilizar el producto punto para verificar el ángulo
+            // Utilizar el producto punto para verificar el ï¿½ngulo
             float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
 
-            // Establecer un umbral para el ángulo (ajustar según sea necesario)
+            // Establecer un umbral para el ï¿½ngulo (ajustar segï¿½n sea necesario)
             float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
             if (dotProduct > angleThreshold)
             {
@@ -303,9 +311,12 @@ public class Castor : MonoBehaviour
         if (presaTarget != null)
         {
             castNav.SetDestination(presaTarget.position);
-            if (transform.position.x == presaTarget.position.x && transform.position.z == presaTarget.position.z)
+            float distanciaX = Mathf.Abs(transform.position.x - presaTarget.position.x);
+            float distanciaZ = Mathf.Abs(transform.position.z - presaTarget.position.z);
+            if (distanciaX <= 2 && distanciaZ <= 2)
             {
                 Debug.Log("en presa");
+                aSalvo=true;
                 return ChaseState.Finished;
             }
             return ChaseState.Enproceso;
@@ -364,6 +375,7 @@ public class Castor : MonoBehaviour
             paloTarget = null;
             
     }
+    
 
     void CogerPalo()
     {
@@ -406,6 +418,7 @@ public class Castor : MonoBehaviour
             bool_Miedo = false;
             isDefaultMov = false;
             bool_Hambre = true;
+            aSalvo = false;
             BT_PalosPresa.SetActive(false);
             BT_EnergiaMiedo.SetActive(false);
             BT_Hambre.SetActive(true);
@@ -416,21 +429,47 @@ public class Castor : MonoBehaviour
             bool_Hambre = false;
             bool_Miedo = false;
             isDefaultMov = true;
+            aSalvo = false;
             BT_EnergiaMiedo.SetActive(false);
             BT_Hambre.SetActive(false);
             BT_PalosPresa.SetActive(true);
         }
     }
 
-    public void HambreAction()
+    /*public void HambreAction()
     {
         // BT de cuando el Cocodrilo tiene hambre
         //moverse a palo
         //_hambre = 0;
+    }*/
+
+    void DetectarObjetivos()
+    {
+        cocodrilosCercanos.Clear();
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, distanciaMaxima, huirCocodrilo);
+        foreach (Collider collider in colliders)
+        {
+            cocodrilosCercanos.Add(collider.transform);
+        }
     }
+
+    void ActualizarMiedo()
+    {
+        miedo = 0f;
+
+        foreach (Transform objetivo in cocodrilosCercanos)
+        {
+            float distancia = Vector3.Distance(transform.position, objetivo.position);
+            float miedoIncremental = Mathf.Clamp01(1 - distancia / distanciaMaxima) * 100; // Calcular el miedo incremental normalizado
+
+            miedo = Mathf.Max(miedo, miedoIncremental); // Mantener el mayor valor de miedo
+        }
+    }
+
 
     public void EnergiaMiedoAction()
     {
-        // BT de cuando el Cocodrilo tiene poca energía
+        // BT de cuando el Cocodrilo tiene poca energï¿½a
     }
 }

@@ -17,11 +17,12 @@ public class Cocodrilo : MonoBehaviour
     public LayerMask targetMaskHuevos;
     public LayerMask targetMaskArena;
     public LayerMask obstructionMask;
+
     public bool puedeVer;
     public bool puedeVerArena;
 
 
-    // BTs de cada acción
+    // BTs de cada acciï¿½n
     public GameObject BT_Hambre;
     public GameObject BT_Energia;
     public GameObject BT_Miedo;
@@ -59,7 +60,7 @@ public class Cocodrilo : MonoBehaviour
     private bool dirtyUS = false;
 
     //Para indicar si esta aSalvo
-    public Pato patoScript; // Asegúrate de asignar esto desde el Inspector
+    public Pato patoScript; // Asegï¿½rate de asignar esto desde el Inspector
     public Castor castorScript;
 
     // Variables para controlar el intervalo de movimiento
@@ -131,7 +132,7 @@ public class Cocodrilo : MonoBehaviour
         }
         else if (Bool_Hambre) {
             
-            //BT_Hambre.GetComponent<MonoBehaviourTree>().Tick();
+            BT_Hambre.GetComponent<MonoBehaviourTree>().Tick();
 
         }
         else if (Bool_Energia)
@@ -154,11 +155,11 @@ public class Cocodrilo : MonoBehaviour
             Vector3 randomPoint = RandomNavmeshLocation(60f); // Obtener un punto aleatorio en el NavMesh
             crocNav.SetDestination(randomPoint); // Establecer el punto como destino
             //Debug.Log("croc se mueve");
-            nextRandomMovementTime = Time.time + movementInterval; // Actualizar el tiempo para el próximo movimiento
+            nextRandomMovementTime = Time.time + movementInterval; // Actualizar el tiempo para el prï¿½ximo movimiento
         }
     }
 
-    // Función para encontrar un punto aleatorio en el NavMesh dentro de un radio dado
+    // Funciï¿½n para encontrar un punto aleatorio en el NavMesh dentro de un radio dado
     private Vector3 RandomNavmeshLocation(float radius)
     {
         Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
@@ -256,10 +257,10 @@ public class Cocodrilo : MonoBehaviour
 
             Vector3 directionToTarget = (target.position - transform.position).normalized;
 
-            // Utilizar el producto punto para verificar el ángulo
+            // Utilizar el producto punto para verificar el ï¿½ngulo
             float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
 
-            // Establecer un umbral para el ángulo (ajustar según sea necesario)
+            // Establecer un umbral para el ï¿½ngulo (ajustar segï¿½n sea necesario)
             float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
             if (dotProduct > angleThreshold)
             {
@@ -433,60 +434,91 @@ public class Cocodrilo : MonoBehaviour
         return ChaseState.Failed;
     }
 
-    //Acción perseguir animales
-    public ChaseState Chase()
+    //Acciï¿½n perseguir animales
+   public ChaseState Chase()
+{
+    GameObject targetParent = animalTarget.gameObject.transform.parent.gameObject;
+    var castor = targetParent.GetComponent<Castor>();
+    var pato = targetParent.GetComponent<Pato>();
+
+    if (animalTarget == null)
     {
-
-        float minDist = crocNav.stoppingDistance;
-        if (animalTarget != null)
-        {
-            float dist = Vector3.Distance(animalTarget.position, transform.position);
-            crocNav.speed = crocNav.speed + 1;
-            while (dist > minDist)
-            {
-                if (animalTarget == null) //si el animal se ha muerto por el camino
-                {
-                    break;//salimos del bucle
-                }
-
-                crocNav.SetDestination(animalTarget.position); //se pone como punto de destino la posicion del animal
-
-            }
-            crocNav.speed--;
-            return ChaseState.Finished;// se ha llegado al punto indicado aunque el animal ya no este (muerto o escondido)
-
-
-
-        }
-        else
-        {
-            crocNav.speed--;
-            return ChaseState.Failed; //no haya animal al que perseguir
-        }
-
+        Debug.Log("Chase failed: no target.");
+        return ChaseState.Failed; // No hay objetivo
     }
 
-    //Acción comer tanto huevos como animales
+    if(castor.aSalvo){ //MUUUUUUUUUUUUUUY IMPORTANTE METER AQUI TAMBIEN AL PATO EHHHH IMPORTANTE IMPORTANTE HACER TAMBIEN pato.aSalvo EEEEEEH IMPORTANTE MIRENME
+        return ChaseState.Finished;
+    }
+    float minDist = crocNav.stoppingDistance;
+    float dist = Vector3.Distance(animalTarget.position, transform.position);
+
+    Debug.Log($"Chasing target. Current distance: {dist}, Minimum distance: {minDist}");
+
+    if (dist <= 2.0)
+    {
+        Debug.Log("Chase finished: target reached.");
+        return ChaseState.Finished; // Se ha llegado al objetivo
+    }
+
+    if (crocNav.pathPending || crocNav.remainingDistance > minDist)
+    {
+        crocNav.SetDestination(animalTarget.position); // Actualiza el destino
+        return ChaseState.Enproceso; // La persecuciÃ³n estÃ¡ en curso
+    }
+
+    Debug.Log("Chase finished: close enough to target.");
+    return ChaseState.Finished; // Se ha llegado suficientemente cerca
+}
+
+    //Acciï¿½n comer tanto huevos como animales
     public void Eat(bool animal, bool eggs)
     {
-        GameObject target;
-        if (animal) //si vamos a comer un animal
+    if (animal && animalTarget != null) // Si vamos a comer un animal y hay un objetivo animal
+    {
+        // Obtener el padre del GameObject que contiene los componentes asociados al objetivo animal
+        GameObject targetParent = animalTarget.gameObject.transform.parent.gameObject;
+        var castor = targetParent.GetComponent<Castor>();
+        var pato = targetParent.GetComponent<Pato>();
+        if (castor != null)
         {
-            target = animalTarget.GetComponentInParent<GameObject>();
-            GameObject.Destroy(target);//destruimos el gameobject del animal que se ha comido
+            if(!castor.aSalvo){  
+            // Destruir el GameObject del animal y su padre
+            GameObject.Destroy(targetParent);
+            // Restablecer la cantidad de hambre a cero
+            hambre = 0;
+            }
+            
         }
-        else if (eggs) //si comer huevos de salamandra
+        if (pato != null)
         {
-            target = eggsTarget.GetComponentInParent<GameObject>();
-            GameObject.Destroy(target);//destruimos el gameobject de los huevos que se ha comido
-            energia += 20; //aumentamos la energía
-            energia = Mathf.Clamp(energia, 0f, 100f);
+            if(!pato.aSalvo){
+            // Destruir el GameObject del animal y su padre
+            GameObject.Destroy(targetParent);
+            // Restablecer la cantidad de hambre a cero
+            hambre = 0;
+            }
+            
         }
+        
+    }
+    else if (eggs && eggsTarget != null) // Si vamos a comer huevos y hay un objetivo de huevos
+    {
+        // Obtener el padre del GameObject que contiene los componentes asociados al objetivo de huevos
+        GameObject targetParent = eggsTarget.gameObject.transform.parent.gameObject;
 
-        hambre = 0; //ya no hay hambre
+        // Destruir el GameObject de los huevos y su padre
+        GameObject.Destroy(targetParent);
+
+        // Aumentar la energÃ­a
+        energia += 20;
+        energia = Mathf.Clamp(energia, 0f, 100f);
     }
 
-    //Acción huir a arena
+    
+    }
+
+    //Acciï¿½n huir a arena
     public ChaseState irArena()
     {
         if (sandTarget != null)
