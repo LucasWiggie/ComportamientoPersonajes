@@ -313,6 +313,7 @@ public class Castor : MonoBehaviour
             castNav.SetDestination(presaTarget.position);
             float distanciaX = Mathf.Abs(transform.position.x - presaTarget.position.x);
             float distanciaZ = Mathf.Abs(transform.position.z - presaTarget.position.z);
+            
             if (distanciaX <= 2 && distanciaZ <= 2)
             {
                 Debug.Log("en presa");

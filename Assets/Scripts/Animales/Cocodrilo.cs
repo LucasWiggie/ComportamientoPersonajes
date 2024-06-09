@@ -183,6 +183,7 @@ public class Cocodrilo : MonoBehaviour
         _uHambre = this.getHambre();
         _uEnergia = this.getEnergia();
         _uMiedo = this.getMiedo();
+        List<Collider> animalesNoASalvo = ObtenerAnimalesNoASalvo();
 
         if (_uEnergia < 50)
         {
@@ -194,7 +195,7 @@ public class Cocodrilo : MonoBehaviour
             BT_Miedo.SetActive(false);
             BT_Energia.SetActive(true);
         }
-        else if (_uHambre > 70 && _uHambre > _uMiedo && _uEnergia > 50)
+        else if (_uHambre > 70 && _uHambre > _uMiedo && _uEnergia > 50 && animalesNoASalvo.Count!=0)
         {
             Bool_Energia = false;
             Bool_Miedo = false;
@@ -226,6 +227,32 @@ public class Cocodrilo : MonoBehaviour
         }
     }
 
+    public List<Collider> ObtenerAnimalesNoASalvo()
+    {
+    // Obtener todos los colisionadores en el rango especificado
+    Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
+
+    // Lista para almacenar colisionadores de animales no a salvo
+    List<Collider> animalesNoASalvo = new List<Collider>();
+
+    foreach (Collider col in rangeChecks)
+    {
+        // Obtener el GameObject padre del colisionador
+        GameObject targetParent = col.transform.parent != null ? col.transform.parent.gameObject : col.gameObject;
+
+        // Verificar si el objetivo es un castor o un pato y si no está a salvo
+        Castor castor = targetParent.GetComponent<Castor>();
+        Pato pato = targetParent.GetComponent<Pato>();
+
+        if ((castor != null && !castor.aSalvo) || (pato != null && !pato.aSalvo))
+        {
+            animalesNoASalvo.Add(col);
+        }
+    }
+
+    return animalesNoASalvo;
+    }
+
     public void HambreAction()
     {
         // BT de cuando el Cocodrilo tiene hambre
@@ -245,53 +272,74 @@ public class Cocodrilo : MonoBehaviour
     #endregion
 
     #region "Acciones"
-    public ChaseState HayCaza()
+public ChaseState HayCaza()
+{
+    Debug.Log("ENTRO EN HAY CAZA");
+
+    // Obtener todos los colisionadores en el rango especificado
+    Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
+
+    // Lista para almacenar colisionadores de animales no a salvo
+    List<Collider> animalesNoASalvo = new List<Collider>();
+
+    foreach (Collider col in rangeChecks)
     {
-        Debug.Log("ENTRO EN HAY CAZA");
-        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
-        Debug.Log(rangeChecks.Length);
-        if (rangeChecks.Length > 0)
+        // Obtener el GameObject padre del colisionador
+        GameObject targetParent = col.transform.parent != null ? col.transform.parent.gameObject : col.gameObject;
+
+        // Verificar si el objetivo es un castor o un pato y si no está a salvo
+        Castor castor = targetParent.GetComponent<Castor>();
+        //Pato pato = targetParent.GetComponent<Pato>();
+
+        if ((castor != null && !castor.aSalvo) ) //|| (pato != null && !pato.aSalvo)) HAY QUE METER ESTO QUE NO SE OLVIDEEEEEEEEEEEEEEEEEE
         {
-            Transform target = rangeChecks[0].transform;
-            animalTarget = target;
+            animalesNoASalvo.Add(col);
+        }
+    }
 
-            Vector3 directionToTarget = (target.position - transform.position).normalized;
+    // Verificar si hay objetivos no a salvo
+    if (animalesNoASalvo.Count > 0)
+    {
+        // Utilizar el primer objetivo no a salvo encontrado
+        Transform target = animalesNoASalvo[0].transform;
+        animalTarget = target;
 
-            // Utilizar el producto punto para verificar el �ngulo
-            float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
+        Vector3 directionToTarget = (target.position - transform.position).normalized;
 
-            // Establecer un umbral para el �ngulo (ajustar seg�n sea necesario)
-            float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
-            if (dotProduct > angleThreshold)
+        // Utilizar el producto punto para verificar el ángulo
+        float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
+
+        // Establecer un umbral para el ángulo (ajustar según sea necesario)
+        float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
+        if (dotProduct > angleThreshold)
+        {
+            float distanciaToTarget = Vector3.Distance(transform.position, target.position);
+
+            if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
             {
-                float distanciaToTarget = Vector3.Distance(transform.position, target.position);
+                puedeVer = true;
 
-                if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
-                {
-                    puedeVer = true;
-
-                    return ChaseState.Finished;
-
-                }
-                else
-                {
-                    puedeVer = false;
-                    return ChaseState.Failed;
-                }
+                return ChaseState.Finished;
             }
             else
             {
                 puedeVer = false;
                 return ChaseState.Failed;
             }
-
         }
-        else if (puedeVer)
+        else
         {
             puedeVer = false;
             return ChaseState.Failed;
         }
+    }
+    else if (puedeVer)
+    {
+        puedeVer = false;
         return ChaseState.Failed;
+    }
+    return ChaseState.Failed;
+
         /*
         //Debug.Log("ENTRA EN COMPROBAR VISION");
         //Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
