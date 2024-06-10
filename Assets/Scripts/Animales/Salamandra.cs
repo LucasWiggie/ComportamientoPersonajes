@@ -1,3 +1,4 @@
+using MBT;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,9 +16,28 @@ public class Salamandra : MonoBehaviour
     public LayerMask obstructionMask;
     public bool puedeVer;
 
-    public float hambre = 70; //Rango 0-100 las 3
-    public float energia = 100;
-    public float miedo = 0;
+    public float hambre; //Rango 0-100 las 3
+    public float energia;
+    public float miedo;
+
+    // BTs
+    // BTs de cada accion
+    public GameObject btHambre;
+    public GameObject btEnergia;
+    public GameObject btMiedoPato;
+    public GameObject btProtegerHuevos;
+
+    //Bool bts
+    private bool boolHambre = false;
+    private bool boolEnergia = false;
+    private bool boolMiedoPato = false;
+    private bool boolProtegerHuevos = false;
+
+    //Utilidades
+    public float _uHambre;
+    public float _uEnergia;
+    public float _uMiedo;
+    public float _uTemorHuevo;
 
     float hambreRate = 0.2f;
     float energiaRate = 0.05f;
@@ -59,10 +79,19 @@ public class Salamandra : MonoBehaviour
 
     private void Start()
     {
-        salamandraNav = GetComponent<NavMeshAgent>();
-        InvokeRepeating("NuevoDestinoAleatorio", 0f, movementInterval);
-
         playerRef = this.gameObject;
+        salamandraNav = GetComponent<NavMeshAgent>();
+        //InvokeRepeating("NuevoDestinoAleatorio", 0f, movementInterval);
+
+        hambre = 60;
+        energia = 100;
+        miedo = 0;
+
+        _uHambre = hambre;
+        _uEnergia = energia;
+        _uMiedo = miedo;
+
+
         StartCoroutine(FOVRoutine());
     }
 
@@ -73,27 +102,53 @@ public class Salamandra : MonoBehaviour
 
     private void FixedUpdate()
     {
+        UtilitySystem();
         if (isDefaultMov)
         {
+            movimientoAleatorio();
         }
-
-        if (dirtyUS)
+        else if (boolHambre)
         {
-
+            btHambre.GetComponent<MonoBehaviourTree>().Tick();
         }
+        else if (boolEnergia)
+        {
+            btEnergia.GetComponent<MonoBehaviourTree>().Tick();
+        }
+        else if (boolMiedoPato)
+        {
+            btMiedoPato.GetComponent<MonoBehaviourTree>().Tick();
+        }
+        else if (boolProtegerHuevos)
+        {
+            btProtegerHuevos.GetComponent<MonoBehaviourTree>().Tick();
+        }
+
+        //if (dirtyUS)
+        //{
+
+        //}
     }
 
-    private void NuevoDestinoAleatorio()
+    private void movimientoAleatorio()
     {
-        if (isDefaultMov)
+        if (Time.time >= nextRandomMovementTime)
         {
             Vector3 randomPoint = RandomNavmeshLocation(60f); // Obtener un punto aleatorio en el NavMesh
             salamandraNav.SetDestination(randomPoint); // Establecer el punto como destino
+            //Debug.Log("pato se mueve");
+            nextRandomMovementTime = Time.time + movementInterval; // Actualizar el tiempo para el próximo movimiento
         }
-        
     }
 
-    
+    //private void NuevoDestinoAleatorio()
+    //{
+    //    if (isDefaultMov)
+    //    {
+    //        Vector3 randomPoint = RandomNavmeshLocation(60f); // Obtener un punto aleatorio en el NavMesh
+    //        salamandraNav.SetDestination(randomPoint); // Establecer el punto como destino
+    //    }    
+    //}
 
     // Función para encontrar un punto aleatorio en el NavMesh dentro de un radio dado
     private Vector3 RandomNavmeshLocation(float radius)
@@ -111,6 +166,59 @@ public class Salamandra : MonoBehaviour
 
         return finalPosition;
     }
+
+    public void UtilitySystem()
+    {
+        _uHambre = this.getHambre();
+        _uEnergia = this.getEnergia();
+        _uMiedo = this.getMiedo();
+
+        if (_uEnergia < 50)
+        {
+            bool boolHambre = false;
+            bool boolEnergia = false;
+            bool boolMiedoPato = false;
+            bool boolProtegerHuevos = false;
+            btHambre.SetActive(false);
+            btEnergia.SetActive(false);
+            btMiedoPato.SetActive(false);
+            btProtegerHuevos.SetActive(false);
+        }
+        else if (_uHambre > 70 && _uHambre > _uMiedo && _uEnergia > 50)
+        {
+            bool boolHambre = false;
+            bool boolEnergia = false;
+            bool boolMiedoPato = false;
+            bool boolProtegerHuevos = false;
+            btHambre.SetActive(false);
+            btEnergia.SetActive(false);
+            btMiedoPato.SetActive(false);
+            btProtegerHuevos.SetActive(false);
+        }
+        else if (_uMiedo > 70 && _uMiedo > _uHambre && _uEnergia > 50)
+        {
+            bool boolHambre = false;
+            bool boolEnergia = false;
+            bool boolMiedoPato = false;
+            bool boolProtegerHuevos = false;
+            btHambre.SetActive(false);
+            btEnergia.SetActive(false);
+            btMiedoPato.SetActive(false);
+            btProtegerHuevos.SetActive(false);
+        }
+        else
+        {
+            bool boolHambre = false;
+            bool boolEnergia = false;
+            bool boolMiedoPato = false;
+            bool boolProtegerHuevos = false;
+            btHambre.SetActive(false);
+            btEnergia.SetActive(false);
+            btMiedoPato.SetActive(false);
+            btProtegerHuevos.SetActive(false);
+        }
+    }
+
     private void UpdateVariables()
     {
         hambre += hambreRate * Time.deltaTime;

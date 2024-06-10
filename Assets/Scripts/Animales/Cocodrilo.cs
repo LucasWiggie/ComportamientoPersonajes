@@ -23,14 +23,14 @@ public class Cocodrilo : MonoBehaviour
 
 
     // BTs de cada acci�n
-    public GameObject BT_Hambre;
-    public GameObject BT_Energia;
-    public GameObject BT_Miedo;
+    public GameObject btHambre;
+    public GameObject btEnergia;
+    public GameObject btMiedo;
 
     //Bool bts
-    private bool Bool_Hambre = false;
-    private bool Bool_Energia = false;
-    private bool Bool_Miedo = false;
+    private bool boolHambre = false;
+    private bool boolEnergia = false;
+    private bool boolMiedo = false;
 
     //Rango 0-100 las 3 
     public float hambre;
@@ -66,7 +66,6 @@ public class Cocodrilo : MonoBehaviour
     // Variables para controlar el intervalo de movimiento
     private float nextRandomMovementTime = 0f;
     public float movementInterval = 7.0f;
-
 
     public enum ChaseState
     {
@@ -118,6 +117,7 @@ public class Cocodrilo : MonoBehaviour
         //InvokeRepeating("UtilitySystem", 0f, 2.0f);
         //StartCoroutine(FOVRoutine());
     }
+    
     private void Update()
     {
         UpdateVariables();
@@ -130,20 +130,20 @@ public class Cocodrilo : MonoBehaviour
         {
             NuevoDestinoAleatorio();
         }
-        else if (Bool_Hambre) {
+        else if (boolHambre) {
             
-            BT_Hambre.GetComponent<MonoBehaviourTree>().Tick();
+            btHambre.GetComponent<MonoBehaviourTree>().Tick();
 
         }
-        else if (Bool_Energia)
+        else if (boolEnergia)
         {
             
-            BT_Energia.GetComponent<MonoBehaviourTree>().Tick();
+            btEnergia.GetComponent<MonoBehaviourTree>().Tick();
         }
-        else if (Bool_Miedo)
+        else if (boolMiedo)
         {
             
-           BT_Miedo.GetComponent<MonoBehaviourTree>().Tick();
+           btMiedo.GetComponent<MonoBehaviourTree>().Tick();
         }
     }
 
@@ -187,43 +187,43 @@ public class Cocodrilo : MonoBehaviour
 
         if (_uEnergia < 50)
         {
-            Bool_Hambre = false;
-            Bool_Miedo = false;
+            boolHambre = false;
+            boolMiedo = false;
             isDefaultMov= false;
-            Bool_Energia = true;
-            BT_Hambre.SetActive(false);
-            BT_Miedo.SetActive(false);
-            BT_Energia.SetActive(true);
+            boolEnergia = true;
+            btHambre.SetActive(false);
+            btMiedo.SetActive(false);
+            btEnergia.SetActive(true);
         }
         else if (_uHambre > 70 && _uHambre > _uMiedo && _uEnergia > 50 && animalesNoASalvo.Count!=0)
         {
-            Bool_Energia = false;
-            Bool_Miedo = false;
+            boolEnergia = false;
+            boolMiedo = false;
             isDefaultMov = false;
-            Bool_Hambre = true;
-            BT_Energia.SetActive(false);
-            BT_Miedo.SetActive(false);
-            BT_Hambre.SetActive(true);
+            boolHambre = true;
+            btEnergia.SetActive(false);
+            btMiedo.SetActive(false);
+            btHambre.SetActive(true);
         }
         else if (_uMiedo > 70 && _uMiedo > _uHambre && _uEnergia > 50)
         {
-            Bool_Energia = false;
-            Bool_Hambre = false;
+            boolEnergia = false;
+            boolHambre = false;
             isDefaultMov = false;
-            Bool_Miedo = true;
-            BT_Hambre.SetActive(false);
-            BT_Energia.SetActive(false);
-            BT_Miedo.SetActive(true);
+            boolMiedo = true;
+            btHambre.SetActive(false);
+            btEnergia.SetActive(false);
+            btMiedo.SetActive(true);
         }
         else
         {
-            Bool_Energia = false;
-            Bool_Hambre = false;
-            Bool_Miedo = false;
+            boolEnergia = false;
+            boolHambre = false;
+            boolMiedo = false;
             isDefaultMov = true;
-            BT_Hambre.SetActive(false);
-            BT_Energia.SetActive(false);
-            BT_Miedo.SetActive(false);
+            btHambre.SetActive(false);
+            btEnergia.SetActive(false);
+            btMiedo.SetActive(false);
         }
     }
 
