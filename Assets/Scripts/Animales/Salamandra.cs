@@ -19,6 +19,7 @@ public class Salamandra : MonoBehaviour
     public float hambre; //Rango 0-100 las 3
     public float energia;
     public float miedo;
+    public float temorHuevos;
 
     // BTs
     // BTs de cada accion
@@ -37,13 +38,15 @@ public class Salamandra : MonoBehaviour
     public float _uHambre;
     public float _uEnergia;
     public float _uMiedo;
-    public float _uTemorHuevo;
+    public float _uTemorHuevos;
 
     float hambreRate = 0.2f;
     float energiaRate = 0.05f;
 
     public bool isDefaultMov = true;
     private bool dirtyUS = false;
+
+    public bool aSalvo = false;
 
     private NavMeshAgent salamandraNav;
 
@@ -64,6 +67,10 @@ public class Salamandra : MonoBehaviour
     {
         return this.miedo;
     }
+    public float getTemorHuevos()
+    {
+        return this.temorHuevos;
+    }
     public void setHambre(float h)
     {
         this.hambre = h;
@@ -76,6 +83,10 @@ public class Salamandra : MonoBehaviour
     {
         this.miedo = m;
     }
+    public void setTemorHuevos(float t)
+    {
+        this.temorHuevos = t;
+    }
 
     private void Start()
     {
@@ -86,10 +97,12 @@ public class Salamandra : MonoBehaviour
         hambre = 60;
         energia = 100;
         miedo = 0;
+        temorHuevos = 0;
 
         _uHambre = hambre;
         _uEnergia = energia;
         _uMiedo = miedo;
+        _uTemorHuevos = temorHuevos;
 
 
         StartCoroutine(FOVRoutine());
@@ -109,18 +122,22 @@ public class Salamandra : MonoBehaviour
         }
         else if (boolHambre)
         {
+            Debug.Log("SAL: Tengo Hambre");
             btHambre.GetComponent<MonoBehaviourTree>().Tick();
         }
         else if (boolEnergia)
         {
+            Debug.Log("SAL: Tengo poca energía");
             btEnergia.GetComponent<MonoBehaviourTree>().Tick();
         }
         else if (boolMiedoPato)
         {
+            Debug.Log("SAL: Tengo miedo al pato");
             btMiedoPato.GetComponent<MonoBehaviourTree>().Tick();
         }
         else if (boolProtegerHuevos)
         {
+            Debug.Log("SAL: Tengo que proteger los huevos");
             btProtegerHuevos.GetComponent<MonoBehaviourTree>().Tick();
         }
 
@@ -172,24 +189,25 @@ public class Salamandra : MonoBehaviour
         _uHambre = this.getHambre();
         _uEnergia = this.getEnergia();
         _uMiedo = this.getMiedo();
+        _uTemorHuevos = this.getTemorHuevos();
 
-        if (_uEnergia < 50)
+        if (_uEnergia < 50) // Si está cansada, se va a la arena
         {
-            bool boolHambre = false;
-            bool boolEnergia = false;
-            bool boolMiedoPato = false;
-            bool boolProtegerHuevos = false;
+            boolHambre = false;
+            boolEnergia = true;
+            boolMiedoPato = false;
+            boolProtegerHuevos = false;
             btHambre.SetActive(false);
-            btEnergia.SetActive(false);
+            btEnergia.SetActive(true);
             btMiedoPato.SetActive(false);
             btProtegerHuevos.SetActive(false);
         }
         else if (_uHambre > 70 && _uHambre > _uMiedo && _uEnergia > 50)
         {
-            bool boolHambre = false;
-            bool boolEnergia = false;
-            bool boolMiedoPato = false;
-            bool boolProtegerHuevos = false;
+            boolHambre = false;
+            boolEnergia = false;
+            boolMiedoPato = false;
+            boolProtegerHuevos = false;
             btHambre.SetActive(false);
             btEnergia.SetActive(false);
             btMiedoPato.SetActive(false);
@@ -197,10 +215,10 @@ public class Salamandra : MonoBehaviour
         }
         else if (_uMiedo > 70 && _uMiedo > _uHambre && _uEnergia > 50)
         {
-            bool boolHambre = false;
-            bool boolEnergia = false;
-            bool boolMiedoPato = false;
-            bool boolProtegerHuevos = false;
+            boolHambre = false;
+            boolEnergia = false;
+            boolMiedoPato = false;
+            boolProtegerHuevos = false;
             btHambre.SetActive(false);
             btEnergia.SetActive(false);
             btMiedoPato.SetActive(false);
@@ -208,10 +226,13 @@ public class Salamandra : MonoBehaviour
         }
         else
         {
-            bool boolHambre = false;
-            bool boolEnergia = false;
-            bool boolMiedoPato = false;
-            bool boolProtegerHuevos = false;
+            isDefaultMov = true;
+
+            aSalvo = false;
+            boolHambre = false;
+            boolEnergia = false;
+            boolMiedoPato = false;
+            boolProtegerHuevos = false;
             btHambre.SetActive(false);
             btEnergia.SetActive(false);
             btMiedoPato.SetActive(false);
@@ -228,6 +249,7 @@ public class Salamandra : MonoBehaviour
         energia = Mathf.Clamp(energia, 0f, 100f);
     }
 
+    // NO LO HE MIRADO TODAVÍA, ECHADLE UN OJO. Lucas
     private IEnumerator FOVRoutine()
     {
         float delay = 0.2f;
