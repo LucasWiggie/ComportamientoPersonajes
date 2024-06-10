@@ -191,96 +191,117 @@ public class Castor : MonoBehaviour
     }
 
     public ChaseState ComprobarVision()
-    {
-        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
-        Debug.Log("cuenta " + rangeChecks.Count());
-        if (rangeChecks.Length > 0)
-        {
-            Transform target = rangeChecks[0].transform;
-            paloTarget = target;
+{
+    Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
+    Debug.Log("cuenta " + rangeChecks.Length);
 
+    if (rangeChecks.Length > 0)
+    {
+        Transform closestTarget = null;
+        float closestDistance = float.MaxValue;
+
+        foreach (Collider col in rangeChecks)
+        {
+            Transform target = col.transform;
             Vector3 directionToTarget = (target.position - transform.position).normalized;
 
-            // Utilizar el producto punto para verificar el �ngulo
+            // Verificar que el objetivo esté dentro del ángulo de visión
             float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
-
-            // Establecer un umbral para el �ngulo (ajustar seg�n sea necesario)
             float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
             if (dotProduct > angleThreshold)
             {
                 float distanciaToTarget = Vector3.Distance(transform.position, target.position);
 
+                // Verificar que no haya obstrucciones entre el castor y el palo
                 if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
                 {
-                    puedeVer = true;                   
-
-                    return ChaseState.Finished;
-
-                }
-                else
-                {
-                    puedeVer = false;
-                    return ChaseState.Failed;
+                    // Si este objetivo está más cerca que los anteriores, actualizar el más cercano
+                    if (distanciaToTarget < closestDistance)
+                    {
+                        closestDistance = distanciaToTarget;
+                        closestTarget = target;
+                    }
                 }
             }
-            else
-            {
-                puedeVer = false;
-                return ChaseState.Failed;
-            }
-            
         }
-        else if (puedeVer)
+
+        if (closestTarget != null)
+        {
+            // Asignar el palo más cercano como el objetivo
+            paloTarget = closestTarget;
+            puedeVer = true;
+            return ChaseState.Finished;
+        }
+        else
         {
             puedeVer = false;
             return ChaseState.Failed;
         }
+    }
+    else if (puedeVer)
+    {
+        puedeVer = false;
         return ChaseState.Failed;
     }
 
-    public ChaseState HayPresa()
-    {
-        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radioPresa, targetMaskPresa);
+    return ChaseState.Failed;
+}
 
-        if (rangeChecks.Length > 0)
+    public ChaseState HayPresa()
+{
+    Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radioPresa, targetMaskPresa);
+
+    if (rangeChecks.Length > 0)
+    {
+        Transform closestTarget = null;
+        float closestDistance = float.MaxValue;
+
+        foreach (Collider col in rangeChecks)
         {
-            Transform target = rangeChecks[0].transform;
-            presaTarget = target;
+            Transform target = col.transform;
             Vector3 directionToTarget = (target.position - transform.position).normalized;
 
-            // Utilizar el producto punto para verificar el �ngulo
+            // Verificar que el objetivo esté dentro del ángulo de visión
             float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
-
-            // Establecer un umbral para el �ngulo (ajustar seg�n sea necesario)
             float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
             if (dotProduct > angleThreshold)
             {
                 float distanciaToTarget = Vector3.Distance(transform.position, target.position);
 
+                // Verificar que no haya obstrucciones entre el castor y la presa
                 if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
                 {
-                    puedeVerPresa = true;
-                    return ChaseState.Finished;
+                    // Si este objetivo está más cerca que los anteriores, actualizar el más cercano
+                    if (distanciaToTarget < closestDistance)
+                    {
+                        closestDistance = distanciaToTarget;
+                        closestTarget = target;
+                    }
                 }
-                else
-                {
-                    puedeVerPresa = false;
-                    return ChaseState.Failed;
-                }
-            }
-            else
-            {
-                puedeVerPresa = false;
-                return ChaseState.Failed;
             }
         }
-        else if (puedeVerPresa)
+
+        if (closestTarget != null)
+        {
+            // Asignar la presa más cercana como el objetivo
+            presaTarget = closestTarget;
+            puedeVerPresa = true;
+            return ChaseState.Finished;
+        }
+        else
         {
             puedeVerPresa = false;
             return ChaseState.Failed;
         }
+    }
+    else if (puedeVerPresa)
+    {
+        puedeVerPresa = false;
         return ChaseState.Failed;
     }
+
+    return ChaseState.Failed;
+}
 
 
     public ChaseState irPalo()
@@ -310,6 +331,7 @@ public class Castor : MonoBehaviour
     {
         if (presaTarget != null)
         {
+            
             castNav.SetDestination(presaTarget.position);
             float distanciaX = Mathf.Abs(transform.position.x - presaTarget.position.x);
             float distanciaZ = Mathf.Abs(transform.position.z - presaTarget.position.z);
@@ -318,7 +340,14 @@ public class Castor : MonoBehaviour
             {
                 Debug.Log("en presa");
                 aSalvo=true;
+                energia+=0.02f;
                 return ChaseState.Finished;
+            }
+            else{
+                if(miedo>70){
+                energia-=0.02f;
+                castNav.speed+=0.002f;
+            }
             }
             return ChaseState.Enproceso;
 
@@ -398,6 +427,7 @@ public class Castor : MonoBehaviour
             bool_Miedo = false;
             isDefaultMov = false;
             bool_Energia = true;
+            aSalvo = false;
             BT_Hambre.SetActive(false);
             BT_PalosPresa.SetActive(false);
             BT_EnergiaMiedo.SetActive(true);
@@ -409,6 +439,7 @@ public class Castor : MonoBehaviour
             bool_Hambre = false;
             isDefaultMov = false;
             bool_Miedo = true;
+            aSalvo = false;
             BT_Hambre.SetActive(false);
             BT_PalosPresa.SetActive(false);
             BT_EnergiaMiedo.SetActive(true); //mirar esto, creo que si huye a presa se cansa, pero si va por cansancio no
