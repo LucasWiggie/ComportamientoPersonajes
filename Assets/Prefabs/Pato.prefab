@@ -108,10 +108,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c06b0e4145960fd4fb7f20dbe51bdc73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radio: 8
-  radioNenufar: 0
+  radio: 300
+  radioNenufar: 300
   angulo: 360
   playerRef: {fileID: 0}
+  patito: {fileID: 5842986526443527119, guid: fcd7e96b0af642c45930bff60bce15b1, type: 3}
+  numPatitos: 2
   targetMask:
     serializedVersion: 2
     m_Bits: 256
@@ -121,14 +123,21 @@ MonoBehaviour:
   obstructionMask:
     serializedVersion: 2
     m_Bits: 0
+  huirCocodrilo:
+    serializedVersion: 2
+    m_Bits: 2048
   puedeVer: 0
   puedeVerNenufar: 0
+  distanciaMaxima: 25
   hambre: 60
   energia: 100
   miedo: 0
   _hambre: 0
   _energia: 0
   _miedo: 0
+  BT_Hambre: {fileID: 1485185606296902250}
+  BT_Energia: {fileID: 5955136895735176969}
+  BT_Miedo: {fileID: 5958547077724282190}
   aSalvo: 0
   isDefaultMov: 1
   movementInterval: 3
@@ -170,6 +179,7 @@ GameObject:
   - component: {fileID: 255674509467123020}
   - component: {fileID: 5380822691933397978}
   - component: {fileID: 2437773349234617882}
+  - component: {fileID: 7808841930528568980}
   m_Layer: 6
   m_Name: BT Hambre
   m_TagString: Untagged
@@ -204,8 +214,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 2437773349234617882}
-  repeatOnFinish: 0
+  selectedEditorNode: {fileID: 7808841930528568980}
+  repeatOnFinish: 1
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
 --- !u!114 &3508181387410966423
@@ -255,7 +265,7 @@ MonoBehaviour:
   parent: {fileID: 3508181387410966423}
   children:
   - {fileID: 2481025263309032625}
-  - {fileID: 255674509467123020}
+  - {fileID: 7808841930528568980}
   - {fileID: 5380822691933397978}
   - {fileID: 2437773349234617882}
   behaviourTree: {fileID: 0}
@@ -277,8 +287,8 @@ MonoBehaviour:
   title: MPato_HaySal
   rect:
     serializedVersion: 2
-    x: 40
-    y: 400
+    x: -9
+    y: 401
     width: 160
     height: 45
   parent: {fileID: 58316560993812071}
@@ -287,12 +297,6 @@ MonoBehaviour:
   runtimePriority: 0
   breakpoint: 0
   abort: 0
-  somePropertyRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 0}
-    key: 
-    constantValue: 0
 --- !u!114 &255674509467123020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -308,11 +312,11 @@ MonoBehaviour:
   title: MPato_PerseguirSal
   rect:
     serializedVersion: 2
-    x: 220
-    y: 400
+    x: 205
+    y: 461
     width: 160
     height: 45
-  parent: {fileID: 58316560993812071}
+  parent: {fileID: 7808841930528568980}
   children: []
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -342,12 +346,6 @@ MonoBehaviour:
   runtimePriority: 0
   breakpoint: 0
   abort: 0
-  somePropertyRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 0}
-    key: 
-    constantValue: 0
 --- !u!114 &2437773349234617882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,6 +370,46 @@ MonoBehaviour:
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
+--- !u!114 &7808841930528568980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485185606296902250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8595d37ac5b0f340b7f64ca227f8860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Loop
+  rect:
+    serializedVersion: 2
+    x: 212
+    y: 395
+    width: 160
+    height: 45
+  parent: {fileID: 58316560993812071}
+  children:
+  - {fileID: 255674509467123020}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  loops:
+    useConstant: 1
+    mode: 0
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 3
+  infinite:
+    useConstant: 1
+    mode: 0
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0
+  breakOnStatus: 2
+  resultOnFinish: 0
+  resultOnBreak: 1
 --- !u!1 &2172786572255230401
 GameObject:
   m_ObjectHideFlags: 0
@@ -554,6 +592,8 @@ GameObject:
   - component: {fileID: 5875402266604200840}
   - component: {fileID: 8276362274899865567}
   - component: {fileID: 1023595678935630645}
+  - component: {fileID: 4869860202718405909}
+  - component: {fileID: 5044296903117529870}
   m_Layer: 6
   m_Name: "BT Energ\xEDa"
   m_TagString: Untagged
@@ -588,8 +628,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 0}
-  repeatOnFinish: 0
+  selectedEditorNode: {fileID: 5044296903117529870}
+  repeatOnFinish: 1
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
 --- !u!114 &5875402266604200840
@@ -638,7 +678,8 @@ MonoBehaviour:
     height: 45
   parent: {fileID: 5875402266604200840}
   children:
-  - {fileID: 1023595678935630645}
+  - {fileID: 4869860202718405909}
+  - {fileID: 5044296903117529870}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
@@ -658,8 +699,32 @@ MonoBehaviour:
   title: MPato_IrNenufares
   rect:
     serializedVersion: 2
-    x: 363
-    y: 374
+    x: 495
+    y: 439
+    width: 160
+    height: 45
+  parent: {fileID: 5044296903117529870}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+--- !u!114 &4869860202718405909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5955136895735176969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8b068d57c41978478657a7db2741903, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: MPato_HayNenufares
+  rect:
+    serializedVersion: 2
+    x: 269
+    y: 382
     width: 160
     height: 45
   parent: {fileID: 8276362274899865567}
@@ -667,6 +732,47 @@ MonoBehaviour:
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
+  abort: 0
+--- !u!114 &5044296903117529870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5955136895735176969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8595d37ac5b0f340b7f64ca227f8860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Loop
+  rect:
+    serializedVersion: 2
+    x: 537
+    y: 328
+    width: 160
+    height: 45
+  parent: {fileID: 8276362274899865567}
+  children:
+  - {fileID: 1023595678935630645}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  loops:
+    useConstant: 1
+    mode: 0
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 3
+  infinite:
+    useConstant: 1
+    mode: 0
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0
+  breakOnStatus: 1
+  resultOnFinish: 0
+  resultOnBreak: 1
 --- !u!1 &5958547077724282190
 GameObject:
   m_ObjectHideFlags: 0
@@ -681,6 +787,7 @@ GameObject:
   - component: {fileID: 630212625465408658}
   - component: {fileID: 467306413643125144}
   - component: {fileID: 1966581857357772927}
+  - component: {fileID: 5233296769172598974}
   m_Layer: 6
   m_Name: BT Miedo
   m_TagString: Untagged
@@ -715,8 +822,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 1966581857357772927}
-  repeatOnFinish: 0
+  selectedEditorNode: {fileID: 5233296769172598974}
+  repeatOnFinish: 1
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
 --- !u!114 &3499843115908937866
@@ -759,14 +866,14 @@ MonoBehaviour:
   title: Sequence
   rect:
     serializedVersion: 2
-    x: 260
-    y: 280
+    x: 261
+    y: 267
     width: 160
     height: 45
   parent: {fileID: 3499843115908937866}
   children:
   - {fileID: 467306413643125144}
-  - {fileID: 1966581857357772927}
+  - {fileID: 5233296769172598974}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
@@ -796,12 +903,6 @@ MonoBehaviour:
   runtimePriority: 0
   breakpoint: 0
   abort: 0
-  somePropertyRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 0}
-    key: 
-    constantValue: 0
 --- !u!114 &1966581857357772927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -817,15 +918,55 @@ MonoBehaviour:
   title: MPato_HuirNenufares
   rect:
     serializedVersion: 2
-    x: 361.5
-    y: 399.5
+    x: 392.5
+    y: 414.5
     width: 160
     height: 45
-  parent: {fileID: 630212625465408658}
+  parent: {fileID: 5233296769172598974}
   children: []
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
+--- !u!114 &5233296769172598974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5958547077724282190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8595d37ac5b0f340b7f64ca227f8860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Loop
+  rect:
+    serializedVersion: 2
+    x: 365
+    y: 343
+    width: 160
+    height: 45
+  parent: {fileID: 630212625465408658}
+  children:
+  - {fileID: 1966581857357772927}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  loops:
+    useConstant: 1
+    mode: 0
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 3
+  infinite:
+    useConstant: 1
+    mode: 0
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0
+  breakOnStatus: 1
+  resultOnFinish: 0
+  resultOnBreak: 1
 --- !u!1 &7466123869080960449
 GameObject:
   m_ObjectHideFlags: 0

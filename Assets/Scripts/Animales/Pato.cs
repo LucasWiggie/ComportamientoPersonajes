@@ -1,3 +1,4 @@
+using MBT;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,11 +15,21 @@ public class Pato : MonoBehaviour
     public float angulo;
     public GameObject playerRef;
 
+    public GameObject patito;
+    public int numPatitos = 2;
+
     public LayerMask targetMask;
     public LayerMask targetMaskNenufar;
     public LayerMask obstructionMask;
+    public LayerMask huirCocodrilo;
+
+
     public bool puedeVer;
     public bool puedeVerNenufar;
+
+    //Lista con los cocodrilos cercanos al pato
+    private List<Transform> cocodrilosCercanos = new List<Transform>();
+    public float distanciaMaxima = 1f;
 
     public float hambre; //Rango 0-100 las 3
     public float energia;
@@ -28,6 +39,17 @@ public class Pato : MonoBehaviour
     public float _hambre;
     public float _energia;
     public float _miedo;
+
+    //BTs
+    public GameObject BT_Hambre;
+    public GameObject BT_Energia;
+    public GameObject BT_Miedo;
+
+    //bool Necesidades
+    private bool bool_Hambre;
+    private bool bool_Energia;
+    private bool bool_Miedo;
+    private bool fertil;
 
     float hambreRate = 0.2f;
     float energiaRate = 0.05f;
@@ -86,14 +108,37 @@ public class Pato : MonoBehaviour
     private void Update()
     {
         UpdateVariables();
-        
+        DetectarObjetivos();
+        ActualizarMiedo();
+
     }
 
     private void FixedUpdate()
     {
+        UtilitySystem();
         if (isDefaultMov)
         {
             movimientoAleatorio();
+        }
+        else if (bool_Hambre)
+        {
+            Debug.Log("Tengo Hambre");
+            BT_Hambre.GetComponent<MonoBehaviourTree>().Tick();
+        }
+        else if (bool_Miedo)
+        {
+            Debug.Log("Tengo Miedo");
+            BT_Miedo.GetComponent<MonoBehaviourTree>().Tick();
+        }
+        else if (bool_Energia)
+        {
+            Debug.Log("Tengo cansancio");
+            BT_Energia.GetComponent<MonoBehaviourTree>().Tick();
+        }
+        else if (fertil)
+        {
+            Debug.Log("Genero patitos");
+            GenerarPatitos();
         }
 
         if (dirtyUS)
@@ -101,6 +146,98 @@ public class Pato : MonoBehaviour
 
         }
     }
+
+    public void UtilitySystem() 
+    {
+        _hambre = this.getHambre();
+        _energia = this.getEnergia();
+        _miedo = this.getMiedo();
+
+        if (_energia < 60)
+        {
+            bool_Hambre = false;
+            bool_Miedo = false;
+            isDefaultMov = false;
+            fertil = false;
+            bool_Energia = true;
+            BT_Hambre.SetActive(false);
+            BT_Miedo.SetActive(false);
+            BT_Energia.SetActive(true);
+
+        }else if (_hambre < 40 && _energia >= 70)
+        {
+            bool_Energia = false;
+            bool_Hambre = false;
+            bool_Miedo = false;
+            isDefaultMov = false;
+            aSalvo = false;
+            fertil = true;
+            BT_Energia.SetActive(false);
+            BT_Hambre.SetActive(false);
+            BT_Miedo.SetActive(false);
+        }
+        else if (_miedo > 50)
+        {
+            bool_Energia = false;
+            bool_Hambre = false;
+            isDefaultMov = false;
+            fertil = false;
+            bool_Miedo = true;
+            BT_Hambre.SetActive(false);
+            BT_Energia.SetActive(false);
+            BT_Miedo.SetActive(true);
+        }
+        else if (_hambre > 50)
+        {
+            bool_Energia = false;
+            bool_Miedo = false;
+            isDefaultMov = false;
+            fertil = false;
+            bool_Hambre = true;
+            aSalvo = false;
+            BT_Miedo.SetActive(false);
+            BT_Energia.SetActive(false);
+            BT_Hambre.SetActive(true);
+        }
+        else
+        {
+            bool_Energia = false;
+            bool_Hambre = false;
+            bool_Miedo = false;
+            fertil= false;
+            isDefaultMov = true;
+            aSalvo = false;
+            BT_Energia.SetActive(false);
+            BT_Hambre.SetActive(false);
+            BT_Miedo.SetActive(false);
+        }
+    }
+
+    void DetectarObjetivos()
+    {
+        cocodrilosCercanos.Clear();
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, distanciaMaxima, huirCocodrilo);
+        foreach (Collider collider in colliders)
+        {
+            cocodrilosCercanos.Add(collider.transform);
+        }
+    }
+
+    void ActualizarMiedo()
+    {
+        miedo = 0f;
+
+        foreach (Transform objetivo in cocodrilosCercanos)
+        {
+            float distancia = Vector3.Distance(transform.position, objetivo.position);
+            float miedoIncremental = Mathf.Clamp01(1 - distancia / distanciaMaxima) * 100; // Calcular el miedo incremental normalizado
+
+            miedo = Mathf.Max(miedo, miedoIncremental); // Mantener el mayor valor de miedo
+        }
+    }
+
+
     private void movimientoAleatorio()
     {
         if (Time.time >= nextRandomMovementTime)
@@ -141,6 +278,8 @@ public class Pato : MonoBehaviour
         hambre = Mathf.Clamp(hambre, 0f, 100f);
         energia = Mathf.Clamp(energia, 0f, 100f);
     }
+
+
     private IEnumerator FOVRoutine()
     {
         float delay = 0.2f;
@@ -249,6 +388,8 @@ public class Pato : MonoBehaviour
         Enproceso,
         Failed
     }
+
+
     public ChaseState IrNenufares()
     {
         
@@ -367,6 +508,15 @@ public class Pato : MonoBehaviour
             patoNav.speed--;
             return ChaseState.Failed; //no haya animal al que perseguir
         }
+    }
+
+    public void GenerarPatitos()
+    {
+        energia -= 20;
+        hambre += 20;
+        Instantiate(patito,transform.position,transform.rotation);
+        
+       
     }
 }
 

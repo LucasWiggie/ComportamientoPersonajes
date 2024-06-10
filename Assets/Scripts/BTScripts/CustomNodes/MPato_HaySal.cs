@@ -7,22 +7,45 @@ namespace CustomNodes
 {
     [AddComponentMenu("")]
     [MBTNode(name = "CustomNodes/MPato_HaySal")]
-    public class MPato_HaySal : Condition
+    public class MPato_HaySal : Leaf
     {
         public Abort abort;
-        public BoolReference somePropertyRef = new BoolReference(VarRefMode.DisableConstant);
+        //public BoolReference somePropertyRef = new BoolReference(VarRefMode.DisableConstant);
         private Pato patoScript; // Referencia al script Salamandra
 
         private void Start()
         {
             // Obtener el componente Cocodrilo adjunto al mismo objeto
-            patoScript = GetComponent<Pato>();
+            //patoScript = GetComponent<Pato>();
+            patoScript = GetComponentInParent<Pato>();
         }
 
-        public override bool Check()
+        public override NodeResult Execute()
+        {
+            if (patoScript == null)
+            {
+                Debug.LogError("patoScript is still null!");
+                return NodeResult.failure;
+            }
+
+            Pato.ChaseState estadoHuida = patoScript.ComprobarVision();
+            switch (estadoHuida)
+            {
+                case Pato.ChaseState.Finished:
+                    return NodeResult.success;
+                case Pato.ChaseState.Failed:
+                    return NodeResult.failure;
+                default:
+                    return NodeResult.failure;
+            }
+
+
+        }
+
+        /*public override bool Check()
         {
             // AQUÍ LA COMPROBACIÓN DE SI HAY SALAMANDRA
-            return true;//patoScript.ComprobarVision();
+            return patoScript.ComprobarVision();
         }
 
         public override void OnAllowInterrupt()
@@ -52,6 +75,6 @@ namespace CustomNodes
         {
             // Reevaluate Check() and abort tree when needed
             EvaluateConditionAndTryAbort(abort);
-        }
+        }*/
     }
 }

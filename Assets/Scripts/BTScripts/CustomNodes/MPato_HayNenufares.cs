@@ -7,22 +7,44 @@ namespace CustomNodes
 {
     [AddComponentMenu("")]
     [MBTNode(name = "CustomNodes/MPato_HayNenufares")]
-    public class MPato_HayNenufares : Condition
+    public class MPato_HayNenufares : Leaf
     {
         public Abort abort;
-        public BoolReference somePropertyRef = new BoolReference(VarRefMode.DisableConstant);
+        //public BoolReference somePropertyRef = new BoolReference(VarRefMode.DisableConstant);
         private Pato patoScript; // Referencia al script Salamandra
 
         private void Start()
         {
             // Obtener el componente Cocodrilo adjunto al mismo objeto
-            patoScript = GetComponent<Pato>();
+            //patoScript = GetComponent<Pato>();
+            patoScript = GetComponentInParent<Pato>();
         }
 
-        public override bool Check()
+        public override NodeResult Execute()
+        {
+            if (patoScript == null)
+            {
+                Debug.LogError("patoScript is still null!");
+                return NodeResult.failure;
+            }
+            Pato.ChaseState estadoHuida = patoScript.HayNenufares();
+
+            switch (estadoHuida)
+            {
+                case Pato.ChaseState.Finished:
+                    return NodeResult.success;
+                case Pato.ChaseState.Failed:
+                    return NodeResult.failure;
+                default:
+                    return NodeResult.failure;
+            }
+
+        }
+
+        /*public override bool Check()
         {
             // AQUÍ LA COMPROBACIÓN DE SI HAY NENÚFARES
-            return true;//patoScript.HayNenufares();
+            return patoScript.HayNenufares();
         }
 
         public override void OnAllowInterrupt()
@@ -52,6 +74,6 @@ namespace CustomNodes
         {
             // Reevaluate Check() and abort tree when needed
             EvaluateConditionAndTryAbort(abort);
-        }
+        }*/
     }
 }
