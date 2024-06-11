@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6198804323563081297}
   - component: {fileID: 2701432703818327778}
   m_Layer: 6
-  m_Name: BT Miedo Huevos
+  m_Name: BT Proteger Huevos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -362,6 +362,7 @@ MonoBehaviour:
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
+  abort: 0
 --- !u!114 &6259082330948417709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -402,7 +403,7 @@ GameObject:
   - component: {fileID: 3311054906263832701}
   - component: {fileID: 5429760114110347867}
   m_Layer: 6
-  m_Name: BT Huir Arena
+  m_Name: BT Miedo Patos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -552,6 +553,7 @@ MonoBehaviour:
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
+  abort: 0
 --- !u!114 &5429760114110347867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -958,7 +960,8 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: -509268506519099833, guid: cceb8eb4a1f9b6c4db19b93c751099c9, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -6803186898478926095, guid: cceb8eb4a1f9b6c4db19b93c751099c9, type: 3}
       insertIndex: -1
@@ -1023,7 +1026,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91ed0b51a4258a4438c9e0065da39f12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radio: 8
+  radio: 300
   angulo: 360
   playerRef: {fileID: 0}
   targetMask:
@@ -1032,11 +1035,27 @@ MonoBehaviour:
   obstructionMask:
     serializedVersion: 2
     m_Bits: 0
+  targetMaskHuevos:
+    serializedVersion: 2
+    m_Bits: 4096
+  targetMaskArena:
+    serializedVersion: 2
+    m_Bits: 16384
   puedeVer: 0
   hambre: 70
   energia: 100
   miedo: 0
+  temorHuevos: 0
+  btHambre: {fileID: 4751725006468547131}
+  btEnergia: {fileID: 735421246916199322}
+  btMiedoPatos: {fileID: 1821917573401748153}
+  btProtegerHuevos: {fileID: 188259396673268546}
+  _uHambre: 0
+  _uEnergia: 0
+  _uMiedo: 0
+  _uTemorHuevos: 0
   isDefaultMov: 1
+  aSalvo: 0
   movementInterval: 3
 --- !u!195 &783188113347528045
 NavMeshAgent:

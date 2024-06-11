@@ -11,9 +11,37 @@ namespace CustomNodes
 
     public class Sal_IrArena : Leaf
     {
+        private Salamandra salamandraScript;
+
+        private void Start()
+        {
+            salamandraScript = GetComponentInParent<Salamandra>();
+        }
+
         public override NodeResult Execute()
         {
-            throw new System.NotImplementedException();
+            if (salamandraScript == null)
+            {
+                salamandraScript = GetComponentInParent<Salamandra>();
+                if (salamandraScript == null)
+                {
+                    Debug.LogError("Salamandra is still null!");
+                    return NodeResult.failure;
+                }
+            }
+            // AQUI LA EJECUCIÓN DE QUE LA SALAMANDRA SE MUEVA A LA ARENA
+            Salamandra.ChaseState estadoHuida = salamandraScript.irArena();
+            switch (estadoHuida)
+            {
+                case Salamandra.ChaseState.Enproceso:
+                    return NodeResult.running;
+                case Salamandra.ChaseState.Finished:
+                    return NodeResult.success;
+                case Salamandra.ChaseState.Failed:
+                    return NodeResult.failure;
+                default:
+                    return NodeResult.failure;
+            }
         }
     }
 }

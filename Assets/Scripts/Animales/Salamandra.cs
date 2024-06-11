@@ -14,6 +14,8 @@ public class Salamandra : MonoBehaviour
 
     public LayerMask targetMask;
     public LayerMask obstructionMask;
+    public LayerMask targetMaskHuevos;
+    public LayerMask targetMaskArena;
     public bool puedeVer;
 
     public float hambre; //Rango 0-100 las 3
@@ -21,11 +23,18 @@ public class Salamandra : MonoBehaviour
     public float miedo;
     public float temorHuevos;
 
+    public enum ChaseState
+    {
+        Finished,
+        Failed,
+        Enproceso
+    }
+
     // BTs
     // BTs de cada accion
     public GameObject btHambre;
     public GameObject btEnergia;
-    public GameObject btMiedoPato;
+    public GameObject btMiedoPatos;
     public GameObject btProtegerHuevos;
 
     //Bool bts
@@ -53,6 +62,10 @@ public class Salamandra : MonoBehaviour
     // Variables para controlar el intervalo de movimiento
     private float nextRandomMovementTime = 0f;
     public float movementInterval = 5f;
+
+    // Objetivos
+    private Transform eggsTarget;//huevos objetivo
+    private Transform sandTarget;//arena
 
     //Getters y Setters
     public float getHambre()
@@ -96,7 +109,7 @@ public class Salamandra : MonoBehaviour
 
         hambre = 60;
         energia = 100;
-        miedo = 0;
+        miedo = 51;
         temorHuevos = 0;
 
         _uHambre = hambre;
@@ -133,7 +146,7 @@ public class Salamandra : MonoBehaviour
         else if (boolMiedoPato)
         {
             Debug.Log("SAL: Tengo miedo al pato");
-            btMiedoPato.GetComponent<MonoBehaviourTree>().Tick();
+            btMiedoPatos.GetComponent<MonoBehaviourTree>().Tick();
         }
         else if (boolProtegerHuevos)
         {
@@ -191,37 +204,52 @@ public class Salamandra : MonoBehaviour
         _uMiedo = this.getMiedo();
         _uTemorHuevos = this.getTemorHuevos();
 
-        if (_uEnergia < 50) // Si está cansada, se va a la arena
+        if (_uMiedo > 50) 
         {
+            isDefaultMov = false;
+            boolHambre = false;
+            boolEnergia = false;
+            boolMiedoPato = true;
+            boolProtegerHuevos = false;
+            btHambre.SetActive(false);
+            btEnergia.SetActive(false);
+            btMiedoPatos.SetActive(true);
+            btProtegerHuevos.SetActive(false);
+        }
+        else if (_uTemorHuevos > 60)
+        {
+            isDefaultMov = false;
+            boolHambre = false;
+            boolEnergia = false;
+            boolMiedoPato = false;
+            boolProtegerHuevos = true;
+            btHambre.SetActive(false);
+            btEnergia.SetActive(false);
+            btMiedoPatos.SetActive(false);
+            btProtegerHuevos.SetActive(true);
+        }
+        else if (_uEnergia < 50)
+        {
+            isDefaultMov = false;
             boolHambre = false;
             boolEnergia = true;
             boolMiedoPato = false;
             boolProtegerHuevos = false;
             btHambre.SetActive(false);
             btEnergia.SetActive(true);
-            btMiedoPato.SetActive(false);
+            btMiedoPatos.SetActive(false);
             btProtegerHuevos.SetActive(false);
         }
-        else if (_uHambre > 70 && _uHambre > _uMiedo && _uEnergia > 50)
+        else if (_uHambre > 70)
         {
-            boolHambre = false;
+            isDefaultMov = false;
+            boolHambre = true;
             boolEnergia = false;
             boolMiedoPato = false;
             boolProtegerHuevos = false;
-            btHambre.SetActive(false);
+            btHambre.SetActive(true);
             btEnergia.SetActive(false);
-            btMiedoPato.SetActive(false);
-            btProtegerHuevos.SetActive(false);
-        }
-        else if (_uMiedo > 70 && _uMiedo > _uHambre && _uEnergia > 50)
-        {
-            boolHambre = false;
-            boolEnergia = false;
-            boolMiedoPato = false;
-            boolProtegerHuevos = false;
-            btHambre.SetActive(false);
-            btEnergia.SetActive(false);
-            btMiedoPato.SetActive(false);
+            btMiedoPatos.SetActive(false);
             btProtegerHuevos.SetActive(false);
         }
         else
@@ -235,7 +263,7 @@ public class Salamandra : MonoBehaviour
             boolProtegerHuevos = false;
             btHambre.SetActive(false);
             btEnergia.SetActive(false);
-            btMiedoPato.SetActive(false);
+            btMiedoPatos.SetActive(false);
             btProtegerHuevos.SetActive(false);
         }
     }
@@ -299,5 +327,87 @@ public class Salamandra : MonoBehaviour
             puedeVer = false;
         }
     }
+
+    public ChaseState HayArena()
+    {
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMaskArena);
+        Debug.Log("Number of objects found: " + rangeChecks.Length);
+
+        if (rangeChecks.Length > 0)
+        {
+            Transform target = rangeChecks[0].transform;
+            sandTarget = target;
+
+            Vector3 directionToTarget = (target.position - transform.position).normalized;
+            float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
+            float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
+
+            if (dotProduct > angleThreshold)
+            {
+                float distanceToTarget = Vector3.Distance(transform.position, target.position);
+
+                if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
+                {
+                    puedeVer = true;
+                    return ChaseState.Finished;
+
+                }
+                else
+                {
+                    puedeVer = false;
+                    return ChaseState.Failed;
+                }
+            }
+            else
+            {
+                puedeVer = false;
+                return ChaseState.Failed;
+            }
+        }
+        else if (puedeVer)
+        {
+            puedeVer = false;
+            return ChaseState.Failed;
+        }
+        return ChaseState.Failed;
+    }
+
+    public ChaseState irArena()
+    {
+        if (sandTarget != null)
+        {
+            salamandraNav.SetDestination(sandTarget.position); //se pone como punto de destino la posicion de la arena
+            salamandraNav.speed = salamandraNav.speed + 5f;
+            energia -= 5;
+            energia = Mathf.Clamp(energia, 0f, 100f);
+
+            if (transform.position.x == sandTarget.position.x && transform.position.z == sandTarget.position.z)
+            {
+                Debug.Log("SALAMANDRA EN ARENA");
+                miedo = 0; //reducimos el miedo
+                salamandraNav.isStopped = true;//paramos el movimiento
+                StartCoroutine(ReanudarMovimiento());
+                salamandraNav.speed = salamandraNav.speed - 5f;
+                return ChaseState.Finished;
+            }
+            salamandraNav.speed = salamandraNav.speed - 5f;
+            return ChaseState.Enproceso;// se ha llegado al punto indicado aunque el animal ya no este (muerto o escondido)
+
+        }
+        else
+        {
+            salamandraNav.stoppingDistance = 0;
+            salamandraNav.speed--;
+            return ChaseState.Failed; //no haya animal al que perseguir
+        }
+    }
+
+    public IEnumerator ReanudarMovimiento()
+    {
+        yield return new WaitForSeconds(5f);
+        salamandraNav.isStopped = false; //reanudamos el movimiento despues de x segundos
+    }
+
+
 }
 
