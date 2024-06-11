@@ -13,22 +13,17 @@ namespace CustomNodes
     {
         private Cocodrilo crocodile;
 
-        // This is called every tick as long as node is executed
-        private void Awake()
-        {
-            crocodile = GetComponentInParent<Cocodrilo>();
-        }
+      
         public override NodeResult Execute()
         {
+           
+            crocodile = GetComponentInParent<Cocodrilo>();
             if (crocodile == null)
             {
-                crocodile = GetComponentInParent<Cocodrilo>();
-                if (crocodile == null)
-                {
-                    Debug.LogError("crocodile is still null!");
-                    return NodeResult.failure;
-                }
+                Debug.LogError("crocodile is still null!");
+                return NodeResult.failure;
             }
+            
             // AQUI LA EJECUCIÓN DE QUE EL COCODRILO SE MUEVA A LOS HUEVOS
             Cocodrilo.ChaseState estadoIr = crocodile.IrAHuevos();
             switch (estadoIr)

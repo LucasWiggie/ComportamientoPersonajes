@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4228598821186494499}
   - component: {fileID: -7625833318841799888}
   - component: {fileID: 7968679378519121202}
-  m_Layer: 6
+  m_Layer: 12
   m_Name: Huevo
   m_TagString: Huevo
   m_Icon: {fileID: 0}
@@ -153,11 +153,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1db5621cceb1a2e45942a543ec24bafe, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8164078558771037576, guid: 1db5621cceb1a2e45942a543ec24bafe, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -105,8 +105,8 @@ public class Cocodrilo : MonoBehaviour
         playerRef = this.gameObject;
         crocNav = GetComponent<NavMeshAgent>();
 
-        hambre = 68;
-        energia = 100;
+        hambre = 60;
+        energia = 80;
         miedo = 0;
 
         _uHambre = hambre;
@@ -272,54 +272,60 @@ public class Cocodrilo : MonoBehaviour
     #endregion
 
     #region "Acciones"
-public ChaseState HayCaza()
-{
-    Debug.Log("ENTRO EN HAY CAZA");
-
-    // Obtener todos los colisionadores en el rango especificado
-    Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
-
-    // Lista para almacenar colisionadores de animales no a salvo
-    List<Collider> animalesNoASalvo = new List<Collider>();
-
-    foreach (Collider col in rangeChecks)
+    public ChaseState HayCaza()
     {
-        // Obtener el GameObject padre del colisionador
-        GameObject targetParent = col.transform.parent != null ? col.transform.parent.gameObject : col.gameObject;
+        Debug.Log("ENTRO EN HAY CAZA");
 
-        // Verificar si el objetivo es un castor o un pato y si no está a salvo
-        Castor castor = targetParent.GetComponent<Castor>();
-        //Pato pato = targetParent.GetComponent<Pato>();
+        // Obtener todos los colisionadores en el rango especificado
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
 
-        if ((castor != null && !castor.aSalvo) ) //|| (pato != null && !pato.aSalvo)) HAY QUE METER ESTO QUE NO SE OLVIDEEEEEEEEEEEEEEEEEE
+        // Lista para almacenar colisionadores de animales no a salvo
+        List<Collider> animalesNoASalvo = new List<Collider>();
+
+        foreach (Collider col in rangeChecks)
         {
-            animalesNoASalvo.Add(col);
-        }
-    }
+            // Obtener el GameObject padre del colisionador
+            GameObject targetParent = col.transform.parent != null ? col.transform.parent.gameObject : col.gameObject;
 
-    // Verificar si hay objetivos no a salvo
-    if (animalesNoASalvo.Count > 0)
-    {
-        // Utilizar el primer objetivo no a salvo encontrado
-        Transform target = animalesNoASalvo[0].transform;
-        animalTarget = target;
+            // Verificar si el objetivo es un castor o un pato y si no está a salvo
+            Castor castor = targetParent.GetComponent<Castor>();
+            //Pato pato = targetParent.GetComponent<Pato>();
 
-        Vector3 directionToTarget = (target.position - transform.position).normalized;
-
-        // Utilizar el producto punto para verificar el ángulo
-        float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
-
-        // Establecer un umbral para el ángulo (ajustar según sea necesario)
-        float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
-        if (dotProduct > angleThreshold)
-        {
-            float distanciaToTarget = Vector3.Distance(transform.position, target.position);
-
-            if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
+            if ((castor != null && !castor.aSalvo) ) //|| (pato != null && !pato.aSalvo)) HAY QUE METER ESTO QUE NO SE OLVIDEEEEEEEEEEEEEEEEEE
             {
-                puedeVer = true;
+                animalesNoASalvo.Add(col);
+            }
+        }
 
-                return ChaseState.Finished;
+        // Verificar si hay objetivos no a salvo
+        if (animalesNoASalvo.Count > 0)
+        {
+            // Utilizar el primer objetivo no a salvo encontrado
+            Transform target = animalesNoASalvo[0].transform;
+            animalTarget = target;
+
+            Vector3 directionToTarget = (target.position - transform.position).normalized;
+
+            // Utilizar el producto punto para verificar el ángulo
+            float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
+
+            // Establecer un umbral para el ángulo (ajustar según sea necesario)
+            float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
+            if (dotProduct > angleThreshold)
+            {
+                float distanciaToTarget = Vector3.Distance(transform.position, target.position);
+
+                if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
+                {
+                    puedeVer = true;
+
+                    return ChaseState.Finished;
+                }
+                else
+                {
+                    puedeVer = false;
+                    return ChaseState.Failed;
+                }
             }
             else
             {
@@ -327,82 +333,24 @@ public ChaseState HayCaza()
                 return ChaseState.Failed;
             }
         }
-        else
+        else if (puedeVer)
         {
             puedeVer = false;
             return ChaseState.Failed;
         }
-    }
-    else if (puedeVer)
-    {
-        puedeVer = false;
         return ChaseState.Failed;
-    }
-    return ChaseState.Failed;
-
-        /*
-        //Debug.Log("ENTRA EN COMPROBAR VISION");
-        //Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
-        //bool estaASalvo;
-        //puedeVer = false;
-        //Debug.Log(rangeChecks.Length);
-        //if (rangeChecks.Length > 0)
-        //{
-        //    Transform target = rangeChecks[0].transform;
-        //    Debug.Log(target.name);
-        //    if (target.CompareTag("Pato"))
-        //    {
-        //        animalTarget = target; // ponemos el pato como objetivo
-        //        // Acceder a la variable aSalvo de Pato
-        //        estaASalvo = animalTarget.GetComponentInParent<Pato>().aSalvo;
-        //        Debug.Log("estaASalvo: " + estaASalvo);
-
-        //        Vector3 directionToTarget = (target.position - transform.position).normalized;
-        //        float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
-        //        float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
-
-        //        if (dotProduct > angleThreshold)
-        //        {
-        //            float distanciaToTarget = Vector3.Distance(transform.position, target.position);
-
-        //            if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
-        //            {
-        //                // Verificar si el tag es "Castor" o "Pato"
-        //                if (estaASalvo == false)
-        //                {
-        //                    puedeVer = true;
-        //                    return ChaseState.Finished;
-        //                }
-        //                else
-        //                {
-        //                    puedeVer = false;
-        //                    return ChaseState.Failed;
-        //                }
-        //            }
-        //            else
-        //            {
-        //                puedeVer = false;
-        //                return ChaseState.Failed;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            puedeVer = false;
-        //            return ChaseState.Failed;
-        //        }
-        //    }           
-        //}
-        //return ChaseState.Failed;
-        */
+       
     }
 
     public ChaseState HayHuevos()
     {
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radioHuevos, targetMaskHuevos);
+        Debug.Log("ENTRA EN METODO HAY HUEVOS. HAY: " + rangeChecks.Length);
 
         if (rangeChecks.Length > 0)
         {
             Transform target = rangeChecks[0].transform;
+            eggsTarget = target;
 
             Vector3 directionToTarget = (target.position - transform.position).normalized;
             float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
@@ -436,6 +384,8 @@ public ChaseState HayCaza()
             puedeVerArena = false;
             return ChaseState.Failed;
         }
+
+        Debug.Log("devuelve fail? ");
         return ChaseState.Failed;
     }
 
@@ -484,85 +434,90 @@ public ChaseState HayCaza()
 
     //Acci�n perseguir animales
    public ChaseState Chase()
-{
-    GameObject targetParent = animalTarget.gameObject.transform.parent.gameObject;
-    var castor = targetParent.GetComponent<Castor>();
-    var pato = targetParent.GetComponent<Pato>();
-
-    if (animalTarget == null)
     {
-        Debug.Log("Chase failed: no target.");
-        return ChaseState.Failed; // No hay objetivo
+        GameObject targetParent = animalTarget.gameObject.transform.parent.gameObject;
+        var castor = targetParent.GetComponent<Castor>();
+        var pato = targetParent.GetComponent<Pato>();
+
+        if (animalTarget == null)
+        {
+            Debug.Log("Chase failed: no target.");
+            return ChaseState.Failed; // No hay objetivo
+        }
+
+        if(castor.aSalvo /*|| pato.aSalvo*/)  ////////////////////////////////////ACTIVAR CUANDO SE METAN PATOS A LA ESCENAAAA///////////////////////////////////////////
+        { 
+            return ChaseState.Finished;
+        }
+        float minDist = crocNav.stoppingDistance;
+        float dist = Vector3.Distance(animalTarget.position, transform.position);
+
+        Debug.Log($"Chasing target. Current distance: {dist}, Minimum distance: {minDist}");
+
+        if (dist <= 2.0)
+        {
+            Debug.Log("Chase finished: target reached.");
+            return ChaseState.Finished; // Se ha llegado al objetivo
+        }
+
+        if (crocNav.pathPending || crocNav.remainingDistance > minDist)
+        {
+            crocNav.SetDestination(animalTarget.position); // Actualiza el destino
+            return ChaseState.Enproceso; // La persecución está en curso
+        }
+
+        Debug.Log("Chase finished: close enough to target.");
+        return ChaseState.Finished; // Se ha llegado suficientemente cerca
     }
-
-    if(castor.aSalvo){ //MUUUUUUUUUUUUUUY IMPORTANTE METER AQUI TAMBIEN AL PATO EHHHH IMPORTANTE IMPORTANTE HACER TAMBIEN pato.aSalvo EEEEEEH IMPORTANTE MIRENME
-        return ChaseState.Finished;
-    }
-    float minDist = crocNav.stoppingDistance;
-    float dist = Vector3.Distance(animalTarget.position, transform.position);
-
-    Debug.Log($"Chasing target. Current distance: {dist}, Minimum distance: {minDist}");
-
-    if (dist <= 2.0)
-    {
-        Debug.Log("Chase finished: target reached.");
-        return ChaseState.Finished; // Se ha llegado al objetivo
-    }
-
-    if (crocNav.pathPending || crocNav.remainingDistance > minDist)
-    {
-        crocNav.SetDestination(animalTarget.position); // Actualiza el destino
-        return ChaseState.Enproceso; // La persecución está en curso
-    }
-
-    Debug.Log("Chase finished: close enough to target.");
-    return ChaseState.Finished; // Se ha llegado suficientemente cerca
-}
 
     //Acci�n comer tanto huevos como animales
     public void Eat(bool animal, bool eggs)
     {
-    if (animal && animalTarget != null) // Si vamos a comer un animal y hay un objetivo animal
-    {
-        // Obtener el padre del GameObject que contiene los componentes asociados al objetivo animal
-        GameObject targetParent = animalTarget.gameObject.transform.parent.gameObject;
-        var castor = targetParent.GetComponent<Castor>();
-        var pato = targetParent.GetComponent<Pato>();
-        if (castor != null)
+        if (animal && animalTarget != null) // Si vamos a comer un animal y hay un objetivo animal
         {
-            if(!castor.aSalvo){  
-            // Destruir el GameObject del animal y su padre
-            GameObject.Destroy(targetParent);
-            // Restablecer la cantidad de hambre a cero
-            hambre = 0;
-            }
+            // Obtener el padre del GameObject que contiene los componentes asociados al objetivo animal
+            GameObject targetParent = animalTarget.gameObject.transform.parent.gameObject;
+            var castor = targetParent.GetComponent<Castor>();
+            var pato = targetParent.GetComponent<Pato>();
+            if (castor != null)
+            {
+                if(!castor.aSalvo)
+                {  
+                    // Destruir el GameObject del animal y su padre
+                    GameObject.Destroy(targetParent);
+                    // Restablecer la cantidad de hambre a cero
+                    hambre = 0;
+                }
             
-        }
-        if (pato != null)
-        {
-            if(!pato.aSalvo){
-            // Destruir el GameObject del animal y su padre
-            GameObject.Destroy(targetParent);
-            // Restablecer la cantidad de hambre a cero
-            hambre = 0;
             }
+            if (pato != null)
+            {
+                if(!pato.aSalvo)
+                {
+                    // Destruir el GameObject del animal y su padre
+                    GameObject.Destroy(targetParent);
+                    // Restablecer la cantidad de hambre a cero
+                    hambre = 0;
+                }
             
-        }
+            }
         
-    }
-    else if (eggs && eggsTarget != null) // Si vamos a comer huevos y hay un objetivo de huevos
-    {
-        // Obtener el padre del GameObject que contiene los componentes asociados al objetivo de huevos
-        GameObject targetParent = eggsTarget.gameObject.transform.parent.gameObject;
+        }
+        else if (eggs && eggsTarget != null) // Si vamos a comer huevos y hay un objetivo de huevos
+        {
+            // Obtener el padre del GameObject que contiene los componentes asociados al objetivo de huevos
+            GameObject targetParent = eggsTarget.gameObject;
 
-        // Destruir el GameObject de los huevos y su padre
-        GameObject.Destroy(targetParent);
+            StartCoroutine(ReanudarMovimiento(2.0f));
 
-        // Aumentar la energía
-        energia += 20;
-        energia = Mathf.Clamp(energia, 0f, 100f);
-    }
+            // Destruir el GameObject de los huevos y su padre
+            GameObject.Destroy(targetParent);
 
+            // Aumentar la energía
+            energia += 20;
+            energia = Mathf.Clamp(energia, 0f, 100f);
+
+        }
     
     }
 
@@ -573,15 +528,16 @@ public ChaseState HayCaza()
         {
             crocNav.SetDestination(sandTarget.position); //se pone como punto de destino la posicion de la arena
             crocNav.speed = crocNav.speed + 5f;
-            energia -= 5;
+            energiaRate = 0.1f;
             energia = Mathf.Clamp(energia, 0f, 100f);
 
             if (transform.position.x == sandTarget.position.x && transform.position.z == sandTarget.position.z)
             {
                 Debug.Log("COCODRILO EN ARENA");
                 miedo = 0; //reducimos el miedo
+                energiaRate = 0.05f;
                 crocNav.isStopped = true;//paramos el movimiento
-                StartCoroutine(ReanudarMovimiento());
+                StartCoroutine(ReanudarMovimiento(5.0f));
                 crocNav.speed = crocNav.speed - 5f;
                 return ChaseState.Finished;
             }
@@ -596,44 +552,43 @@ public ChaseState HayCaza()
             return ChaseState.Failed; //no haya animal al que perseguir
         }
     }
-    
+    public ChaseState IrAHuevos()
+    {
+        if (eggsTarget != null)
+        {
+            crocNav.SetDestination(eggsTarget.position);
+
+            if ((transform.position.x - eggsTarget.position.x <=0.5) && (transform.position.z - eggsTarget.position.z <= 0.5))
+            {
+
+                Debug.Log("COCODRILO EN HUEVOS"); 
+                crocNav.isStopped = true;
+                return ChaseState.Finished;
+
+            }
+            return ChaseState.Enproceso;
+
+        }
+        else
+        {
+            crocNav.stoppingDistance = 2;
+            return ChaseState.Failed; //no haya animal al que perseguir
+        }
+
+    }
 
     public IEnumerator EsperarLlegada()
     {
         yield return new WaitUntil(() => crocNav.remainingDistance <= crocNav.stoppingDistance); //esperar a que el pato llegue a su destino
     }
 
-    public IEnumerator ReanudarMovimiento()
+    public IEnumerator ReanudarMovimiento(float tiempo)
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(tiempo);
         crocNav.isStopped = false; //reanudamos el movimiento despues de x segundos
     }
 
-    public ChaseState IrAHuevos()
-    {
-        float stopDistance = crocNav.stoppingDistance;
-        crocNav.stoppingDistance = 0;
-        float minDist = crocNav.stoppingDistance;
-        if (eggsTarget != null)
-        {
-            float dist = Vector3.Distance(eggsTarget.position, transform.position);
-
-            if (dist > minDist)
-            {
-
-                crocNav.SetDestination(eggsTarget.position); //se pone como punto de destino la posicion de los huevos
-
-            }
-
-            return ChaseState.Finished;// se ha llegado al punto indicado 
-
-        }
-        else
-        {
-            crocNav.stoppingDistance = stopDistance;
-            return ChaseState.Failed; //no haya animal al que perseguir
-        }
-    }
+    
     #endregion
 
     #region "Otros"
