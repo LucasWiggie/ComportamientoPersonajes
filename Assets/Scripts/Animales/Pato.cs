@@ -16,7 +16,7 @@ public class Pato : MonoBehaviour
     public GameObject playerRef;
 
     public GameObject patito;
-    public int numPatitos = 2;
+
 
     public LayerMask targetMask;
     public LayerMask targetMaskNenufar;
@@ -50,6 +50,7 @@ public class Pato : MonoBehaviour
     private bool bool_Energia;
     private bool bool_Miedo;
     private bool fertil;
+    private bool descansando = false;
 
     float hambreRate = 0.2f;
     float energiaRate = 0.05f;
@@ -118,6 +119,7 @@ public class Pato : MonoBehaviour
         UtilitySystem();
         if (isDefaultMov)
         {
+            Debug.Log("Me muevo");
             movimientoAleatorio();
         }
         else if (bool_Hambre)
@@ -153,18 +155,19 @@ public class Pato : MonoBehaviour
         _energia = this.getEnergia();
         _miedo = this.getMiedo();
 
-        if (_energia < 60)
+        if (_energia < 50 || descansando)
         {
             bool_Hambre = false;
             bool_Miedo = false;
             isDefaultMov = false;
             fertil = false;
+            aSalvo = false;
             bool_Energia = true;
             BT_Hambre.SetActive(false);
             BT_Miedo.SetActive(false);
             BT_Energia.SetActive(true);
 
-        }else if (_hambre < 40 && _energia >= 70)
+        }else if (_hambre < 20 && _energia > 70)
         {
             bool_Energia = false;
             bool_Hambre = false;
@@ -182,6 +185,7 @@ public class Pato : MonoBehaviour
             bool_Hambre = false;
             isDefaultMov = false;
             fertil = false;
+            aSalvo = false;
             bool_Miedo = true;
             BT_Hambre.SetActive(false);
             BT_Energia.SetActive(false);
@@ -342,30 +346,40 @@ public class Pato : MonoBehaviour
 
         if (rangeChecks.Length > 0)
         {
-            Transform target = rangeChecks[0].transform;
-            nenufarTarget = target;
-            Vector3 directionToTarget = (target.position - transform.position).normalized;
+            Transform closestTarget = null;
+            float closestDistance = float.MaxValue;
 
-            // Utilizar el producto punto para verificar el ángulo
-            float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
-
-            // Establecer un umbral para el ángulo (ajustar según sea necesario)
-            float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
-            if (dotProduct > angleThreshold)
+            foreach (Collider col in rangeChecks)
             {
-                float distanciaToTarget = Vector3.Distance(transform.position, target.position);
+                Transform target = col.transform;
+                Vector3 directionToTarget = (target.position - transform.position).normalized;
 
-                if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
+                // Verificar que el objetivo esté dentro del ángulo de visión
+                float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
+                float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
+                if (dotProduct > angleThreshold)
                 {
-                    puedeVerNenufar = true;
-                    return ChaseState.Finished;
+                    float distanciaToTarget = Vector3.Distance(transform.position, target.position);
 
+                    // Verificar que no haya obstrucciones entre el castor y la presa
+                    if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
+                    {
+                        // Si este objetivo está más cerca que los anteriores, actualizar el más cercano
+                        if (distanciaToTarget < closestDistance)
+                        {
+                            closestDistance = distanciaToTarget;
+                            closestTarget = target;
+                        }
+                    }
                 }
-                else
-                {
-                    puedeVerNenufar = false;
-                    return ChaseState.Failed;
-                }
+            }
+
+            if (closestTarget != null)
+            {
+                // Asignar la presa más cercana como el objetivo
+                nenufarTarget = closestTarget;
+                puedeVerNenufar = true;
+                return ChaseState.Finished;
             }
             else
             {
@@ -378,6 +392,7 @@ public class Pato : MonoBehaviour
             puedeVerNenufar = false;
             return ChaseState.Failed;
         }
+
         return ChaseState.Failed;
     }
 
@@ -401,9 +416,14 @@ public class Pato : MonoBehaviour
             if (transform.position.x == nenufarTarget.position.x && transform.position.z == nenufarTarget.position.z)
             {
                 Debug.Log("pato en nenufar");
-                energia = 100;//vuelve a tener energia
-                patoNav.isStopped= true;   
-                StartCoroutine(EsperarLlegada());
+                energia += 0.08f;//vuelve a tener energia
+                descansando = true;
+                if (energia > 80)
+                {
+                    descansando = false;
+                }
+                //patoNav.isStopped= true;   
+               // StartCoroutine(EsperarLlegada());
                 return ChaseState.Finished;
             }
             Debug.Log("en proceso");
@@ -443,9 +463,9 @@ public class Pato : MonoBehaviour
             if (transform.position.x == nenufarTarget.position.x && transform.position.z == nenufarTarget.position.z)
             {
                 Debug.Log("pato en nenufar");
-                miedo = 0;//reducir el miedo
-                patoNav.isStopped = true;//paramos movimiento
-                StartCoroutine(ReaunadarMovimiento());
+                //miedo = 0;//reducir el miedo
+                //patoNav.isStopped = true;//paramos movimiento
+                //StartCoroutine(ReaunadarMovimiento());
                 patoNav.speed = patoNav.speed - 2f;
                 return ChaseState.Finished;
             }
@@ -513,7 +533,7 @@ public class Pato : MonoBehaviour
     public void GenerarPatitos()
     {
         energia -= 20;
-        hambre += 20;
+        hambre += 10;
         Instantiate(patito,transform.position,transform.rotation);
         
        

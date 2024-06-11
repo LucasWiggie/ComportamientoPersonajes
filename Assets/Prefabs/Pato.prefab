@@ -113,7 +113,6 @@ MonoBehaviour:
   angulo: 360
   playerRef: {fileID: 0}
   patito: {fileID: 5842986526443527119, guid: fcd7e96b0af642c45930bff60bce15b1, type: 3}
-  numPatitos: 2
   targetMask:
     serializedVersion: 2
     m_Bits: 256
@@ -177,7 +176,6 @@ GameObject:
   - component: {fileID: 58316560993812071}
   - component: {fileID: 2481025263309032625}
   - component: {fileID: 255674509467123020}
-  - component: {fileID: 5380822691933397978}
   - component: {fileID: 2437773349234617882}
   - component: {fileID: 7808841930528568980}
   m_Layer: 6
@@ -214,7 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 7808841930528568980}
+  selectedEditorNode: {fileID: 0}
   repeatOnFinish: 1
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
@@ -266,7 +264,6 @@ MonoBehaviour:
   children:
   - {fileID: 2481025263309032625}
   - {fileID: 7808841930528568980}
-  - {fileID: 5380822691933397978}
   - {fileID: 2437773349234617882}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -321,31 +318,6 @@ MonoBehaviour:
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
---- !u!114 &5380822691933397978
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1485185606296902250}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bb6ece130e719c4191dd6cb28d8a04d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: MPato_HaySal
-  rect:
-    serializedVersion: 2
-    x: 400
-    y: 400
-    width: 160
-    height: 45
-  parent: {fileID: 58316560993812071}
-  children: []
-  behaviourTree: {fileID: 0}
-  runtimePriority: 0
-  breakpoint: 0
-  abort: 0
 --- !u!114 &2437773349234617882
 MonoBehaviour:
   m_ObjectHideFlags: 0
