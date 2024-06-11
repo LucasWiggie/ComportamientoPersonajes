@@ -25,7 +25,7 @@ public class Castor : MonoBehaviour
 
     //Lista con los cocodrilos cercanos al castor
     private List<Transform> cocodrilosCercanos = new List<Transform>();
-    public float distanciaMaxima = 1f;
+    public float distanciaMaxima = 2f;
 
 
 
@@ -191,61 +191,69 @@ public class Castor : MonoBehaviour
     }
 
     public ChaseState ComprobarVision()
-{
-    Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
-    Debug.Log("cuenta " + rangeChecks.Length);
-
-    if (rangeChecks.Length > 0)
     {
-        Transform closestTarget = null;
-        float closestDistance = float.MaxValue;
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
+        Debug.Log("cuenta " + rangeChecks.Length);
 
-        foreach (Collider col in rangeChecks)
+        if (rangeChecks.Length > 0)
         {
-            Transform target = col.transform;
-            Vector3 directionToTarget = (target.position - transform.position).normalized;
+            Transform closestTarget = null;
+            float closestDistance = float.MaxValue;
 
-            // Verificar que el objetivo esté dentro del ángulo de visión
-            float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
-            float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
-            if (dotProduct > angleThreshold)
+            foreach (Collider col in rangeChecks)
             {
-                float distanciaToTarget = Vector3.Distance(transform.position, target.position);
-
-                // Verificar que no haya obstrucciones entre el castor y el palo
-                if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
+                Palo palo = col.GetComponent<Palo>();
+                if (palo != null && !palo.EstaReservado())
                 {
-                    // Si este objetivo está más cerca que los anteriores, actualizar el más cercano
-                    if (distanciaToTarget < closestDistance)
+                    Transform target = palo.transform;
+                    Vector3 directionToTarget = (target.position - transform.position).normalized;
+
+                    // Verificar que el objetivo esté dentro del ángulo de visión
+                    float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
+                    float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
+                    if (dotProduct > angleThreshold)
                     {
-                        closestDistance = distanciaToTarget;
-                        closestTarget = target;
+                        float distanciaToTarget = Vector3.Distance(transform.position, target.position);
+
+                        // Verificar que no haya obstrucciones entre el castor y el palo
+                        if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
+                        {
+                            // Si este objetivo está más cerca que los anteriores, actualizar el más cercano
+                            if (distanciaToTarget < closestDistance)
+                            {
+                                closestDistance = distanciaToTarget;
+                                closestTarget = target;
+                            }
+                        }
                     }
                 }
             }
-        }
 
-        if (closestTarget != null)
-        {
-            // Asignar el palo más cercano como el objetivo
-            paloTarget = closestTarget;
-            puedeVer = true;
-            return ChaseState.Finished;
+            if (closestTarget != null)
+            {
+                // Asignar el palo más cercano como el objetivo y reservarlo
+                paloTarget = closestTarget;
+                Palo paloComponent = closestTarget.GetComponent<Palo>();
+                if (paloComponent.Reservar(this))
+                {
+                    puedeVer = true;
+                    return ChaseState.Finished;
+                }
+            }
+            else
+            {
+                puedeVer = false;
+                return ChaseState.Failed;
+            }
         }
-        else
+        else if (puedeVer)
         {
             puedeVer = false;
             return ChaseState.Failed;
         }
-    }
-    else if (puedeVer)
-    {
-        puedeVer = false;
+
         return ChaseState.Failed;
     }
-
-    return ChaseState.Failed;
-}
 
     public ChaseState HayPresa()
     {
