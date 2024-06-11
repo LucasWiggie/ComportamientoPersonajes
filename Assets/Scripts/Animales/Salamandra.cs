@@ -17,6 +17,7 @@ public class Salamandra : MonoBehaviour
     public LayerMask obstructionMask;
     public LayerMask targetMaskHuevos;
     public LayerMask targetMaskArena;
+    public LayerMask huirCocodrilo;
     public bool puedeVer;
 
     public float hambre; //Rango 0-100 las 3
@@ -68,6 +69,11 @@ public class Salamandra : MonoBehaviour
     private Transform eggsTarget;//huevos objetivo
     private Transform sandTarget;//arena
 
+    //Peligros
+    private List<Transform> patosCercanos = new List<Transform>();
+    public float distanciaMaxima = 2f;
+
+
     //Getters y Setters
     public float getHambre()
     {
@@ -110,7 +116,7 @@ public class Salamandra : MonoBehaviour
 
         hambre = 60;
         energia = 100;
-        miedo = 51;
+        miedo = 0;
         temorHuevos = 0;
 
         _uHambre = hambre;
@@ -125,6 +131,8 @@ public class Salamandra : MonoBehaviour
     private void Update()
     {
         UpdateVariables();
+        DetectarPatosCercanos();
+        ActualizarMiedo();
     }
 
     private void FixedUpdate()
@@ -412,6 +420,31 @@ public class Salamandra : MonoBehaviour
             return ChaseState.Failed; //no haya animal al que perseguir
         }
     }
+
+    void DetectarPatosCercanos()
+    {
+        patosCercanos.Clear();
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, distanciaMaxima, huirCocodrilo);
+        foreach (Collider collider in colliders)
+        {
+            patosCercanos.Add(collider.transform);
+        }
+    }
+
+    void ActualizarMiedo()
+    {
+        miedo = 0f;
+
+        foreach (Transform objetivo in patosCercanos)
+        {
+            float distancia = Vector3.Distance(transform.position, objetivo.position);
+            float miedoIncremental = Mathf.Clamp01(1 - distancia / distanciaMaxima) * 100; // Calcular el miedo incremental normalizado
+
+            miedo = Mathf.Max(miedo, miedoIncremental); // Mantener el mayor valor de miedo
+        }
+    }
+
 
     public IEnumerator ReanudarMovimiento()
     {
