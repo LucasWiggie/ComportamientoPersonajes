@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.GraphicsBuffer;
 
 public class Salamandra : MonoBehaviour
 {
@@ -335,28 +336,38 @@ public class Salamandra : MonoBehaviour
 
         if (rangeChecks.Length > 0)
         {
-            Transform target = rangeChecks[0].transform;
-            sandTarget = target;
+            Transform closestTarget = null;
+            float closestDistance = float.MaxValue;
 
-            Vector3 directionToTarget = (target.position - transform.position).normalized;
-            float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
-            float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
-
-            if (dotProduct > angleThreshold)
+            foreach (Collider col in rangeChecks)
             {
-                float distanceToTarget = Vector3.Distance(transform.position, target.position);
+                Transform target = col.transform;
+                Vector3 directionToTarget = (target.position - transform.position).normalized;
 
-                if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
-                {
-                    puedeVer = true;
-                    return ChaseState.Finished;
+                float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
+                float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
 
-                }
-                else
+                if (dotProduct > angleThreshold)
                 {
-                    puedeVer = false;
-                    return ChaseState.Failed;
+                    float distanceToTarget = Vector3.Distance(transform.position, target.position);
+
+                    if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
+                    {
+                        if (distanceToTarget < closestDistance)
+                        {
+                            closestDistance = distanceToTarget;
+                            closestTarget = target;
+                        }
+                    }
                 }
+            }
+
+            if (closestTarget != null)
+            {
+                // Asignar la presa más cercana como el objetivo
+                sandTarget = closestTarget;
+                puedeVer = true;
+                return ChaseState.Finished;
             }
             else
             {

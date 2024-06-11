@@ -248,60 +248,60 @@ public class Castor : MonoBehaviour
 }
 
     public ChaseState HayPresa()
-{
-    Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radioPresa, targetMaskPresa);
-
-    if (rangeChecks.Length > 0)
     {
-        Transform closestTarget = null;
-        float closestDistance = float.MaxValue;
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radioPresa, targetMaskPresa);
 
-        foreach (Collider col in rangeChecks)
+        if (rangeChecks.Length > 0)
         {
-            Transform target = col.transform;
-            Vector3 directionToTarget = (target.position - transform.position).normalized;
+            Transform closestTarget = null;
+            float closestDistance = float.MaxValue;
 
-            // Verificar que el objetivo esté dentro del ángulo de visión
-            float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
-            float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
-            if (dotProduct > angleThreshold)
+            foreach (Collider col in rangeChecks)
             {
-                float distanciaToTarget = Vector3.Distance(transform.position, target.position);
+                Transform target = col.transform;
+                Vector3 directionToTarget = (target.position - transform.position).normalized;
 
-                // Verificar que no haya obstrucciones entre el castor y la presa
-                if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
+                // Verificar que el objetivo esté dentro del ángulo de visión
+                float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
+                float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
+                if (dotProduct > angleThreshold)
                 {
-                    // Si este objetivo está más cerca que los anteriores, actualizar el más cercano
-                    if (distanciaToTarget < closestDistance)
+                    float distanciaToTarget = Vector3.Distance(transform.position, target.position);
+
+                    // Verificar que no haya obstrucciones entre el castor y la presa
+                    if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
                     {
-                        closestDistance = distanciaToTarget;
-                        closestTarget = target;
+                        // Si este objetivo está más cerca que los anteriores, actualizar el más cercano
+                        if (distanciaToTarget < closestDistance)
+                        {
+                            closestDistance = distanciaToTarget;
+                            closestTarget = target;
+                        }
                     }
                 }
             }
-        }
 
-        if (closestTarget != null)
-        {
-            // Asignar la presa más cercana como el objetivo
-            presaTarget = closestTarget;
-            puedeVerPresa = true;
-            return ChaseState.Finished;
+            if (closestTarget != null)
+            {
+                // Asignar la presa más cercana como el objetivo
+                presaTarget = closestTarget;
+                puedeVerPresa = true;
+                return ChaseState.Finished;
+            }
+            else
+            {
+                puedeVerPresa = false;
+                return ChaseState.Failed;
+            }
         }
-        else
+        else if (puedeVerPresa)
         {
             puedeVerPresa = false;
             return ChaseState.Failed;
         }
-    }
-    else if (puedeVerPresa)
-    {
-        puedeVerPresa = false;
+
         return ChaseState.Failed;
     }
-
-    return ChaseState.Failed;
-}
 
 
     public ChaseState irPalo()
