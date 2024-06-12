@@ -14,12 +14,10 @@ namespace CustomNodes
 public class Cast_IrPalo : Leaf
     {
         private Castor castor;
-        private bool hasEnteredRunningState = false;
 
         private void Awake()
         {
             castor = GetComponentInParent<Castor>();
-            if (castor == null) { Debug.Log("no hay castor en irPalo"); }
         }
 
 
@@ -36,15 +34,6 @@ public class Cast_IrPalo : Leaf
                 }
             }
 
-            if (castor == null)
-            {
-                castor = GetComponentInParent<Castor>();
-                if (castor == null)
-                {
-                    Debug.LogError("castorScript is still null!");
-                    return NodeResult.failure;
-                }
-            }
 
             Castor.ChaseState estadoHuida = castor.irPalo();
             switch (estadoHuida)

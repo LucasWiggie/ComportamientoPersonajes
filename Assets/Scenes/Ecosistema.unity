@@ -1744,7 +1744,7 @@ MonoBehaviour:
   nCastores: 2
   nSalamandras: 0
   nPatos: 0
-  nPalos: 2
+  nPalos: 5
   nMoscas: 0
 --- !u!4 &362074959
 Transform:

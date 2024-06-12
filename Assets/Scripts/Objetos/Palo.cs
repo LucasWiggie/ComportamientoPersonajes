@@ -3,22 +3,18 @@ using UnityEngine;
 public class Palo : MonoBehaviour
 {
     // Referencia al castor que ha reservado este palo
-    public Castor Reservado { get; private set; }
+    public Castor castorReservante; // Referencia al castor que ha recogido este palo
 
-    // Método para reservar el palo
-    public bool Reservar(Castor castor)
-    {
-        if (Reservado == null)
-        {
-            Reservado = castor;
-            return true;
-        }
-        return false;
-    }
+    // Indica si el palo está siendo recogido por otro castor
+    public bool siendoRecogido = false;
 
-    // Método para verificar si está reservado
-    public bool EstaReservado()
+    // Método para que el palo realice acciones cuando es recogido por un castor
+    public void RecogidoPorCastor()
     {
-        return Reservado != null;
+        // Aquí puedes realizar cualquier acción necesaria antes de destruir el palo
+        // Por ejemplo, desactivar cualquier comportamiento del palo, reproducir un efecto de sonido, etc.
+        
+        // Luego, destruye el palo
+        Destroy(gameObject);
     }
 }

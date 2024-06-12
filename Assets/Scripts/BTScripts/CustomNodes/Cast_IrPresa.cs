@@ -13,12 +13,10 @@ namespace CustomNodes
     {
 
         private Castor castor;
-        private bool hasEnteredRunningState = false;
 
         private void Awake()
         {
             castor = GetComponentInParent<Castor>();
-            if (castor == null) { Debug.Log("no hay castor en irPalo"); }
         }
 
 
