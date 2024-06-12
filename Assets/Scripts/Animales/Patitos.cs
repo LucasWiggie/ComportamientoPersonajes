@@ -50,7 +50,7 @@ public class Patitos : MonoBehaviour
             Vector3 randomPoint = RandomNavmeshLocation(60f); // Obtener un punto aleatorio en el NavMesh
             patitoNav.SetDestination(randomPoint); // Establecer el punto como destino
             //Debug.Log("pato se mueve");
-            nextRandomMovementTime = Time.time + movementInterval; // Actualizar el tiempo para el próximo movimiento
+            nextRandomMovementTime = Time.time + movementInterval; // Actualizar el tiempo para el prï¿½ximo movimiento
         }
     }
 
@@ -58,7 +58,7 @@ public class Patitos : MonoBehaviour
     private float nextRandomMovementTime = 0f;
     public float movementInterval = 3f;
 
-    // Función para encontrar un punto aleatorio en el NavMesh dentro de un radio dado
+    // Funciï¿½n para encontrar un punto aleatorio en el NavMesh dentro de un radio dado
     private Vector3 RandomNavmeshLocation(float radius)
     {
         Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
@@ -87,7 +87,7 @@ public class Patitos : MonoBehaviour
             // Obtener el GameObject padre del colisionador
             GameObject targetParent = col.transform.parent != null ? col.transform.parent.gameObject : col.gameObject;
 
-            // Verificar si el objetivo es una salamandra y si no está a salvo
+            // Verificar si el objetivo es una salamandra y si no estï¿½ a salvo
             Cocodrilo cocodrilo = targetParent.GetComponent<Cocodrilo>();
 
             if ((cocodrilo != null)) //&& !cocodrilo.aSalvo)) //PONER CUANDO SE PUEDA PONER A SALVO UN COCODRILO
@@ -107,10 +107,10 @@ public class Patitos : MonoBehaviour
 
             Vector3 directionToTarget = (target.position - transform.position).normalized;
 
-            // Utilizar el producto punto para verificar el ángulo
+            // Utilizar el producto punto para verificar el ï¿½ngulo
             float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
 
-            // Establecer un umbral para el ángulo (ajustar según sea necesario)
+            // Establecer un umbral para el ï¿½ngulo (ajustar segï¿½n sea necesario)
             float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
             if (dotProduct > angleThreshold)
             {
@@ -145,39 +145,28 @@ public class Patitos : MonoBehaviour
 
     public void PerseguirCroc()
     {
-        GameObject targetParent = crocTarget.gameObject.transform.parent.gameObject;
-        var cocodrilo = targetParent.GetComponent<Cocodrilo>();
-
-
         if (crocTarget == null)
         {
-            Debug.Log("Chase failed: no target");
-            
+            Debug.LogError("PerseguirCroc failed: crocTarget is null.");
+            return;
         }
 
-        /*if (cocodrilo.aSalvo) //si esta se ha resguardado PONER CUANDO CROC ASALVO
-        {
-            Debug.Log("Chase failed: resguardado");
-        }*/
         float minDist = patitoNav.stoppingDistance;
         float dist = Vector3.Distance(crocTarget.position, transform.position);
 
-        Debug.Log($"Chasing target. Current distance: {dist}, Minimum distance: {minDist}");
-
-        if (dist <= 2.0)
+        if (dist <= 2)
         {
             Debug.Log("Chase finished: target reached.");
-            ComerCroc(); // Se ha llegado al objetivo, llamamos a comerCroc
+            ComerCroc(); // Se ha llegado al objetivo, llamar a ComerCroc
         }
-
-        if (patitoNav.pathPending || patitoNav.remainingDistance > minDist)//si no se ha llegado al objetivo
+        else
         {
-            Debug.Log("En proceso");
-            patitoNav.SetDestination(crocTarget.position); // Actualiza el destino
-            Debug.Log("En proceso");
+            if (!patitoNav.pathPending)
+            {
+                Debug.Log("Chasing croc target.");
+                patitoNav.SetDestination(crocTarget.position); // Actualiza el destino
+            }
         }
-
-        Debug.Log("Chase finished: close enough to target.");
     }
 
     public void ComerCroc()

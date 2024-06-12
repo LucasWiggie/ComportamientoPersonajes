@@ -245,7 +245,7 @@ public class Pato : MonoBehaviour
             Vector3 randomPoint = RandomNavmeshLocation(60f); // Obtener un punto aleatorio en el NavMesh
             patoNav.SetDestination(randomPoint); // Establecer el punto como destino
             //Debug.Log("pato se mueve");
-            nextRandomMovementTime = Time.time + movementInterval; // Actualizar el tiempo para el próximo movimiento
+            nextRandomMovementTime = Time.time + movementInterval; // Actualizar el tiempo para el prï¿½ximo movimiento
         }
     }
 
@@ -253,7 +253,7 @@ public class Pato : MonoBehaviour
     private float nextRandomMovementTime = 0f;
     public float movementInterval = 3f;
 
-    // Función para encontrar un punto aleatorio en el NavMesh dentro de un radio dado
+    // Funciï¿½n para encontrar un punto aleatorio en el NavMesh dentro de un radio dado
     private Vector3 RandomNavmeshLocation(float radius)
     {
         Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
@@ -303,7 +303,7 @@ public class Pato : MonoBehaviour
             // Obtener el GameObject padre del colisionador
             GameObject targetParent = col.transform.parent != null ? col.transform.parent.gameObject : col.gameObject;
 
-            // Verificar si el objetivo es una salamandra y si no está a salvo
+            // Verificar si el objetivo es una salamandra y si no estï¿½ a salvo
             Salamandra salamandra = targetParent.GetComponent<Salamandra>();
 
             if ((salamandra != null && !salamandra.aSalvo)) 
@@ -321,10 +321,10 @@ public class Pato : MonoBehaviour
 
             Vector3 directionToTarget = (target.position - transform.position).normalized;
 
-            // Utilizar el producto punto para verificar el ángulo
+            // Utilizar el producto punto para verificar el ï¿½ngulo
             float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
 
-            // Establecer un umbral para el ángulo (ajustar según sea necesario)
+            // Establecer un umbral para el ï¿½ngulo (ajustar segï¿½n sea necesario)
             float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
             if (dotProduct > angleThreshold)
             {
@@ -370,7 +370,7 @@ public class Pato : MonoBehaviour
                 Transform target = col.transform;
                 Vector3 directionToTarget = (target.position - transform.position).normalized;
 
-                // Verificar que el objetivo esté dentro del ángulo de visión
+                // Verificar que el objetivo estï¿½ dentro del ï¿½ngulo de visiï¿½n
                 float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
                 float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
                 if (dotProduct > angleThreshold)
@@ -380,7 +380,7 @@ public class Pato : MonoBehaviour
                     // Verificar que no haya obstrucciones entre el castor y la presa
                     if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
                     {
-                        // Si este objetivo está más cerca que los anteriores, actualizar el más cercano
+                        // Si este objetivo estï¿½ mï¿½s cerca que los anteriores, actualizar el mï¿½s cercano
                         if (distanciaToTarget < closestDistance)
                         {
                             closestDistance = distanciaToTarget;
@@ -392,7 +392,7 @@ public class Pato : MonoBehaviour
 
             if (closestTarget != null)
             {
-                // Asignar la presa más cercana como el objetivo
+                // Asignar la presa mï¿½s cercana como el objetivo
                 nenufarTarget = closestTarget;
                 puedeVerNenufar = true;
                 return ChaseState.Finished;
@@ -412,7 +412,7 @@ public class Pato : MonoBehaviour
         return ChaseState.Failed;
     }
 
-    //Acción ir a nenufares
+    //Acciï¿½n ir a nenufares
     public enum ChaseState
     {
         Finished,
@@ -483,61 +483,70 @@ public class Pato : MonoBehaviour
         }
     }
 
-    //Acción Comer Salamandra
+    //Acciï¿½n Comer Salamandra
     public void ComerSal()
     {
-        // Obtener el padre del GameObject que contiene los componentes asociados al objetivo animal
-        GameObject targetParent = salTarget.gameObject.transform.parent.gameObject;
+        // Verificar si salTarget no es null
+        if (salTarget == null)
+        {
+            return; 
+        }
+
+        GameObject targetParent = salTarget.gameObject;
         var salamandra = targetParent.GetComponent<Salamandra>();
+
         if (salamandra != null)
         {
             if (!salamandra.aSalvo)
             {
-                Destroy(salTarget.gameObject);//destruimos el gameobject de la salamandra que se ha comido
-                hambre -= 50;//baja el hambre
-             
+                float distanciaMinimaParaComer = 2.0f; 
+                float distanciaActual = Vector3.Distance(salTarget.position, transform.position);
+
+                if (distanciaActual <= distanciaMinimaParaComer)
+                {
+                    Destroy(salTarget.gameObject); // Destruir el GameObject de la salamandra que se ha comido
+                    hambre -= 50; // Bajar el hambre
+                }
+
             }
-             
         }
-       
     }
 
-    //Acción Perseguir Salamandra
+    //Acciï¿½n Perseguir Salamandra
     public ChaseState PerseguirSal()
     {
-        GameObject targetParent = salTarget.gameObject.transform.parent.gameObject;
-        var salamandra = targetParent.GetComponent<Salamandra>();
- 
-
         if (salTarget == null)
         {
-            Debug.Log("Chase failed: no target.");
-            return ChaseState.Failed; // No hay objetivo
+            return ChaseState.Failed; 
         }
 
-        if (salamandra.aSalvo) //si esta se ha resguardado
+        GameObject targetParent = salTarget.gameObject;
+        var salamandra = targetParent.GetComponent<Salamandra>();
+
+        if (salamandra == null)
+        {
+            return ChaseState.Failed;
+        }
+
+        if (salamandra.aSalvo) 
         {
             return ChaseState.Finished;
         }
-        float minDist = patoNav.stoppingDistance;
-        float dist = Vector3.Distance(salTarget.position, transform.position);
 
-        Debug.Log($"Chasing target. Current distance: {dist}, Minimum distance: {minDist}");
+        float distanciaMinimaParaComer = 2.0f; 
+        float distanciaActual = Vector3.Distance(salTarget.position, transform.position);
 
-        if (dist <= 2.0)
+        Debug.Log($"Chasing target. Current distance: {distanciaActual}, Minimum distance: {distanciaMinimaParaComer}");
+
+        if (distanciaActual > distanciaMinimaParaComer)
         {
-            Debug.Log("Chase finished: target reached.");
-            return ChaseState.Finished; // Se ha llegado al objetivo
+            patoNav.SetDestination(salTarget.position); 
+            return ChaseState.Enproceso; 
         }
-
-        if (patoNav.pathPending || patoNav.remainingDistance > minDist)//si no se ha llegado al objetivo
+        else
         {
-            patoNav.SetDestination(salTarget.position); // Actualiza el destino
-            return ChaseState.Enproceso; // La persecución está en curso
+            return ChaseState.Finished; // Suficientemente cerca para intentar comer
         }
-
-        Debug.Log("Chase finished: close enough to target.");
-        return ChaseState.Finished; // Se ha llegado suficientemente cerca
     }
 
     public void GenerarPatitos()
