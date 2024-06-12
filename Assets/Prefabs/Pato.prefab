@@ -128,7 +128,7 @@ MonoBehaviour:
   puedeVer: 0
   puedeVerNenufar: 0
   distanciaMaxima: 25
-  hambre: 60
+  hambre: 45
   energia: 100
   miedo: 0
   _hambre: 0

@@ -352,6 +352,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20bdaf51b1b8a4a48a7d7bddaf539906, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  radio: 300
+  angulo: 360
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 2048
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 0
+  lifeTime: 60
+  puedeVer: 0
   movementInterval: 3
 --- !u!195 &243555104146194913
 NavMeshAgent:

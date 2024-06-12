@@ -108,9 +108,9 @@ public class Pato : MonoBehaviour
     }
     private void Update()
     {
-        UpdateVariables();
-        DetectarObjetivos();
-        ActualizarMiedo();
+        UpdateVariables();//actualizamos necesidades
+        DetectarObjetivos();//detectamos cocodrilos
+        ActualizarMiedo();//actualizamos miedo
 
     }
 
@@ -143,10 +143,6 @@ public class Pato : MonoBehaviour
             GenerarPatitos();
         }
 
-        if (dirtyUS)
-        {
-
-        }
     }
 
     public void UtilitySystem() 
@@ -155,7 +151,7 @@ public class Pato : MonoBehaviour
         _energia = this.getEnergia();
         _miedo = this.getMiedo();
 
-        if (_energia < 50 || descansando)
+        if (_energia < 50 || descansando) //si energia baja o descansando -> arbol de energia
         {
             bool_Hambre = false;
             bool_Miedo = false;
@@ -167,7 +163,7 @@ public class Pato : MonoBehaviour
             BT_Miedo.SetActive(false);
             BT_Energia.SetActive(true);
 
-        }else if (_hambre < 20 && _energia > 70)
+        }else if (_hambre < 20 && _energia > 70) //si sufienciente energia y poca hambre -> generar patitos
         {
             bool_Energia = false;
             bool_Hambre = false;
@@ -179,7 +175,7 @@ public class Pato : MonoBehaviour
             BT_Hambre.SetActive(false);
             BT_Miedo.SetActive(false);
         }
-        else if (_miedo > 50)
+        else if (_miedo > 50)//si miedo -> arbol de miedo
         {
             bool_Energia = false;
             bool_Hambre = false;
@@ -191,7 +187,7 @@ public class Pato : MonoBehaviour
             BT_Energia.SetActive(false);
             BT_Miedo.SetActive(true);
         }
-        else if (_hambre > 50)
+        else if (_hambre > 50)// si hambre -> arbol de hambre
         {
             bool_Energia = false;
             bool_Miedo = false;
@@ -203,7 +199,7 @@ public class Pato : MonoBehaviour
             BT_Energia.SetActive(false);
             BT_Hambre.SetActive(true);
         }
-        else
+        else //si nada -> movimiento estandar
         {
             bool_Energia = false;
             bool_Hambre = false;
@@ -299,10 +295,30 @@ public class Pato : MonoBehaviour
     {
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
 
-        if (rangeChecks.Length > 0)
+        //salamandras que no estan resguardadas
+        List<Collider> salamandrasNoASalvo = new List<Collider>();
+
+        foreach (Collider col in rangeChecks)
         {
-            Transform target = rangeChecks[0].transform;
-            salTarget= target;  
+            // Obtener el GameObject padre del colisionador
+            GameObject targetParent = col.transform.parent != null ? col.transform.parent.gameObject : col.gameObject;
+
+            // Verificar si el objetivo es una salamandra y si no está a salvo
+            Salamandra salamandra = targetParent.GetComponent<Salamandra>();
+
+            if ((salamandra != null && !salamandra.aSalvo)) 
+            {
+                salamandrasNoASalvo.Add(col);
+            }
+        }
+
+        // Verificar si hay objetivos no a salvo
+        if (salamandrasNoASalvo.Count > 0)
+        {
+            // Utilizar el primer objetivo no a salvo encontrado
+            Transform target = salamandrasNoASalvo[0].transform;
+            salTarget = target;
+
             Vector3 directionToTarget = (target.position - transform.position).normalized;
 
             // Utilizar el producto punto para verificar el ángulo
@@ -317,8 +333,8 @@ public class Pato : MonoBehaviour
                 if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
                 {
                     puedeVer = true;
-                    return ChaseState.Finished;
 
+                    return ChaseState.Finished;
                 }
                 else
                 {
@@ -337,7 +353,7 @@ public class Pato : MonoBehaviour
             puedeVer = false;
             return ChaseState.Failed;
         }
-        return ChaseState.Failed; 
+        return ChaseState.Failed;
     }
 
     public ChaseState HayNenufares()
@@ -418,12 +434,10 @@ public class Pato : MonoBehaviour
                 Debug.Log("pato en nenufar");
                 energia += 0.08f;//vuelve a tener energia
                 descansando = true;
-                if (energia > 80)
+                if (energia > 80)//una cantidad necesaria de energia que reponer para poder salir del nenufar, evitando cambios de comportamiento por cte por el cambio del valor de energia en la franja de cansancio
                 {
                     descansando = false;
                 }
-                //patoNav.isStopped= true;   
-               // StartCoroutine(EsperarLlegada());
                 return ChaseState.Finished;
             }
             Debug.Log("en proceso");
@@ -436,17 +450,6 @@ public class Pato : MonoBehaviour
             Debug.Log("nenufar null");
             return ChaseState.Failed; 
         }
-    }
-    //Esperar a llegar al destino
-    public IEnumerator EsperarLlegada()
-    {
-        yield return new WaitUntil(()=>patoNav.remainingDistance <= patoNav.stoppingDistance); //esperar a que el pato llegue a su destino
-    }
-    //Esperar x  tiempo
-    public IEnumerator ReaunadarMovimiento()
-    {
-        yield return new WaitForSeconds(5f);
-        patoNav.isStopped = false; //reanudamos el movimiento despues de x segundos
     }
 
     public ChaseState HuirNenufares()
@@ -463,9 +466,6 @@ public class Pato : MonoBehaviour
             if (transform.position.x == nenufarTarget.position.x && transform.position.z == nenufarTarget.position.z)
             {
                 Debug.Log("pato en nenufar");
-                //miedo = 0;//reducir el miedo
-                //patoNav.isStopped = true;//paramos movimiento
-                //StartCoroutine(ReaunadarMovimiento());
                 patoNav.speed = patoNav.speed - 2f;
                 return ChaseState.Finished;
             }
@@ -484,57 +484,67 @@ public class Pato : MonoBehaviour
     }
 
     //Acción Comer Salamandra
-    public ChaseState ComerSal()
+    public void ComerSal()
     {
-        if (salTarget != null)
+        // Obtener el padre del GameObject que contiene los componentes asociados al objetivo animal
+        GameObject targetParent = salTarget.gameObject.transform.parent.gameObject;
+        var salamandra = targetParent.GetComponent<Salamandra>();
+        if (salamandra != null)
         {
-            Destroy(salTarget.gameObject);//destruimos el gameobject de la salamandra que se ha comido
-            hambre -= 30;//baja el hambre
-            return ChaseState.Finished;
+            if (!salamandra.aSalvo)
+            {
+                Destroy(salTarget.gameObject);//destruimos el gameobject de la salamandra que se ha comido
+                hambre -= 50;//baja el hambre
+             
+            }
+             
         }
-        else
-        {
-            Debug.Log("no hay salamandra");
-            return ChaseState.Failed;
-        }
+       
     }
 
     //Acción Perseguir Salamandra
     public ChaseState PerseguirSal()
     {
+        GameObject targetParent = salTarget.gameObject.transform.parent.gameObject;
+        var salamandra = targetParent.GetComponent<Salamandra>();
+ 
+
+        if (salTarget == null)
+        {
+            Debug.Log("Chase failed: no target.");
+            return ChaseState.Failed; // No hay objetivo
+        }
+
+        if (salamandra.aSalvo) //si esta se ha resguardado
+        {
+            return ChaseState.Finished;
+        }
         float minDist = patoNav.stoppingDistance;
-        if (salTarget != null)
+        float dist = Vector3.Distance(salTarget.position, transform.position);
+
+        Debug.Log($"Chasing target. Current distance: {dist}, Minimum distance: {minDist}");
+
+        if (dist <= 2.0)
         {
-            float dist = Vector3.Distance(salTarget.position, transform.position);
-            patoNav.speed = patoNav.speed + 1;
-            while (dist > minDist)
-            {
-                if (salTarget == null) //si el animal se ha muerto por el camino
-                {
-                    break;//salimos del bucle
-                }
-
-                patoNav.SetDestination(salTarget.position); //se pone como punto de destino la posicion de la salamandra
-
-            }
-            patoNav.speed--;
-            return ChaseState.Finished;// se ha llegado al punto indicado aunque la salamandra ya no este (muerto o escondido)
-
-
-
+            Debug.Log("Chase finished: target reached.");
+            return ChaseState.Finished; // Se ha llegado al objetivo
         }
-        else
+
+        if (patoNav.pathPending || patoNav.remainingDistance > minDist)//si no se ha llegado al objetivo
         {
-            patoNav.speed--;
-            return ChaseState.Failed; //no haya animal al que perseguir
+            patoNav.SetDestination(salTarget.position); // Actualiza el destino
+            return ChaseState.Enproceso; // La persecución está en curso
         }
+
+        Debug.Log("Chase finished: close enough to target.");
+        return ChaseState.Finished; // Se ha llegado suficientemente cerca
     }
 
     public void GenerarPatitos()
     {
-        energia -= 20;
+        energia -= 20;//resta energfia y aumenta hambre
         hambre += 10;
-        Instantiate(patito,transform.position,transform.rotation);
+        Instantiate(patito,transform.position,transform.rotation); //se generarn patitos en la posicion actual
         
        
     }
