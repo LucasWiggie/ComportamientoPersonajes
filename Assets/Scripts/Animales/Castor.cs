@@ -47,6 +47,7 @@ public class Castor : MonoBehaviour
     public bool cogePalo = false;
     public bool dejaPalo = false;
     public bool llegaDestino = false;
+    private static List<Transform> palosRecogidos = new List<Transform>();
 
 
     //NavMeshAgent
@@ -193,59 +194,63 @@ public class Castor : MonoBehaviour
 
     public ChaseState ComprobarVision()
     {
-    Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
-    Debug.Log("cuenta " + rangeChecks.Length);
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
+        Debug.Log("cuenta " + rangeChecks.Length);
 
-    if (rangeChecks.Length > 0)
-    {
-        Transform closestTarget = null;
-        float closestDistance = float.MaxValue;
-
-        foreach (Collider col in rangeChecks)
+        if (rangeChecks.Length > 0)
         {
-            Transform target = col.transform;
-            Vector3 directionToTarget = (target.position - transform.position).normalized;
+            Transform closestTarget = null;
+            float closestDistance = float.MaxValue;
 
-            // Verificar que el objetivo esté dentro del ángulo de visión
-            float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
-            float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
-            if (dotProduct > angleThreshold)
+            foreach (Collider col in rangeChecks)
             {
-                float distanciaToTarget = Vector3.Distance(transform.position, target.position);
+                Transform target = col.transform;
+                Vector3 directionToTarget = (target.position - transform.position).normalized;
 
-                // Verificar que no haya obstrucciones entre el castor y el palo
-                if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
+                // Verificar que el objetivo esté dentro del ángulo de visión
+                float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
+                float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
+                if (dotProduct > angleThreshold)
                 {
-                    // Si este objetivo está más cerca que los anteriores, actualizar el más cercano
-                    if (distanciaToTarget < closestDistance)
+                    float distanciaToTarget = Vector3.Distance(transform.position, target.position);
+
+                    // Verificar que no haya obstrucciones entre el castor y el palo
+                    if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
                     {
-                        closestDistance = distanciaToTarget;
-                        closestTarget = target;
+                        // Verificar si el palo ha sido recogido por otro castor
+                        if (!Castor.PaloRecogido(target))
+                        {
+                            // Si este objetivo está más cerca que los anteriores, actualizar el más cercano
+                            if (distanciaToTarget < closestDistance)
+                            {
+                                closestDistance = distanciaToTarget;
+                                closestTarget = target;
+                            }
+                        }
                     }
                 }
             }
-        }
 
-        if (closestTarget != null)
-        {
-            // Asignar el palo más cercano como el objetivo
-            paloTarget = closestTarget;
-            puedeVer = true;
-            return ChaseState.Finished;
+            if (closestTarget != null)
+            {
+                // Asignar el palo más cercano como el objetivo
+                paloTarget = closestTarget;
+                puedeVer = true;
+                return ChaseState.Finished;
+            }
+            else
+            {
+                puedeVer = false;
+                return ChaseState.Failed;
+            }
         }
-        else
+        else if (puedeVer)
         {
             puedeVer = false;
             return ChaseState.Failed;
         }
-    }
-    else if (puedeVer)
-    {
-        puedeVer = false;
-        return ChaseState.Failed;
-    }
 
-    return ChaseState.Failed;
+        return ChaseState.Failed;
     }
 
     public ChaseState HayPresa()
@@ -412,12 +417,19 @@ public class Castor : MonoBehaviour
 
     void SoltarPalo()
     {
-            paloTarget.parent = null;
-            dejaPalo = true;
-            cogePalo = false;
-            Destroy(paloTarget.gameObject);
-            paloTarget = null;
-            
+        if (paloTarget != null)
+        {
+            // Verificar que el palo tenga un padre antes de soltarlo
+            if (paloTarget.parent == transform)
+            {
+                // Desasignar el padre del palo
+                paloTarget.parent = null;
+                dejaPalo = true;
+                cogePalo = false;
+                Destroy(paloTarget.gameObject); // Destruir el palo que estaba llevando el castor
+                paloTarget = null;
+            }
+        }
     }
     
 
@@ -523,6 +535,31 @@ public class Castor : MonoBehaviour
         }
     }
 
+
+    // Método estático para verificar si un palo ha sido recogido
+    public static bool PaloRecogido(Transform palo)
+    {
+        Castor[] castores = FindObjectsOfType<Castor>(); // Obtener todos los castores en la escena
+
+        foreach (Castor castor in castores)
+        {
+            if (castor.paloTarget == palo && castor.cogePalo) // Verificar si un castor tiene como objetivo el palo y lo ha recogido
+            {
+                return true; // El palo ha sido recogido por algún castor
+            }
+        }
+
+        return false; // El palo no ha sido recogido por ningún castor
+    }
+
+    // Método para agregar un palo recogido a la lista
+    public static void AgregarPaloRecogido(Transform palo)
+    {
+        if (!palosRecogidos.Contains(palo))
+        {
+            palosRecogidos.Add(palo);
+        }
+    }
 
     public void EnergiaMiedoAction()
     {
