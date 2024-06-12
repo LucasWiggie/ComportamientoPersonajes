@@ -759,6 +759,159 @@ MonoBehaviour:
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
+--- !u!1 &7503248831314225843
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6999644626784369824}
+  - component: {fileID: 2455509174263992982}
+  - component: {fileID: 8517747601784220938}
+  - component: {fileID: 2675272141124349062}
+  - component: {fileID: 6035025249330236965}
+  - component: {fileID: 2065214039674331182}
+  m_Layer: 6
+  m_Name: BT Poner Huevos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &6999644626784369824
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7503248831314225843}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.00000026822093, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.048359536, y: 0.052894406, z: 0.04425065}
+  m_LocalScale: {x: 0.20581694, y: 0.20581695, z: 0.20581695}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7018700374007281199}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2455509174263992982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7503248831314225843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedEditorNode: {fileID: 0}
+  repeatOnFinish: 1
+  maxExecutionsPerTick: 1000
+  parent: {fileID: 0}
+--- !u!114 &8517747601784220938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7503248831314225843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 538645f2f9090fd43bc6154b2e89e2d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Root
+  rect:
+    serializedVersion: 2
+    x: 220
+    y: 100
+    width: 160
+    height: 45
+  parent: {fileID: 0}
+  children:
+  - {fileID: 2675272141124349062}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+--- !u!114 &2675272141124349062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7503248831314225843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c78c7da6b00e1b46bad07949050f82f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Sequence
+  rect:
+    serializedVersion: 2
+    x: 220
+    y: 180
+    width: 160
+    height: 45
+  parent: {fileID: 8517747601784220938}
+  children:
+  - {fileID: 6035025249330236965}
+  - {fileID: 2065214039674331182}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  random: 0
+--- !u!114 &6035025249330236965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7503248831314225843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dedaf4b8357838344b9ce3150ecbed6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Sal_HayArena
+  rect:
+    serializedVersion: 2
+    x: 20
+    y: 340
+    width: 160
+    height: 45
+  parent: {fileID: 2675272141124349062}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  abort: 0
+--- !u!114 &2065214039674331182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7503248831314225843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0df38c5eb619e7b42b0762121374e41a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Sal_IrArena
+  rect:
+    serializedVersion: 2
+    x: 200
+    y: 340
+    width: 160
+    height: 45
+  parent: {fileID: 2675272141124349062}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
 --- !u!1001 &4679617429700640990
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -975,6 +1128,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -6803186898478926095, guid: cceb8eb4a1f9b6c4db19b93c751099c9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2905706558305599561}
+    - targetCorrespondingSourceObject: {fileID: -6803186898478926095, guid: cceb8eb4a1f9b6c4db19b93c751099c9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6999644626784369824}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cceb8eb4a1f9b6c4db19b93c751099c9, type: 3}
       insertIndex: -1
@@ -1049,14 +1205,17 @@ MonoBehaviour:
   energia: 100
   miedo: 51
   temorHuevos: 0
+  moscasComidas: 0
   btHambre: {fileID: 4751725006468547131}
   btEnergia: {fileID: 735421246916199322}
   btMiedoPatos: {fileID: 1821917573401748153}
   btProtegerHuevos: {fileID: 188259396673268546}
+  btPonerHuevos: {fileID: 7503248831314225843}
   _uHambre: 0
   _uEnergia: 0
   _uMiedo: 0
   _uTemorHuevos: 0
+  _uMoscasComidas: 0
   isDefaultMov: 1
   aSalvo: 0
   movementInterval: 3
