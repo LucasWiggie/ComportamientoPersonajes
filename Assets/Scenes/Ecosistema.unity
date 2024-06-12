@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748171, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -184,6 +184,10 @@ PrefabInstance:
       value: Roca_9 (1)
       objectReference: {fileID: 0}
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -207,7 +211,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1712430872}
+    m_TransformParent: {fileID: 778121412}
     m_Modifications:
     - target: {fileID: 1453473650103136789, guid: da51fdd72b4939347874a502214fe54f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -436,6 +440,10 @@ PrefabInstance:
       value: Roca_9 (2)
       objectReference: {fileID: 0}
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -511,6 +519,10 @@ PrefabInstance:
     - target: {fileID: 9218536176855263176, guid: ecb6ffdbed3452246b5d12a63cbd2ba5, type: 3}
       propertyPath: m_Name
       value: Roca_8
+      objectReference: {fileID: 0}
+    - target: {fileID: 9218536176855263176, guid: ecb6ffdbed3452246b5d12a63cbd2ba5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9218536176855263176, guid: ecb6ffdbed3452246b5d12a63cbd2ba5, type: 3}
       propertyPath: m_NavMeshLayer
@@ -702,6 +714,10 @@ PrefabInstance:
       value: Roca_6
       objectReference: {fileID: 0}
     - target: {fileID: 3583507464462443825, guid: ad8d1dfcd6610844698dced11b2a1e48, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3583507464462443825, guid: ad8d1dfcd6610844698dced11b2a1e48, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -784,6 +800,10 @@ PrefabInstance:
       value: Roca_9 (2)
       objectReference: {fileID: 0}
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -807,6 +827,10 @@ PrefabInstance:
     - target: {fileID: 6995648418218152981, guid: a4255fbc44f5a424890f8f4e5e82fbd1, type: 3}
       propertyPath: m_Name
       value: Roca
+      objectReference: {fileID: 0}
+    - target: {fileID: 6995648418218152981, guid: a4255fbc44f5a424890f8f4e5e82fbd1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6995648418218152981, guid: a4255fbc44f5a424890f8f4e5e82fbd1, type: 3}
       propertyPath: m_NavMeshLayer
@@ -938,6 +962,10 @@ PrefabInstance:
       value: Roca_9 (5)
       objectReference: {fileID: 0}
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -1046,12 +1074,16 @@ PrefabInstance:
       value: Roca_6 (1)
       objectReference: {fileID: 0}
     - target: {fileID: 3583507464462443825, guid: ad8d1dfcd6610844698dced11b2a1e48, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3583507464462443825, guid: ad8d1dfcd6610844698dced11b2a1e48, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3583507464462443825, guid: ad8d1dfcd6610844698dced11b2a1e48, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 8
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1131,6 +1163,10 @@ PrefabInstance:
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_Name
       value: Roca_9 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_NavMeshLayer
@@ -1267,6 +1303,10 @@ PrefabInstance:
       value: Roca_9 (5)
       objectReference: {fileID: 0}
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -1295,6 +1335,10 @@ PrefabInstance:
     - target: {fileID: 2451608862838358773, guid: 2ed6731405fe8a64999760120c8ef51b, type: 3}
       propertyPath: m_Name
       value: Roca_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2451608862838358773, guid: 2ed6731405fe8a64999760120c8ef51b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2451608862838358773, guid: 2ed6731405fe8a64999760120c8ef51b, type: 3}
       propertyPath: m_NavMeshLayer
@@ -1431,12 +1475,16 @@ PrefabInstance:
       value: Roca_4 (3)
       objectReference: {fileID: 0}
     - target: {fileID: 4105289993384629127, guid: ad7854bf522bb0a4fa5325b807aec483, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4105289993384629127, guid: ad7854bf522bb0a4fa5325b807aec483, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4105289993384629127, guid: ad7854bf522bb0a4fa5325b807aec483, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 8
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1456,12 +1504,16 @@ PrefabInstance:
       value: Roca_3 (3)
       objectReference: {fileID: 0}
     - target: {fileID: 6347638398699564862, guid: e3c7402a1b9ea5c4e9b9d6ea785964b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6347638398699564862, guid: e3c7402a1b9ea5c4e9b9d6ea785964b5, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6347638398699564862, guid: e3c7402a1b9ea5c4e9b9d6ea785964b5, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 8
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 7330503039503382050, guid: e3c7402a1b9ea5c4e9b9d6ea785964b5, type: 3}
       propertyPath: m_LocalScale.x
@@ -1562,6 +1614,10 @@ PrefabInstance:
     - target: {fileID: 2451608862838358773, guid: 2ed6731405fe8a64999760120c8ef51b, type: 3}
       propertyPath: m_Name
       value: Roca_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2451608862838358773, guid: 2ed6731405fe8a64999760120c8ef51b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2451608862838358773, guid: 2ed6731405fe8a64999760120c8ef51b, type: 3}
       propertyPath: m_NavMeshLayer
@@ -1693,6 +1749,10 @@ PrefabInstance:
       value: Roca_9 (3)
       objectReference: {fileID: 0}
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -1740,9 +1800,9 @@ MonoBehaviour:
   pato: {fileID: 385287219224526871, guid: 0e0713aa9ebc07640b01992d3fa21da8, type: 3}
   palo: {fileID: 5656048564650677434, guid: cc04d654acd24d244808316233ee9eb8, type: 3}
   mosca: {fileID: 473223151736451685, guid: 2612d0139ca15cd4487fb287783742ad, type: 3}
-  nCocodrilos: 0
-  nCastores: 2
-  nSalamandras: 0
+  nCocodrilos: 1
+  nCastores: 4
+  nSalamandras: 2
   nPatos: 0
   nPalos: 5
   nMoscas: 0
@@ -1827,6 +1887,10 @@ PrefabInstance:
       value: Roca_9 (4)
       objectReference: {fileID: 0}
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -1909,12 +1973,16 @@ PrefabInstance:
       value: Roca_9 (8)
       objectReference: {fileID: 0}
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 8
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2091,6 +2159,10 @@ PrefabInstance:
       value: Roca_9 (1)
       objectReference: {fileID: 0}
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -2126,12 +2198,16 @@ PrefabInstance:
       value: Roca_11 (1)
       objectReference: {fileID: 0}
     - target: {fileID: 2466062777283206240, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2466062777283206240, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2466062777283206240, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 8
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 7500475168369626528, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
       propertyPath: m_LocalScale.x
@@ -2251,6 +2327,10 @@ PrefabInstance:
       value: Roca_9 (4)
       objectReference: {fileID: 0}
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -2274,6 +2354,10 @@ PrefabInstance:
     - target: {fileID: 2466062777283206240, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
       propertyPath: m_Name
       value: Roca_11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2466062777283206240, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2466062777283206240, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
       propertyPath: m_NavMeshLayer
@@ -2467,6 +2551,10 @@ PrefabInstance:
       value: Roca_9 (5)
       objectReference: {fileID: 0}
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -2538,6 +2626,10 @@ PrefabInstance:
     - target: {fileID: 3583507464462443825, guid: ad8d1dfcd6610844698dced11b2a1e48, type: 3}
       propertyPath: m_Name
       value: Roca_6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3583507464462443825, guid: ad8d1dfcd6610844698dced11b2a1e48, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3583507464462443825, guid: ad8d1dfcd6610844698dced11b2a1e48, type: 3}
       propertyPath: m_NavMeshLayer
@@ -2617,6 +2709,10 @@ PrefabInstance:
       value: Roca_9
       objectReference: {fileID: 0}
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -2692,6 +2788,10 @@ PrefabInstance:
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_Name
       value: Roca_9 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_NavMeshLayer
@@ -2818,6 +2918,11 @@ CapsuleCollider:
   m_Height: 0.020182358
   m_Direction: 1
   m_Center: {x: -0.00000051688403, y: 0.000004229601, z: 0.000029179533}
+--- !u!4 &660366415 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7500475168369626528, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
+  m_PrefabInstance: {fileID: 1456037924}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &706856804 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7500475168369626528, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
@@ -2841,12 +2946,16 @@ PrefabInstance:
       value: Roca_3
       objectReference: {fileID: 0}
     - target: {fileID: 6347638398699564862, guid: e3c7402a1b9ea5c4e9b9d6ea785964b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6347638398699564862, guid: e3c7402a1b9ea5c4e9b9d6ea785964b5, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6347638398699564862, guid: e3c7402a1b9ea5c4e9b9d6ea785964b5, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 8
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 7330503039503382050, guid: e3c7402a1b9ea5c4e9b9d6ea785964b5, type: 3}
       propertyPath: m_LocalScale.x
@@ -2966,6 +3075,10 @@ PrefabInstance:
       value: Roca_9 (1)
       objectReference: {fileID: 0}
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -2994,7 +3107,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!23 &752794106
 MeshRenderer:
@@ -3126,6 +3239,10 @@ PrefabInstance:
       value: Roca_8
       objectReference: {fileID: 0}
     - target: {fileID: 9218536176855263176, guid: ecb6ffdbed3452246b5d12a63cbd2ba5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9218536176855263176, guid: ecb6ffdbed3452246b5d12a63cbd2ba5, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -3143,6 +3260,40 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6757948134652215406, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
   m_PrefabInstance: {fileID: 484242284}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &778121411
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 778121412}
+  m_Layer: 0
+  m_Name: Presas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &778121412
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 778121411}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 278758404}
+  - {fileID: 1064303480}
+  - {fileID: 1762643189}
+  m_Father: {fileID: 1712430872}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &791297495
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3156,12 +3307,16 @@ PrefabInstance:
       value: Roca_3 (1)
       objectReference: {fileID: 0}
     - target: {fileID: 6347638398699564862, guid: e3c7402a1b9ea5c4e9b9d6ea785964b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6347638398699564862, guid: e3c7402a1b9ea5c4e9b9d6ea785964b5, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6347638398699564862, guid: e3c7402a1b9ea5c4e9b9d6ea785964b5, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 8
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 7330503039503382050, guid: e3c7402a1b9ea5c4e9b9d6ea785964b5, type: 3}
       propertyPath: m_LocalScale.x
@@ -3273,6 +3428,10 @@ PrefabInstance:
     - target: {fileID: 2451608862838358773, guid: 2ed6731405fe8a64999760120c8ef51b, type: 3}
       propertyPath: m_Name
       value: Roca_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2451608862838358773, guid: 2ed6731405fe8a64999760120c8ef51b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2451608862838358773, guid: 2ed6731405fe8a64999760120c8ef51b, type: 3}
       propertyPath: m_NavMeshLayer
@@ -3451,12 +3610,16 @@ PrefabInstance:
       value: Roca_6 (1)
       objectReference: {fileID: 0}
     - target: {fileID: 3583507464462443825, guid: ad8d1dfcd6610844698dced11b2a1e48, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3583507464462443825, guid: ad8d1dfcd6610844698dced11b2a1e48, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3583507464462443825, guid: ad8d1dfcd6610844698dced11b2a1e48, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 8
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3492,6 +3655,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 660366415}
   - {fileID: 1779100619}
   - {fileID: 992692757}
   - {fileID: 2113385429}
@@ -3518,6 +3682,10 @@ PrefabInstance:
     - target: {fileID: 6995648418218152981, guid: a4255fbc44f5a424890f8f4e5e82fbd1, type: 3}
       propertyPath: m_Name
       value: Roca
+      objectReference: {fileID: 0}
+    - target: {fileID: 6995648418218152981, guid: a4255fbc44f5a424890f8f4e5e82fbd1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6995648418218152981, guid: a4255fbc44f5a424890f8f4e5e82fbd1, type: 3}
       propertyPath: m_NavMeshLayer
@@ -3655,6 +3823,10 @@ PrefabInstance:
       value: Roca_6
       objectReference: {fileID: 0}
     - target: {fileID: 3583507464462443825, guid: ad8d1dfcd6610844698dced11b2a1e48, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3583507464462443825, guid: ad8d1dfcd6610844698dced11b2a1e48, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -3667,6 +3839,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad8d1dfcd6610844698dced11b2a1e48, type: 3}
+--- !u!4 &1021386970 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1514044858232685764, guid: d5ba587923511ac4a9e5a0494e6ba63b, type: 3}
+  m_PrefabInstance: {fileID: 1195630016}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1050563518 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 20282718735664176, guid: ad7854bf522bb0a4fa5325b807aec483, type: 3}
@@ -3740,6 +3917,10 @@ PrefabInstance:
     - target: {fileID: 9218536176855263176, guid: ecb6ffdbed3452246b5d12a63cbd2ba5, type: 3}
       propertyPath: m_Name
       value: Roca_8
+      objectReference: {fileID: 0}
+    - target: {fileID: 9218536176855263176, guid: ecb6ffdbed3452246b5d12a63cbd2ba5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9218536176855263176, guid: ecb6ffdbed3452246b5d12a63cbd2ba5, type: 3}
       propertyPath: m_NavMeshLayer
@@ -3819,6 +4000,10 @@ PrefabInstance:
       value: Roca_9 (3)
       objectReference: {fileID: 0}
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -3837,7 +4022,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1712430872}
+    m_TransformParent: {fileID: 778121412}
     m_Modifications:
     - target: {fileID: 1453473650103136789, guid: da51fdd72b4939347874a502214fe54f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -3956,6 +4141,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da51fdd72b4939347874a502214fe54f, type: 3}
+--- !u!4 &1145736499 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1514044858232685764, guid: d5ba587923511ac4a9e5a0494e6ba63b, type: 3}
+  m_PrefabInstance: {fileID: 6519400469961939041}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1146274626 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6757948134652215406, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
@@ -4144,6 +4334,10 @@ PrefabInstance:
       value: Roca_9 (1)
       objectReference: {fileID: 0}
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -4167,7 +4361,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1259437685}
     m_Modifications:
     - target: {fileID: 1514044858232685764, guid: d5ba587923511ac4a9e5a0494e6ba63b, type: 3}
       propertyPath: m_LocalScale.x
@@ -4179,7 +4373,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1514044858232685764, guid: d5ba587923511ac4a9e5a0494e6ba63b, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.8445535
+      value: 0.84455353
       objectReference: {fileID: 0}
     - target: {fileID: 1514044858232685764, guid: d5ba587923511ac4a9e5a0494e6ba63b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4256,12 +4450,16 @@ PrefabInstance:
       value: Roca_3 (2)
       objectReference: {fileID: 0}
     - target: {fileID: 6347638398699564862, guid: e3c7402a1b9ea5c4e9b9d6ea785964b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6347638398699564862, guid: e3c7402a1b9ea5c4e9b9d6ea785964b5, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6347638398699564862, guid: e3c7402a1b9ea5c4e9b9d6ea785964b5, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 8
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 7330503039503382050, guid: e3c7402a1b9ea5c4e9b9d6ea785964b5, type: 3}
       propertyPath: m_LocalScale.x
@@ -4430,6 +4628,10 @@ PrefabInstance:
       value: Roca_9 (3)
       objectReference: {fileID: 0}
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -4442,6 +4644,45 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
+--- !u!4 &1257285583 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1514044858232685764, guid: d5ba587923511ac4a9e5a0494e6ba63b, type: 3}
+  m_PrefabInstance: {fileID: 1797665556}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1259437684
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1259437685}
+  m_Layer: 0
+  m_Name: Arenas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1259437685
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1259437684}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1145736499}
+  - {fileID: 1021386970}
+  - {fileID: 1257285583}
+  m_Father: {fileID: 1712430872}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1263080856 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6757948134652215406, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
@@ -4520,6 +4761,10 @@ PrefabInstance:
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_Name
       value: Roca_9 (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_NavMeshLayer
@@ -4718,6 +4963,10 @@ PrefabInstance:
       value: Roca_11
       objectReference: {fileID: 0}
     - target: {fileID: 2466062777283206240, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2466062777283206240, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -4764,6 +5013,87 @@ PrefabInstance:
     - target: {fileID: 7500475168369626528, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0.5287627
+      objectReference: {fileID: 0}
+    - target: {fileID: 7500475168369626528, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7500475168369626528, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7500475168369626528, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
+--- !u!1001 &1456037924
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 948991234}
+    m_Modifications:
+    - target: {fileID: 2466062777283206240, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
+      propertyPath: m_Name
+      value: Roca_11 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2466062777283206240, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2466062777283206240, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2466062777283206240, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7500475168369626528, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: -2.748899
+      objectReference: {fileID: 0}
+    - target: {fileID: 7500475168369626528, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.08867
+      objectReference: {fileID: 0}
+    - target: {fileID: 7500475168369626528, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.0205564
+      objectReference: {fileID: 0}
+    - target: {fileID: 7500475168369626528, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 42.797005
+      objectReference: {fileID: 0}
+    - target: {fileID: 7500475168369626528, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.48889995
+      objectReference: {fileID: 0}
+    - target: {fileID: 7500475168369626528, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 11.939987
+      objectReference: {fileID: 0}
+    - target: {fileID: 7500475168369626528, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.6600545
+      objectReference: {fileID: 0}
+    - target: {fileID: 7500475168369626528, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.75072825
+      objectReference: {fileID: 0}
+    - target: {fileID: 7500475168369626528, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.026953068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7500475168369626528, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.0029449756
       objectReference: {fileID: 0}
     - target: {fileID: 7500475168369626528, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4852,6 +5182,10 @@ PrefabInstance:
       value: Roca_4 (2)
       objectReference: {fileID: 0}
     - target: {fileID: 4105289993384629127, guid: ad7854bf522bb0a4fa5325b807aec483, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4105289993384629127, guid: ad7854bf522bb0a4fa5325b807aec483, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -4875,6 +5209,10 @@ PrefabInstance:
     - target: {fileID: 6995648418218152981, guid: a4255fbc44f5a424890f8f4e5e82fbd1, type: 3}
       propertyPath: m_Name
       value: Roca
+      objectReference: {fileID: 0}
+    - target: {fileID: 6995648418218152981, guid: a4255fbc44f5a424890f8f4e5e82fbd1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6995648418218152981, guid: a4255fbc44f5a424890f8f4e5e82fbd1, type: 3}
       propertyPath: m_NavMeshLayer
@@ -5048,6 +5386,10 @@ PrefabInstance:
       value: Roca_11
       objectReference: {fileID: 0}
     - target: {fileID: 2466062777283206240, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2466062777283206240, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -5183,6 +5525,10 @@ PrefabInstance:
       value: Roca_9 (4)
       objectReference: {fileID: 0}
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -5206,6 +5552,10 @@ PrefabInstance:
     - target: {fileID: 6995648418218152981, guid: a4255fbc44f5a424890f8f4e5e82fbd1, type: 3}
       propertyPath: m_Name
       value: Roca
+      objectReference: {fileID: 0}
+    - target: {fileID: 6995648418218152981, guid: a4255fbc44f5a424890f8f4e5e82fbd1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6995648418218152981, guid: a4255fbc44f5a424890f8f4e5e82fbd1, type: 3}
       propertyPath: m_NavMeshLayer
@@ -5331,6 +5681,10 @@ PrefabInstance:
     - target: {fileID: 3583507464462443825, guid: ad8d1dfcd6610844698dced11b2a1e48, type: 3}
       propertyPath: m_Name
       value: Roca_6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3583507464462443825, guid: ad8d1dfcd6610844698dced11b2a1e48, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3583507464462443825, guid: ad8d1dfcd6610844698dced11b2a1e48, type: 3}
       propertyPath: m_NavMeshLayer
@@ -5518,6 +5872,10 @@ PrefabInstance:
       value: Roca_9 (4)
       objectReference: {fileID: 0}
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -5541,6 +5899,10 @@ PrefabInstance:
     - target: {fileID: 2451608862838358773, guid: 2ed6731405fe8a64999760120c8ef51b, type: 3}
       propertyPath: m_Name
       value: Roca_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2451608862838358773, guid: 2ed6731405fe8a64999760120c8ef51b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2451608862838358773, guid: 2ed6731405fe8a64999760120c8ef51b, type: 3}
       propertyPath: m_NavMeshLayer
@@ -5623,6 +5985,10 @@ PrefabInstance:
     - target: {fileID: 2466062777283206240, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
       propertyPath: m_Name
       value: Roca_11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2466062777283206240, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2466062777283206240, guid: dc2e23de4d2f15b479222356ba41e91d, type: 3}
       propertyPath: m_NavMeshLayer
@@ -5780,9 +6146,8 @@ Transform:
   - {fileID: 122460972}
   - {fileID: 1226286234}
   - {fileID: 948991234}
-  - {fileID: 278758404}
-  - {fileID: 1064303480}
-  - {fileID: 1762643189}
+  - {fileID: 1259437685}
+  - {fileID: 778121412}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1717895418
@@ -5832,7 +6197,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1259437685}
     m_Modifications:
     - target: {fileID: 1514044858232685764, guid: d5ba587923511ac4a9e5a0494e6ba63b, type: 3}
       propertyPath: m_LocalScale.x
@@ -6154,12 +6519,16 @@ PrefabInstance:
       value: Roca_9 (7)
       objectReference: {fileID: 0}
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 8
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6239,6 +6608,10 @@ PrefabInstance:
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_Name
       value: Roca_9 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_NavMeshLayer
@@ -6363,6 +6736,10 @@ PrefabInstance:
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_Name
       value: Roca_9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_NavMeshLayer
@@ -6626,6 +7003,10 @@ PrefabInstance:
       value: Roca_6 (2)
       objectReference: {fileID: 0}
     - target: {fileID: 3583507464462443825, guid: ad8d1dfcd6610844698dced11b2a1e48, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3583507464462443825, guid: ad8d1dfcd6610844698dced11b2a1e48, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -6701,6 +7082,10 @@ PrefabInstance:
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_Name
       value: Roca_9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_NavMeshLayer
@@ -6785,6 +7170,10 @@ PrefabInstance:
       value: Roca_8
       objectReference: {fileID: 0}
     - target: {fileID: 9218536176855263176, guid: ecb6ffdbed3452246b5d12a63cbd2ba5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9218536176855263176, guid: ecb6ffdbed3452246b5d12a63cbd2ba5, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -6862,12 +7251,16 @@ PrefabInstance:
       value: Roca_9 (6)
       objectReference: {fileID: 0}
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 8
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6944,6 +7337,10 @@ PrefabInstance:
       value: Roca_9
       objectReference: {fileID: 0}
     - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849424726087725610, guid: b1014b6d8107da349826bb32a5e21431, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -6962,7 +7359,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1712430872}
+    m_TransformParent: {fileID: 778121412}
     m_Modifications:
     - target: {fileID: 1453473650103136789, guid: da51fdd72b4939347874a502214fe54f, type: 3}
       propertyPath: m_NavMeshLayer
@@ -7087,15 +7484,15 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1259437685}
     m_Modifications:
     - target: {fileID: 1514044858232685764, guid: d5ba587923511ac4a9e5a0494e6ba63b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2.689654
+      value: 2.6896544
       objectReference: {fileID: 0}
     - target: {fileID: 1514044858232685764, guid: d5ba587923511ac4a9e5a0494e6ba63b, type: 3}
       propertyPath: m_LocalScale.y
-      value: 3.0026124
+      value: 3.002612
       objectReference: {fileID: 0}
     - target: {fileID: 1514044858232685764, guid: d5ba587923511ac4a9e5a0494e6ba63b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7163,9 +7560,6 @@ SceneRoots:
   - {fileID: 117915608}
   - {fileID: 1712430872}
   - {fileID: 362074959}
-  - {fileID: 6519400469961939041}
-  - {fileID: 1195630016}
-  - {fileID: 1797665556}
   - {fileID: 2036444808}
   - {fileID: 633549809}
   - {fileID: 1662642698}
