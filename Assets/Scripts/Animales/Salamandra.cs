@@ -127,7 +127,7 @@ public class Salamandra : MonoBehaviour
         //InvokeRepeating("NuevoDestinoAleatorio", 0f, movementInterval);
 
         hambre = 60;
-        energia = 100;
+        energia = 21;
         miedo = 0;
         temorHuevos = 0;
         moscasComidas = 0;
@@ -184,7 +184,6 @@ public class Salamandra : MonoBehaviour
         {
             Vector3 randomPoint = RandomNavmeshLocation(60f); // Obtener un punto aleatorio en el NavMesh
             salamandraNav.SetDestination(randomPoint); // Establecer el punto como destino
-            //Debug.Log("pato se mueve");
             nextRandomMovementTime = Time.time + movementInterval; // Actualizar el tiempo para el próximo movimiento
         }
     }
@@ -252,7 +251,7 @@ public class Salamandra : MonoBehaviour
             btProtegerHuevos.SetActive(true);
             btPonerHuevos.SetActive(false);
         }
-        else if (_uEnergia < 50)
+        else if (_uEnergia < 20)
         {
             isDefaultMov = false;
             boolHambre = false;
@@ -437,15 +436,16 @@ public class Salamandra : MonoBehaviour
         {
             salamandraNav.SetDestination(sandTarget.position); //se pone como punto de destino la posicion de la arena
             salamandraNav.speed = salamandraNav.speed + 5f;
-            energia -= 5;
-            energia = Mathf.Clamp(energia, 0f, 100f);
+            //energia -= 0.05f;
+            //energia = Mathf.Clamp(energia, 0f, 100f);
 
             if (transform.position.x == sandTarget.position.x && transform.position.z == sandTarget.position.z)
             {
                 Debug.Log("SALAMANDRA EN ARENA");
                 miedo = 0; //reducimos el miedo
                 salamandraNav.isStopped = true;//paramos el movimiento
-                StartCoroutine(ReanudarMovimiento());
+                StartCoroutine(ReanudarMovimiento()); // ESTAS CORUTINAS SE LLAMAN NOSE CUANTAS VECES, SOLO SE DEBERÍAN LLAMAR UNA VEZ
+                StartCoroutine(RecuperarEnergia());
                 salamandraNav.speed = salamandraNav.speed - 5f;
                 return ChaseState.Finished;
             }
@@ -488,9 +488,16 @@ public class Salamandra : MonoBehaviour
 
     public IEnumerator ReanudarMovimiento()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(7f);
         Debug.Log("Reanudamos movimiento");
         salamandraNav.isStopped = false; //reanudamos el movimiento despues de x segundos
+    }
+
+    public IEnumerator RecuperarEnergia()
+    {
+        yield return new WaitForSeconds(7f);
+        Debug.Log("Salamandra ha recuperado energía");
+        energia = 100;
     }
 
 

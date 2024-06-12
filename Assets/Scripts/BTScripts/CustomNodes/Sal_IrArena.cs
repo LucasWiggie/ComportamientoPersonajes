@@ -29,7 +29,7 @@ namespace CustomNodes
                     return NodeResult.failure;
                 }
             }
-            // AQUI LA EJECUCIÓN DE QUE LA SALAMANDRA SE MUEVA A LA ARENA
+
             Salamandra.ChaseState estadoHuida = salamandraScript.irArena();
             switch (estadoHuida)
             {

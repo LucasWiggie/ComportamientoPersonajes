@@ -21,7 +21,6 @@ namespace CustomNodes
                 return NodeResult.failure;
             }
 
-            // AQUI LA EJECUCIÓN DE QUE EL COCODRILO SE MUEVA A LA ARENA
             Salamandra.ChaseState estadoHuida = salamandraScript.HayArena();
             switch (estadoHuida)
             {
