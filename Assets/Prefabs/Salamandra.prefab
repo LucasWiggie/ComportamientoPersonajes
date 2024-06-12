@@ -773,6 +773,7 @@ GameObject:
   - component: {fileID: 2675272141124349062}
   - component: {fileID: 6035025249330236965}
   - component: {fileID: 2065214039674331182}
+  - component: {fileID: 6874555940371835822}
   m_Layer: 6
   m_Name: BT Poner Huevos
   m_TagString: Untagged
@@ -807,7 +808,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 0}
+  selectedEditorNode: {fileID: 6874555940371835822}
   repeatOnFinish: 1
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
@@ -859,6 +860,7 @@ MonoBehaviour:
   children:
   - {fileID: 6035025249330236965}
   - {fileID: 2065214039674331182}
+  - {fileID: 6874555940371835822}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
@@ -878,7 +880,7 @@ MonoBehaviour:
   title: Sal_HayArena
   rect:
     serializedVersion: 2
-    x: 20
+    x: 40
     y: 340
     width: 160
     height: 45
@@ -903,7 +905,31 @@ MonoBehaviour:
   title: Sal_IrArena
   rect:
     serializedVersion: 2
-    x: 200
+    x: 220
+    y: 340
+    width: 160
+    height: 45
+  parent: {fileID: 2675272141124349062}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+--- !u!114 &6874555940371835822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7503248831314225843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef10d41d2d7e1af4eb4f4ccc0976516a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Sal_PonerHuevos
+  rect:
+    serializedVersion: 2
+    x: 413
     y: 340
     width: 160
     height: 45
