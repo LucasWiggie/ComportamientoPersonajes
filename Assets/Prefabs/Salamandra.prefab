@@ -1041,10 +1041,13 @@ MonoBehaviour:
   targetMaskArena:
     serializedVersion: 2
     m_Bits: 16384
+  huirCocodrilo:
+    serializedVersion: 2
+    m_Bits: 0
   puedeVer: 0
   hambre: 70
   energia: 100
-  miedo: 0
+  miedo: 51
   temorHuevos: 0
   btHambre: {fileID: 4751725006468547131}
   btEnergia: {fileID: 735421246916199322}
@@ -1057,6 +1060,7 @@ MonoBehaviour:
   isDefaultMov: 1
   aSalvo: 0
   movementInterval: 3
+  distanciaMaxima: 2
 --- !u!195 &783188113347528045
 NavMeshAgent:
   m_ObjectHideFlags: 0

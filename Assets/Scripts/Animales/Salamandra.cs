@@ -144,22 +144,18 @@ public class Salamandra : MonoBehaviour
         }
         else if (boolHambre)
         {
-            Debug.Log("SAL: Tengo Hambre");
             btHambre.GetComponent<MonoBehaviourTree>().Tick();
         }
         else if (boolEnergia)
         {
-            Debug.Log("SAL: Tengo poca energía");
             btEnergia.GetComponent<MonoBehaviourTree>().Tick();
         }
         else if (boolMiedoPato)
         {
-            Debug.Log("SAL: Tengo miedo al pato");
             btMiedoPatos.GetComponent<MonoBehaviourTree>().Tick();
         }
         else if (boolProtegerHuevos)
         {
-            Debug.Log("SAL: Tengo que proteger los huevos");
             btProtegerHuevos.GetComponent<MonoBehaviourTree>().Tick();
         }
 
@@ -215,6 +211,7 @@ public class Salamandra : MonoBehaviour
 
         if (_uMiedo > 50) 
         {
+            Debug.Log("US: Miedo");
             isDefaultMov = false;
             boolHambre = false;
             boolEnergia = false;
@@ -227,6 +224,7 @@ public class Salamandra : MonoBehaviour
         }
         else if (_uTemorHuevos > 60)
         {
+            Debug.Log("US: TemorHuevos");
             isDefaultMov = false;
             boolHambre = false;
             boolEnergia = false;
@@ -239,6 +237,7 @@ public class Salamandra : MonoBehaviour
         }
         else if (_uEnergia < 50)
         {
+            Debug.Log("US: Energia");
             isDefaultMov = false;
             boolHambre = false;
             boolEnergia = true;
@@ -251,6 +250,7 @@ public class Salamandra : MonoBehaviour
         }
         else if (_uHambre > 70)
         {
+            Debug.Log("US: Hambre");
             isDefaultMov = false;
             boolHambre = true;
             boolEnergia = false;
@@ -263,6 +263,7 @@ public class Salamandra : MonoBehaviour
         }
         else
         {
+            Debug.Log("US: Default");
             isDefaultMov = true;
 
             aSalvo = false;
@@ -410,14 +411,14 @@ public class Salamandra : MonoBehaviour
                 return ChaseState.Finished;
             }
             salamandraNav.speed = salamandraNav.speed - 5f;
-            return ChaseState.Enproceso;// se ha llegado al punto indicado aunque el animal ya no este (muerto o escondido)
+            return ChaseState.Enproceso;
 
         }
         else
         {
             salamandraNav.stoppingDistance = 0;
             salamandraNav.speed--;
-            return ChaseState.Failed; //no haya animal al que perseguir
+            return ChaseState.Failed; 
         }
     }
 
@@ -449,6 +450,7 @@ public class Salamandra : MonoBehaviour
     public IEnumerator ReanudarMovimiento()
     {
         yield return new WaitForSeconds(5f);
+        Debug.Log("Reanudamos movimiento");
         salamandraNav.isStopped = false; //reanudamos el movimiento despues de x segundos
     }
 
