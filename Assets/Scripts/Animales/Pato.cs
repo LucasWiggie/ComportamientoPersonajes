@@ -433,6 +433,7 @@ public class Pato : MonoBehaviour
             {
                 Debug.Log("pato en nenufar");
                 energia += 0.08f;//vuelve a tener energia
+                aSalvo = true;
                 descansando = true;
                 if (energia > 80)//una cantidad necesaria de energia que reponer para poder salir del nenufar, evitando cambios de comportamiento por cte por el cambio del valor de energia en la franja de cansancio
                 {
@@ -466,6 +467,7 @@ public class Pato : MonoBehaviour
             if (transform.position.x == nenufarTarget.position.x && transform.position.z == nenufarTarget.position.z)
             {
                 Debug.Log("pato en nenufar");
+                aSalvo = true;
                 patoNav.speed = patoNav.speed - 2f;
                 return ChaseState.Finished;
             }
