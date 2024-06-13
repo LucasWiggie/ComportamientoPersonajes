@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7193842601862783338}
   - component: {fileID: 2575013254388049774}
   - component: {fileID: 6743836290502962243}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Cubo.005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5017630369971440733}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 587729233462406820}
   - component: {fileID: 7202240175006010390}
   - component: {fileID: 5346668248012653110}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Cubo.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -209,7 +209,7 @@ GameObject:
   - component: {fileID: 1665592814371372003}
   - component: {fileID: 1345912696449674343}
   - component: {fileID: 8772818144919436514}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Cubo.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -293,7 +293,7 @@ GameObject:
   - component: {fileID: -6441762561874668698}
   - component: {fileID: 3052677144652467456}
   - component: {fileID: 243555104146194913}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: PatoHijo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -394,7 +394,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4243335479828112510}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: cuerpo
   m_TagString: Untagged
   m_Icon: {fileID: 0}

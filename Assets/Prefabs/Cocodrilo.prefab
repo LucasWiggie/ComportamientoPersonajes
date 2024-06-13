@@ -425,7 +425,7 @@ GameObject:
   - component: {fileID: 2069353354589703511}
   - component: {fileID: 7295796871368753852}
   - component: {fileID: 2688071899071982957}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cocodrilo
   m_TagString: Cocodrilo
   m_Icon: {fileID: 0}
@@ -498,11 +498,15 @@ MonoBehaviour:
   obstructionMask:
     serializedVersion: 2
     m_Bits: 0
+  huirPatito:
+    serializedVersion: 2
+    m_Bits: 65536
   puedeVer: 0
   puedeVerArena: 0
   btHambre: {fileID: 1356444491322341819}
   btEnergia: {fileID: 8047508290797537765}
   btMiedo: {fileID: 2010351796279996322}
+  aSalvo: 0
   hambre: 70
   energia: 100
   miedo: 0
@@ -511,6 +515,7 @@ MonoBehaviour:
   patoScript: {fileID: 337089070920801554, guid: 0e0713aa9ebc07640b01992d3fa21da8, type: 3}
   castorScript: {fileID: 423394064896345906, guid: 3d9597b43e0789841834549bc9145508, type: 3}
   movementInterval: 1.5
+  patitosCercanos: []
 --- !u!1 &7513183408252243350
 GameObject:
   m_ObjectHideFlags: 0

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1802,9 +1802,9 @@ MonoBehaviour:
   mosca: {fileID: 473223151736451685, guid: 2612d0139ca15cd4487fb287783742ad, type: 3}
   nCocodrilos: 1
   nCastores: 0
-  nSalamandras: 1
+  nSalamandras: 0
   nPatos: 1
-  nPalos: 5
+  nPalos: 0
   nMoscas: 0
 --- !u!4 &362074959
 Transform:

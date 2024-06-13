@@ -176,11 +176,10 @@ public class Patitos : MonoBehaviour
         var cocodrilo = targetParent.GetComponent<Cocodrilo>();
         if (cocodrilo != null)
         {
-            //if (!cocodrilo.aSalvo) PONER CUANDO CROC ASALVO
-            //{
+            if (!cocodrilo.aSalvo)
+            {
             GameObject.Destroy(targetParent);//destruimos el gameobject de la salamandra que se ha comido
-
-            //}
+            }
 
         }
 

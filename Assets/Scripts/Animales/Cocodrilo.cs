@@ -2,6 +2,7 @@ using MBT;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -17,6 +18,7 @@ public class Cocodrilo : MonoBehaviour
     public LayerMask targetMaskHuevos;
     public LayerMask targetMaskArena;
     public LayerMask obstructionMask;
+    [SerializeField] public LayerMask huirPatito;
 
     public bool puedeVer;
     public bool puedeVerArena;
@@ -31,6 +33,7 @@ public class Cocodrilo : MonoBehaviour
     private bool boolHambre = false;
     private bool boolEnergia = false;
     private bool boolMiedo = false;
+    public bool aSalvo = false;
 
     //Rango 0-100 las 3 
     public float hambre;
@@ -66,6 +69,10 @@ public class Cocodrilo : MonoBehaviour
     // Variables para controlar el intervalo de movimiento
     private float nextRandomMovementTime = 0f;
     public float movementInterval = 7.0f;
+
+    //Lista con los patitos cercanos al cocodrilo
+    public List<Transform> patitosCercanos = new List<Transform>();
+    private float distanciaMax = 30f;
 
     public enum ChaseState
     {
@@ -121,6 +128,8 @@ public class Cocodrilo : MonoBehaviour
     private void Update()
     {
         UpdateVariables();
+        DetectarObjetivos();
+        ActualizarMiedo();
     }
 
     private void FixedUpdate()
@@ -584,7 +593,9 @@ public class Cocodrilo : MonoBehaviour
 
     public IEnumerator ReanudarMovimiento(float tiempo)
     {
+        aSalvo = true;
         yield return new WaitForSeconds(tiempo);
+        aSalvo = false;
         crocNav.isStopped = false; //reanudamos el movimiento despues de x segundos
     }
 
@@ -617,4 +628,27 @@ public class Cocodrilo : MonoBehaviour
         }
     }
     #endregion
+    void DetectarObjetivos()
+    {
+        patitosCercanos.Clear();
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, distanciaMax, huirPatito);
+        foreach (Collider collider in colliders)
+        {
+            patitosCercanos.Add(collider.transform);
+        }
+    }
+
+    void ActualizarMiedo()
+    {
+        miedo = 0f;
+
+        foreach (Transform objetivo in patitosCercanos)
+        {
+            float distancia = Vector3.Distance(transform.position, objetivo.position);
+            float miedoIncremental = Mathf.Clamp01(1 - distancia / distanciaMax) * 100; // Calcular el miedo incremental normalizado
+
+            miedo = Mathf.Max(miedo, miedoIncremental); // Mantener el mayor valor de miedo
+        }
+    }
 }
