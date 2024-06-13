@@ -17,7 +17,7 @@ public class Salamandra : MonoBehaviour
     public LayerMask obstructionMask;
     public LayerMask targetMaskHuevos;
     public LayerMask targetMaskArena;
-    public LayerMask huirCocodrilo;
+    public LayerMask huirPato;
     public bool puedeVer;
 
     public float hambre; //Rango 0-100 las 3
@@ -379,7 +379,7 @@ public class Salamandra : MonoBehaviour
     public ChaseState HayArena()
     {
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMaskArena);
-        Debug.Log("Number of objects found: " + rangeChecks.Length);
+        //Debug.Log("Number of objects found: " + rangeChecks.Length);
 
         if (rangeChecks.Length > 0)
         {
@@ -441,17 +441,32 @@ public class Salamandra : MonoBehaviour
 
             if (transform.position.x == sandTarget.position.x && transform.position.z == sandTarget.position.z)
             {
-                Debug.Log("SALAMANDRA EN ARENA");
-                miedo = 0; //reducimos el miedo
-                salamandraNav.isStopped = true;//paramos el movimiento
-                StartCoroutine(ReanudarMovimiento()); // ESTAS CORUTINAS SE LLAMAN NOSE CUANTAS VECES, SOLO SE DEBERÍAN LLAMAR UNA VEZ
-                StartCoroutine(RecuperarEnergia());
-                salamandraNav.speed = salamandraNav.speed - 5f;
-                return ChaseState.Finished;
-            }
-            salamandraNav.speed = salamandraNav.speed - 5f;
-            return ChaseState.Enproceso;
+                Debug.Log("Salamandra en arena");
+                aSalvo = true;
 
+                // Incrementa la energía del castor mientras está en la presa
+                energia += 0.08f;
+
+                // Permitir que el castor salga de la presa solo si su energía es >= 90
+                if (energia >= 90)
+                {
+                    return ChaseState.Finished;
+                }
+
+                return ChaseState.Enproceso;
+
+                salamandraNav.speed = salamandraNav.speed - 5f;
+            } 
+            else
+            {
+                if (miedo > 70)
+                {
+                    energia -= 0.02f;
+                    salamandraNav.speed += 0.002f;
+                }
+            }
+            //salamandraNav.speed = salamandraNav.speed - 5f;
+            return ChaseState.Enproceso;
         }
         else
         {
@@ -461,11 +476,65 @@ public class Salamandra : MonoBehaviour
         }
     }
 
+    public ChaseState HayMosca()
+    {
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMaskArena);
+        //Debug.Log("Number of objects found: " + rangeChecks.Length);
+
+        if (rangeChecks.Length > 0)
+        {
+            Transform closestTarget = null;
+            float closestDistance = float.MaxValue;
+
+            foreach (Collider col in rangeChecks)
+            {
+                Transform target = col.transform;
+                Vector3 directionToTarget = (target.position - transform.position).normalized;
+
+                float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
+                float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
+
+                if (dotProduct > angleThreshold)
+                {
+                    float distanceToTarget = Vector3.Distance(transform.position, target.position);
+
+                    if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
+                    {
+                        if (distanceToTarget < closestDistance)
+                        {
+                            closestDistance = distanceToTarget;
+                            closestTarget = target;
+                        }
+                    }
+                }
+            }
+
+            if (closestTarget != null)
+            {
+                // Asignar la presa más cercana como el objetivo
+                sandTarget = closestTarget;
+                puedeVer = true;
+                return ChaseState.Finished;
+            }
+            else
+            {
+                puedeVer = false;
+                return ChaseState.Failed;
+            }
+        }
+        else if (puedeVer)
+        {
+            puedeVer = false;
+            return ChaseState.Failed;
+        }
+        return ChaseState.Failed;
+    }
+
     void DetectarPatosCercanos()
     {
         patosCercanos.Clear();
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, distanciaMaxima, huirCocodrilo);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, distanciaMaxima, huirPato);
         foreach (Collider collider in colliders)
         {
             patosCercanos.Add(collider.transform);

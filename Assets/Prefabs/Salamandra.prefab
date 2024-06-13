@@ -205,7 +205,6 @@ GameObject:
   - component: {fileID: 4170046975100294355}
   - component: {fileID: 6405501984806629876}
   - component: {fileID: 4771704715980220848}
-  - component: {fileID: 3077093483856937987}
   - component: {fileID: 7333378090629432950}
   - component: {fileID: 6259082330948417709}
   m_Layer: 6
@@ -293,51 +292,11 @@ MonoBehaviour:
   parent: {fileID: 6405501984806629876}
   children:
   - {fileID: 7333378090629432950}
-  - {fileID: 3077093483856937987}
-  behaviourTree: {fileID: 0}
-  runtimePriority: 0
-  breakpoint: 0
-  random: 0
---- !u!114 &3077093483856937987
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 735421246916199322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8595d37ac5b0f340b7f64ca227f8860, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: Loop
-  rect:
-    serializedVersion: 2
-    x: 380
-    y: 280
-    width: 160
-    height: 45
-  parent: {fileID: 4771704715980220848}
-  children:
   - {fileID: 6259082330948417709}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
-  loops:
-    useConstant: 1
-    mode: 0
-    blackboard: {fileID: 0}
-    key: 
-    constantValue: 3
-  infinite:
-    useConstant: 1
-    mode: 0
-    blackboard: {fileID: 0}
-    key: 
-    constantValue: 0
-  breakOnStatus: 1
-  resultOnFinish: 0
-  resultOnBreak: 1
+  random: 0
 --- !u!114 &7333378090629432950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,11 +337,11 @@ MonoBehaviour:
   title: Sal_IrArena
   rect:
     serializedVersion: 2
-    x: 380
-    y: 360
+    x: 375
+    y: 338
     width: 160
     height: 45
-  parent: {fileID: 3077093483856937987}
+  parent: {fileID: 4771704715980220848}
   children: []
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -436,7 +395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 3311054906263832701}
+  selectedEditorNode: {fileID: 1706056741336568944}
   repeatOnFinish: 0
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
@@ -711,6 +670,7 @@ MonoBehaviour:
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
+  abort: 0
 --- !u!114 &2310530645337935234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1223,7 +1183,7 @@ MonoBehaviour:
   targetMaskArena:
     serializedVersion: 2
     m_Bits: 16384
-  huirCocodrilo:
+  huirPato:
     serializedVersion: 2
     m_Bits: 0
   puedeVer: 0
