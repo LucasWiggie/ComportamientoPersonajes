@@ -17,13 +17,14 @@ public class Salamandra : MonoBehaviour
     public LayerMask obstructionMask;
     public LayerMask targetMaskHuevos;
     public LayerMask targetMaskArena;
-    public LayerMask huirCocodrilo;
+    public LayerMask huirPato;
     public bool puedeVer;
 
     public float hambre; //Rango 0-100 las 3
     public float energia;
     public float miedo;
     public float temorHuevos;
+    public int moscasComidas;
 
     public enum ChaseState
     {
@@ -38,18 +39,21 @@ public class Salamandra : MonoBehaviour
     public GameObject btEnergia;
     public GameObject btMiedoPatos;
     public GameObject btProtegerHuevos;
+    public GameObject btPonerHuevos;
 
     //Bool bts
     private bool boolHambre = false;
     private bool boolEnergia = false;
     private bool boolMiedoPato = false;
     private bool boolProtegerHuevos = false;
+    private bool boolPonerHuevos = false;
 
     //Utilidades
     public float _uHambre;
     public float _uEnergia;
     public float _uMiedo;
     public float _uTemorHuevos;
+    public int _uMoscasComidas;
 
     float hambreRate = 0.2f;
     float energiaRate = 0.05f;
@@ -91,6 +95,10 @@ public class Salamandra : MonoBehaviour
     {
         return this.temorHuevos;
     }
+    public int getMoscasComidas()
+    {
+        return this.moscasComidas;
+    }
     public void setHambre(float h)
     {
         this.hambre = h;
@@ -107,6 +115,10 @@ public class Salamandra : MonoBehaviour
     {
         this.temorHuevos = t;
     }
+    public void setMoscasComidas(int t)
+    {
+        this.moscasComidas = t;
+    }
 
     private void Start()
     {
@@ -115,14 +127,16 @@ public class Salamandra : MonoBehaviour
         //InvokeRepeating("NuevoDestinoAleatorio", 0f, movementInterval);
 
         hambre = 60;
-        energia = 100;
+        energia = 21;
         miedo = 0;
         temorHuevos = 0;
+        moscasComidas = 0;
 
         _uHambre = hambre;
         _uEnergia = energia;
         _uMiedo = miedo;
         _uTemorHuevos = temorHuevos;
+        _uMoscasComidas = moscasComidas;
 
 
         StartCoroutine(FOVRoutine());
@@ -157,12 +171,11 @@ public class Salamandra : MonoBehaviour
         else if (boolProtegerHuevos)
         {
             btProtegerHuevos.GetComponent<MonoBehaviourTree>().Tick();
+        } 
+        else if (boolPonerHuevos)
+        {
+            btPonerHuevos.GetComponent<MonoBehaviourTree>().Tick();
         }
-
-        //if (dirtyUS)
-        //{
-
-        //}
     }
 
     private void movimientoAleatorio()
@@ -171,7 +184,6 @@ public class Salamandra : MonoBehaviour
         {
             Vector3 randomPoint = RandomNavmeshLocation(60f); // Obtener un punto aleatorio en el NavMesh
             salamandraNav.SetDestination(randomPoint); // Establecer el punto como destino
-            //Debug.Log("pato se mueve");
             nextRandomMovementTime = Time.time + movementInterval; // Actualizar el tiempo para el próximo movimiento
         }
     }
@@ -208,62 +220,85 @@ public class Salamandra : MonoBehaviour
         _uEnergia = this.getEnergia();
         _uMiedo = this.getMiedo();
         _uTemorHuevos = this.getTemorHuevos();
+        _uMoscasComidas = this.getMoscasComidas();
 
         if (_uMiedo > 50) 
         {
-            Debug.Log("US: Miedo");
             isDefaultMov = false;
             boolHambre = false;
             boolEnergia = false;
             boolMiedoPato = true;
             boolProtegerHuevos = false;
+            boolPonerHuevos = false;
+
             btHambre.SetActive(false);
             btEnergia.SetActive(false);
             btMiedoPatos.SetActive(true);
             btProtegerHuevos.SetActive(false);
+            btPonerHuevos.SetActive(false);
         }
         else if (_uTemorHuevos > 60)
         {
-            Debug.Log("US: TemorHuevos");
             isDefaultMov = false;
             boolHambre = false;
             boolEnergia = false;
             boolMiedoPato = false;
             boolProtegerHuevos = true;
+
             btHambre.SetActive(false);
             btEnergia.SetActive(false);
             btMiedoPatos.SetActive(false);
             btProtegerHuevos.SetActive(true);
+            btPonerHuevos.SetActive(false);
         }
-        else if (_uEnergia < 50)
+        else if (_uEnergia < 20)
         {
-            Debug.Log("US: Energia");
             isDefaultMov = false;
             boolHambre = false;
             boolEnergia = true;
             boolMiedoPato = false;
             boolProtegerHuevos = false;
+            boolPonerHuevos = false;
+
             btHambre.SetActive(false);
             btEnergia.SetActive(true);
             btMiedoPatos.SetActive(false);
             btProtegerHuevos.SetActive(false);
+            btPonerHuevos.SetActive(false);
         }
         else if (_uHambre > 70)
         {
-            Debug.Log("US: Hambre");
             isDefaultMov = false;
             boolHambre = true;
             boolEnergia = false;
             boolMiedoPato = false;
             boolProtegerHuevos = false;
+            boolPonerHuevos = false;
+
             btHambre.SetActive(true);
             btEnergia.SetActive(false);
             btMiedoPatos.SetActive(false);
             btProtegerHuevos.SetActive(false);
+            btPonerHuevos.SetActive(false);
+        }
+        else if (_uMoscasComidas >= 5)
+        {
+            // A poner huevos
+            isDefaultMov = false;
+            boolHambre = false;
+            boolEnergia = false;
+            boolMiedoPato = false;
+            boolProtegerHuevos = false;
+            boolPonerHuevos = true;
+
+            btHambre.SetActive(false);
+            btEnergia.SetActive(false);
+            btMiedoPatos.SetActive(false);
+            btProtegerHuevos.SetActive(false);
+            btPonerHuevos.SetActive(true);
         }
         else
         {
-            Debug.Log("US: Default");
             isDefaultMov = true;
 
             aSalvo = false;
@@ -271,10 +306,13 @@ public class Salamandra : MonoBehaviour
             boolEnergia = false;
             boolMiedoPato = false;
             boolProtegerHuevos = false;
+            boolPonerHuevos = false;
+
             btHambre.SetActive(false);
             btEnergia.SetActive(false);
             btMiedoPatos.SetActive(false);
             btProtegerHuevos.SetActive(false);
+            btPonerHuevos.SetActive(false);
         }
     }
 
@@ -341,7 +379,7 @@ public class Salamandra : MonoBehaviour
     public ChaseState HayArena()
     {
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMaskArena);
-        Debug.Log("Number of objects found: " + rangeChecks.Length);
+        //Debug.Log("Number of objects found: " + rangeChecks.Length);
 
         if (rangeChecks.Length > 0)
         {
@@ -398,21 +436,37 @@ public class Salamandra : MonoBehaviour
         {
             salamandraNav.SetDestination(sandTarget.position); //se pone como punto de destino la posicion de la arena
             salamandraNav.speed = salamandraNav.speed + 5f;
-            energia -= 5;
-            energia = Mathf.Clamp(energia, 0f, 100f);
+            //energia -= 0.05f;
+            //energia = Mathf.Clamp(energia, 0f, 100f);
 
             if (transform.position.x == sandTarget.position.x && transform.position.z == sandTarget.position.z)
             {
-                Debug.Log("SALAMANDRA EN ARENA");
-                miedo = 0; //reducimos el miedo
-                salamandraNav.isStopped = true;//paramos el movimiento
-                StartCoroutine(ReanudarMovimiento());
-                salamandraNav.speed = salamandraNav.speed - 5f;
-                return ChaseState.Finished;
-            }
-            salamandraNav.speed = salamandraNav.speed - 5f;
-            return ChaseState.Enproceso;
+                Debug.Log("Salamandra en arena");
+                aSalvo = true;
 
+                // Incrementa la energía del castor mientras está en la presa
+                energia += 0.08f;
+
+                // Permitir que el castor salga de la presa solo si su energía es >= 90
+                if (energia >= 90)
+                {
+                    return ChaseState.Finished;
+                }
+
+                return ChaseState.Enproceso;
+
+                salamandraNav.speed = salamandraNav.speed - 5f;
+            } 
+            else
+            {
+                if (miedo > 70)
+                {
+                    energia -= 0.02f;
+                    salamandraNav.speed += 0.002f;
+                }
+            }
+            //salamandraNav.speed = salamandraNav.speed - 5f;
+            return ChaseState.Enproceso;
         }
         else
         {
@@ -422,11 +476,65 @@ public class Salamandra : MonoBehaviour
         }
     }
 
+    public ChaseState HayMosca()
+    {
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMaskArena);
+        //Debug.Log("Number of objects found: " + rangeChecks.Length);
+
+        if (rangeChecks.Length > 0)
+        {
+            Transform closestTarget = null;
+            float closestDistance = float.MaxValue;
+
+            foreach (Collider col in rangeChecks)
+            {
+                Transform target = col.transform;
+                Vector3 directionToTarget = (target.position - transform.position).normalized;
+
+                float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
+                float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
+
+                if (dotProduct > angleThreshold)
+                {
+                    float distanceToTarget = Vector3.Distance(transform.position, target.position);
+
+                    if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
+                    {
+                        if (distanceToTarget < closestDistance)
+                        {
+                            closestDistance = distanceToTarget;
+                            closestTarget = target;
+                        }
+                    }
+                }
+            }
+
+            if (closestTarget != null)
+            {
+                // Asignar la presa más cercana como el objetivo
+                sandTarget = closestTarget;
+                puedeVer = true;
+                return ChaseState.Finished;
+            }
+            else
+            {
+                puedeVer = false;
+                return ChaseState.Failed;
+            }
+        }
+        else if (puedeVer)
+        {
+            puedeVer = false;
+            return ChaseState.Failed;
+        }
+        return ChaseState.Failed;
+    }
+
     void DetectarPatosCercanos()
     {
         patosCercanos.Clear();
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, distanciaMaxima, huirCocodrilo);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, distanciaMaxima, huirPato);
         foreach (Collider collider in colliders)
         {
             patosCercanos.Add(collider.transform);
@@ -449,9 +557,16 @@ public class Salamandra : MonoBehaviour
 
     public IEnumerator ReanudarMovimiento()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(7f);
         Debug.Log("Reanudamos movimiento");
         salamandraNav.isStopped = false; //reanudamos el movimiento despues de x segundos
+    }
+
+    public IEnumerator RecuperarEnergia()
+    {
+        yield return new WaitForSeconds(7f);
+        Debug.Log("Salamandra ha recuperado energía");
+        energia = 100;
     }
 
 

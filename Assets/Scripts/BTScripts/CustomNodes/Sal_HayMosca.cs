@@ -9,9 +9,28 @@ namespace CustomNodes
     [MBTNode(name = "CustomNodes/Sal_HayMosca")]
     public class Sal_HayMosca : Leaf
     {
+        public Abort abort;
+        private Salamandra salamandraScript;
+
         public override NodeResult Execute()
         {
-            throw new System.NotImplementedException();
+            salamandraScript = GetComponentInParent<Salamandra>();
+            if (salamandraScript == null)
+            {
+                Debug.LogError("salamandraScript is still null!");
+                return NodeResult.failure;
+            }
+
+            Salamandra.ChaseState estadoHuida = salamandraScript.HayMosca();
+            switch (estadoHuida)
+            {
+                case Salamandra.ChaseState.Finished:
+                    return NodeResult.success;
+                case Salamandra.ChaseState.Failed:
+                    return NodeResult.failure;
+                default:
+                    return NodeResult.failure;
+            }
         }
     }
 }
