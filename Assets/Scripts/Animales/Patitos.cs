@@ -178,7 +178,7 @@ public class Patitos : MonoBehaviour
         {
             //if (!cocodrilo.aSalvo) PONER CUANDO CROC ASALVO
             //{
-                Destroy(crocTarget.gameObject);//destruimos el gameobject de la salamandra que se ha comido
+            GameObject.Destroy(targetParent);//destruimos el gameobject de la salamandra que se ha comido
 
             //}
 

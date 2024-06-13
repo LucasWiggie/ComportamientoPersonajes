@@ -504,7 +504,7 @@ public class Pato : MonoBehaviour
 
                 if (distanciaActual <= distanciaMinimaParaComer)
                 {
-                    Destroy(salTarget.gameObject); // Destruir el GameObject de la salamandra que se ha comido
+                    GameObject.Destroy(targetParent); // Destruir el GameObject de la salamandra que se ha comido
                     hambre -= 50; // Bajar el hambre
                 }
 
