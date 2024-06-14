@@ -68,7 +68,7 @@ public class Cocodrilo : MonoBehaviour
 
     // Variables para controlar el intervalo de movimiento
     private float nextRandomMovementTime = 0f;
-    public float movementInterval = 7.0f;
+    public float movementInterval = 20f;
 
     //Lista con los patitos cercanos al cocodrilo
     public List<Transform> patitosCercanos = new List<Transform>();
@@ -112,9 +112,9 @@ public class Cocodrilo : MonoBehaviour
         playerRef = this.gameObject;
         crocNav = GetComponent<NavMeshAgent>();
 
-        hambre = 60;
+        hambre = 20;
         energia = 80;
-        miedo = 0;
+        miedo = 100;
 
         _uHambre = hambre;
         _uEnergia = energia;
@@ -400,32 +400,42 @@ public class Cocodrilo : MonoBehaviour
 
     public ChaseState HayArena()
     {
-        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radioHuevos, targetMaskArena);
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMaskArena);
 
         if (rangeChecks.Length > 0)
         {
-            Transform target = rangeChecks[0].transform;
-            sandTarget = target;
+            Transform closestTarget = null;
+            float closestDistance = float.MaxValue;
 
-            Vector3 directionToTarget = (target.position - transform.position).normalized;
-            float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
-            float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
-
-            if (dotProduct > angleThreshold)
+            foreach (Collider col in rangeChecks)
             {
-                float distanciaToTarget = Vector3.Distance(transform.position, target.position);
+                Transform target = col.transform;
+                Vector3 directionToTarget = (target.position - transform.position).normalized;
 
-                if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
-                {
-                    puedeVer = true;
-                    return ChaseState.Finished;
+                float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
+                float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
 
-                }
-                else
+                if (dotProduct > angleThreshold)
                 {
-                    puedeVer = false;
-                    return ChaseState.Failed;
+                    float distanceToTarget = Vector3.Distance(transform.position, target.position);
+
+                    if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
+                    {
+                        if (distanceToTarget < closestDistance)
+                        {
+                            closestDistance = distanceToTarget;
+                            closestTarget = target;
+                        }
+                    }
                 }
+            }
+
+            if (closestTarget != null)
+            {
+                // Asignar la presa m�s cercana como el objetivo
+                sandTarget = closestTarget;
+                puedeVer = true;
+                return ChaseState.Finished;
             }
             else
             {

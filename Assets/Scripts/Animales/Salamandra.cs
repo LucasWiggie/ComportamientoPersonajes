@@ -265,6 +265,7 @@ public class Salamandra : MonoBehaviour
             boolEnergia = false;
             boolMiedoPato = false;
             boolProtegerHuevos = true;
+            boolPonerHuevos = false;
             aSalvo = false;
             huevosPuestos = false;
 
@@ -409,7 +410,6 @@ public class Salamandra : MonoBehaviour
     public ChaseState HayArena()
     {
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMaskArena);
-        //Debug.Log("Number of objects found: " + rangeChecks.Length);
 
         if (rangeChecks.Length > 0)
         {
