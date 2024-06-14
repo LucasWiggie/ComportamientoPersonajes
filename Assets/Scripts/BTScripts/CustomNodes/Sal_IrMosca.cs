@@ -11,9 +11,35 @@ namespace CustomNodes
 
     public class Sal_IrMosca : Leaf
     {
+        public Abort abort;
+        private Salamandra salamandraScript;
+
+        private void Start()
+        {
+
+        }
         public override NodeResult Execute()
         {
-            throw new System.NotImplementedException();
+            salamandraScript = GetComponentInParent<Salamandra>();
+
+            if (salamandraScript == null)
+            {
+                Debug.LogError("salamandraScript is still null!");
+                return NodeResult.failure;
+            }
+
+            Salamandra.ChaseState estadoHuida = salamandraScript.IrMosca();
+            switch (estadoHuida)
+            {
+                case Salamandra.ChaseState.Enproceso:
+                    return NodeResult.running;
+                case Salamandra.ChaseState.Finished:
+                    return NodeResult.success;
+                case Salamandra.ChaseState.Failed:
+                    return NodeResult.failure;
+                default:
+                    return NodeResult.failure;
+            }
         }
     }
 }

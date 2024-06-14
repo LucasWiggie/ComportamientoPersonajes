@@ -12,9 +12,14 @@ namespace CustomNodes
         public Abort abort;
         private Salamandra salamandraScript;
 
+        private void Start()
+        {
+
+        }
         public override NodeResult Execute()
         {
             salamandraScript = GetComponentInParent<Salamandra>();
+
             if (salamandraScript == null)
             {
                 Debug.LogError("salamandraScript is still null!");
