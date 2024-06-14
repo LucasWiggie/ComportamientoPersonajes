@@ -68,7 +68,7 @@ public class Cocodrilo : MonoBehaviour
 
     // Variables para controlar el intervalo de movimiento
     private float nextRandomMovementTime = 0f;
-    public float movementInterval = 20f;
+    public float movementInterval = 7.0f;
 
     //Lista con los patitos cercanos al cocodrilo
     public List<Transform> patitosCercanos = new List<Transform>();
