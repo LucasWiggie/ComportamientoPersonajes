@@ -732,7 +732,6 @@ GameObject:
   - component: {fileID: 8517747601784220938}
   - component: {fileID: 2675272141124349062}
   - component: {fileID: 6035025249330236965}
-  - component: {fileID: 2065214039674331182}
   - component: {fileID: 6874555940371835822}
   m_Layer: 6
   m_Name: BT Poner Huevos
@@ -819,7 +818,6 @@ MonoBehaviour:
   parent: {fileID: 8517747601784220938}
   children:
   - {fileID: 6035025249330236965}
-  - {fileID: 2065214039674331182}
   - {fileID: 6874555940371835822}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -850,30 +848,6 @@ MonoBehaviour:
   runtimePriority: 0
   breakpoint: 0
   abort: 0
---- !u!114 &2065214039674331182
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7503248831314225843}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0df38c5eb619e7b42b0762121374e41a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: Sal_IrArena
-  rect:
-    serializedVersion: 2
-    x: 220
-    y: 340
-    width: 160
-    height: 45
-  parent: {fileID: 2675272141124349062}
-  children: []
-  behaviourTree: {fileID: 0}
-  runtimePriority: 0
-  breakpoint: 0
 --- !u!114 &6874555940371835822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -889,8 +863,8 @@ MonoBehaviour:
   title: Sal_PonerHuevos
   rect:
     serializedVersion: 2
-    x: 413
-    y: 340
+    x: 398
+    y: 342
     width: 160
     height: 45
   parent: {fileID: 2675272141124349062}
@@ -1191,6 +1165,7 @@ MonoBehaviour:
   huirPato:
     serializedVersion: 2
     m_Bits: 64
+  huevosPrefab: {fileID: 2295779056263190461, guid: 2b41eb1961b62944bacd7fe390b7576b, type: 3}
   puedeVer: 0
   hambre: 70
   energia: 10
@@ -1209,6 +1184,8 @@ MonoBehaviour:
   _uMoscasComidas: 0
   isDefaultMov: 1
   aSalvo: 0
+  poniendoHuevos: 0
+  huevosPuestos: 0
   movementInterval: 3
   distanciaMaxima: 25
 --- !u!195 &783188113347528045
