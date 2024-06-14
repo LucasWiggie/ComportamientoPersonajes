@@ -19,7 +19,6 @@ public class Salamandra : MonoBehaviour
     public LayerMask targetMaskArena;
     public LayerMask huirPato;
     public bool puedeVer;
-    
 
     public float hambre; //Rango 0-100 las 3
     public float energia;
@@ -64,6 +63,10 @@ public class Salamandra : MonoBehaviour
 
     public bool aSalvo = false;
     private bool descansando = false;
+    public bool poniendoHuevos = false;
+
+    private float tiempoInicioPonerHuevos = 0f;
+    private const float tiempoPonerHuevos = 4f;
 
 
     private NavMeshAgent salamandraNav;
@@ -130,8 +133,8 @@ public class Salamandra : MonoBehaviour
         salamandraNav = GetComponent<NavMeshAgent>();
         //InvokeRepeating("NuevoDestinoAleatorio", 0f, movementInterval);
 
-        hambre = 60;
-        energia = 10;
+        hambre = 40;
+        energia = 60;
         miedo = 0;
         temorHuevos = 0;
         moscasComidas = 0;
@@ -461,6 +464,7 @@ public class Salamandra : MonoBehaviour
                 if (energia > 80)//una cantidad necesaria de energia que reponer para poder salir del nenufar, evitando cambios de comportamiento por cte por el cambio del valor de energia en la franja de cansancio
                 {
                     descansando = false;
+                    return ChaseState.Finished;
                 }
 
                 return ChaseState.Enproceso;
@@ -540,6 +544,53 @@ public class Salamandra : MonoBehaviour
         return ChaseState.Failed;
     }
 
+    public ChaseState PonerHuevos()
+    {
+        if (sandTarget != null)
+        {
+            salamandraNav.SetDestination(sandTarget.position); //se pone como punto de destino la posicion de la arena
+            //salamandraNav.speed = salamandraNav.speed + 5f;
+            //energia -= 0.05f;
+            //energia = Mathf.Clamp(energia, 0f, 100f);
+
+            // Si está en la arena
+            if (transform.position.x == sandTarget.position.x && transform.position.z == sandTarget.position.z)
+            {
+                Debug.Log("Salamandra en arena");
+                aSalvo = true;
+                poniendoHuevos = true;
+                descansando = true;
+
+                if (Time.time - tiempoInicioPonerHuevos >= tiempoPonerHuevos) // Si han pasado los 4 segundos
+                {
+                    poniendoHuevos = false;
+                    moscasComidas = 0;
+                    return ChaseState.Finished;
+                }
+
+                return ChaseState.Enproceso;
+
+                //salamandraNav.speed = salamandraNav.speed - 5f;
+            }
+            else
+            {
+                tiempoInicioPonerHuevos = Time.time; // reestablecemos el tiempo en el que se ponen los huevos
+                //if (miedo > 70)
+                //{
+                //    energia -= 0.02f;
+                //    salamandraNav.speed += 0.003f;
+                //}
+            }
+            //salamandraNav.speed = salamandraNav.speed - 5f;
+            return ChaseState.Enproceso;
+        }
+        else
+        {
+            salamandraNav.stoppingDistance = 0;
+            salamandraNav.speed--;
+            return ChaseState.Failed;
+        }
+    }
 
     void DetectarPatosCercanos()
     {
