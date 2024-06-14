@@ -16,10 +16,11 @@ namespace CustomNodes
         // This is called every tick as long as node is executed
         private void Awake()
         {
-            pato = GetComponentInParent<Pato>();
+            
         }
         public override NodeResult Execute()
         {
+            pato = GetComponentInParent<Pato>();
             if (pato == null)
             {
                 pato = GetComponentInParent<Pato>();
@@ -29,7 +30,7 @@ namespace CustomNodes
                     return NodeResult.failure;
                 }
             }
-            // AQUI LA EJECUCIÓN DE QUE EL PATO PERSIGA A LA SALAMANDRA
+            // AQUI LA EJECUCIï¿½N DE QUE EL PATO PERSIGA A LA SALAMANDRA
             Pato.ChaseState estadoPersecucion = pato.PerseguirSal();
             switch (estadoPersecucion)
             {

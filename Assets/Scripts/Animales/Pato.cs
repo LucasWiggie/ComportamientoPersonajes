@@ -29,6 +29,7 @@ public class Pato : MonoBehaviour
 
     //Lista con los cocodrilos cercanos al pato
     private List<Transform> cocodrilosCercanos = new List<Transform>();
+    private List<Collider> animalesNoASalvo = new List<Collider>();
     public float distanciaMaxima = 1f;
 
     public float hambre; //Rango 0-100 las 3
@@ -64,6 +65,9 @@ public class Pato : MonoBehaviour
 
     public bool isDefaultMov = true;
     private bool dirtyUS = false;
+
+    //Para indicar si esta aSalvo
+    public Salamandra salamandraScript;
 
     //Getters y Setters
     public float getHambre()
@@ -150,6 +154,8 @@ public class Pato : MonoBehaviour
         _hambre = this.getHambre();
         _energia = this.getEnergia();
         _miedo = this.getMiedo();
+        animalesNoASalvo = ObtenerAnimalesNoASalvo();
+
 
         if (_energia < 50 || descansando) //si energia baja o descansando -> arbol de energia
         {
@@ -187,7 +193,7 @@ public class Pato : MonoBehaviour
             BT_Energia.SetActive(false);
             BT_Miedo.SetActive(true);
         }
-        else if (_hambre > 50)// si hambre -> arbol de hambre
+        else if (_hambre > 50 && animalesNoASalvo.Count!=0)// si hambre -> arbol de hambre
         {
             bool_Energia = false;
             bool_Miedo = false;
@@ -532,7 +538,7 @@ public class Pato : MonoBehaviour
 
         if (salamandra.aSalvo) 
         {
-            return ChaseState.Finished;
+            return ChaseState.Failed;
         }
 
         float distanciaMinimaParaComer = 2.0f; 
@@ -558,6 +564,31 @@ public class Pato : MonoBehaviour
         Instantiate(patito,transform.position,transform.rotation); //se generarn patitos en la posicion actual
         
        
+    }
+
+    public List<Collider> ObtenerAnimalesNoASalvo()
+    {
+    // Obtener todos los colisionadores en el rango especificado
+    Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
+
+    // Lista para almacenar colisionadores de animales no a salvo
+    List<Collider> animalesNoASalvo = new List<Collider>();
+
+    foreach (Collider col in rangeChecks)
+    {
+        // Obtener el GameObject padre del colisionador
+        GameObject targetParent = col.transform.parent != null ? col.transform.parent.gameObject : col.gameObject;
+
+        // Verificar si el objetivo es un castor o un pato y si no está a salvo
+        Salamandra salamandra = targetParent.GetComponent<Salamandra>();
+
+        if ((salamandra != null && !salamandra.aSalvo))
+        {
+            animalesNoASalvo.Add(col);
+        }
+    }
+
+    return animalesNoASalvo;
     }
 }
 

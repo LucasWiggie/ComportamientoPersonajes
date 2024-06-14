@@ -19,6 +19,7 @@ public class Salamandra : MonoBehaviour
     public LayerMask targetMaskArena;
     public LayerMask huirPato;
     public bool puedeVer;
+    
 
     public float hambre; //Rango 0-100 las 3
     public float energia;
@@ -62,6 +63,8 @@ public class Salamandra : MonoBehaviour
     private bool dirtyUS = false;
 
     public bool aSalvo = false;
+    private bool descansando = false;
+
 
     private NavMeshAgent salamandraNav;
 
@@ -75,7 +78,7 @@ public class Salamandra : MonoBehaviour
 
     //Peligros
     private List<Transform> patosCercanos = new List<Transform>();
-    public float distanciaMaxima = 2f;
+    public float distanciaMaxima = 25;
 
 
     //Getters y Setters
@@ -122,12 +125,13 @@ public class Salamandra : MonoBehaviour
 
     private void Start()
     {
+        patosCercanos.Clear();
         playerRef = this.gameObject;
         salamandraNav = GetComponent<NavMeshAgent>();
         //InvokeRepeating("NuevoDestinoAleatorio", 0f, movementInterval);
 
         hambre = 60;
-        energia = 21;
+        energia = 10;
         miedo = 0;
         temorHuevos = 0;
         moscasComidas = 0;
@@ -184,7 +188,7 @@ public class Salamandra : MonoBehaviour
         {
             Vector3 randomPoint = RandomNavmeshLocation(60f); // Obtener un punto aleatorio en el NavMesh
             salamandraNav.SetDestination(randomPoint); // Establecer el punto como destino
-            nextRandomMovementTime = Time.time + movementInterval; // Actualizar el tiempo para el próximo movimiento
+            nextRandomMovementTime = Time.time + movementInterval; // Actualizar el tiempo para el prï¿½ximo movimiento
         }
     }
 
@@ -197,7 +201,7 @@ public class Salamandra : MonoBehaviour
     //    }    
     //}
 
-    // Función para encontrar un punto aleatorio en el NavMesh dentro de un radio dado
+    // Funciï¿½n para encontrar un punto aleatorio en el NavMesh dentro de un radio dado
     private Vector3 RandomNavmeshLocation(float radius)
     {
         Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
@@ -230,6 +234,7 @@ public class Salamandra : MonoBehaviour
             boolMiedoPato = true;
             boolProtegerHuevos = false;
             boolPonerHuevos = false;
+            aSalvo = false;
 
             btHambre.SetActive(false);
             btEnergia.SetActive(false);
@@ -244,6 +249,7 @@ public class Salamandra : MonoBehaviour
             boolEnergia = false;
             boolMiedoPato = false;
             boolProtegerHuevos = true;
+            aSalvo = false;
 
             btHambre.SetActive(false);
             btEnergia.SetActive(false);
@@ -251,7 +257,7 @@ public class Salamandra : MonoBehaviour
             btProtegerHuevos.SetActive(true);
             btPonerHuevos.SetActive(false);
         }
-        else if (_uEnergia < 20)
+        else if (_uEnergia < 20 || descansando)
         {
             isDefaultMov = false;
             boolHambre = false;
@@ -259,6 +265,7 @@ public class Salamandra : MonoBehaviour
             boolMiedoPato = false;
             boolProtegerHuevos = false;
             boolPonerHuevos = false;
+            aSalvo = false;
 
             btHambre.SetActive(false);
             btEnergia.SetActive(true);
@@ -274,6 +281,7 @@ public class Salamandra : MonoBehaviour
             boolMiedoPato = false;
             boolProtegerHuevos = false;
             boolPonerHuevos = false;
+            aSalvo = false;
 
             btHambre.SetActive(true);
             btEnergia.SetActive(false);
@@ -290,6 +298,7 @@ public class Salamandra : MonoBehaviour
             boolMiedoPato = false;
             boolProtegerHuevos = false;
             boolPonerHuevos = true;
+            aSalvo = false;
 
             btHambre.SetActive(false);
             btEnergia.SetActive(false);
@@ -325,7 +334,7 @@ public class Salamandra : MonoBehaviour
         energia = Mathf.Clamp(energia, 0f, 100f);
     }
 
-    // NO LO HE MIRADO TODAVÍA, ECHADLE UN OJO. Lucas
+    // NO LO HE MIRADO TODAVï¿½A, ECHADLE UN OJO. Lucas
     private IEnumerator FOVRoutine()
     {
         float delay = 0.2f;
@@ -346,10 +355,10 @@ public class Salamandra : MonoBehaviour
             Transform target = rangeChecks[0].transform;
             Vector3 directionToTarget = (target.position - transform.position).normalized;
 
-            // Utilizar el producto punto para verificar el ángulo
+            // Utilizar el producto punto para verificar el ï¿½ngulo
             float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
 
-            // Establecer un umbral para el ángulo (ajustar según sea necesario)
+            // Establecer un umbral para el ï¿½ngulo (ajustar segï¿½n sea necesario)
             float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
             if (dotProduct > angleThreshold)
             {
@@ -411,7 +420,7 @@ public class Salamandra : MonoBehaviour
 
             if (closestTarget != null)
             {
-                // Asignar la presa más cercana como el objetivo
+                // Asignar la presa mï¿½s cercana como el objetivo
                 sandTarget = closestTarget;
                 puedeVer = true;
                 return ChaseState.Finished;
@@ -435,7 +444,7 @@ public class Salamandra : MonoBehaviour
         if (sandTarget != null)
         {
             salamandraNav.SetDestination(sandTarget.position); //se pone como punto de destino la posicion de la arena
-            salamandraNav.speed = salamandraNav.speed + 5f;
+            //salamandraNav.speed = salamandraNav.speed + 5f;
             //energia -= 0.05f;
             //energia = Mathf.Clamp(energia, 0f, 100f);
 
@@ -444,25 +453,26 @@ public class Salamandra : MonoBehaviour
                 Debug.Log("Salamandra en arena");
                 aSalvo = true;
 
-                // Incrementa la energía del castor mientras está en la presa
+                // Incrementa la energï¿½a del castor mientras estï¿½ en la presa
                 energia += 0.08f;
 
-                // Permitir que el castor salga de la presa solo si su energía es >= 90
-                if (energia >= 90)
+                // Permitir que el castor salga de la presa solo si su energï¿½a es >= 90
+                descansando = true;
+                if (energia > 80)//una cantidad necesaria de energia que reponer para poder salir del nenufar, evitando cambios de comportamiento por cte por el cambio del valor de energia en la franja de cansancio
                 {
-                    return ChaseState.Finished;
+                    descansando = false;
                 }
 
                 return ChaseState.Enproceso;
 
-                salamandraNav.speed = salamandraNav.speed - 5f;
+                //salamandraNav.speed = salamandraNav.speed - 5f;
             } 
             else
             {
                 if (miedo > 70)
                 {
                     energia -= 0.02f;
-                    salamandraNav.speed += 0.002f;
+                    salamandraNav.speed += 0.003f;
                 }
             }
             //salamandraNav.speed = salamandraNav.speed - 5f;
@@ -511,7 +521,7 @@ public class Salamandra : MonoBehaviour
 
             if (closestTarget != null)
             {
-                // Asignar la presa más cercana como el objetivo
+                // Asignar la presa mï¿½s cercana como el objetivo
                 sandTarget = closestTarget;
                 puedeVer = true;
                 return ChaseState.Finished;
@@ -529,6 +539,7 @@ public class Salamandra : MonoBehaviour
         }
         return ChaseState.Failed;
     }
+
 
     void DetectarPatosCercanos()
     {
@@ -565,7 +576,7 @@ public class Salamandra : MonoBehaviour
     public IEnumerator RecuperarEnergia()
     {
         yield return new WaitForSeconds(7f);
-        Debug.Log("Salamandra ha recuperado energía");
+        Debug.Log("Salamandra ha recuperado energï¿½a");
         energia = 100;
     }
 

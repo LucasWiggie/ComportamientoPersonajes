@@ -70,6 +70,8 @@ public class Castor : MonoBehaviour
     float energiaRate = 0.05f;
 
     public bool aSalvo = false;
+    private bool descansando = false;
+
 
     //Getters y Setters
     public float getHambre()
@@ -103,7 +105,7 @@ public class Castor : MonoBehaviour
         castNav = GetComponent<NavMeshAgent>();
 
         hambre = 30;
-        energia = 100;
+        energia = 30;
         miedo = 0;
 
         _hambre = hambre;
@@ -349,10 +351,10 @@ public class Castor : MonoBehaviour
                 // Incrementa la energía del castor mientras está en la presa
                 energia += 0.08f;
 
-                // Permitir que el castor salga de la presa solo si su energía es >= 90
-                if (energia >= 90)
+                descansando = true;
+                if (energia > 90)//una cantidad necesaria de energia que reponer para poder salir del nenufar, evitando cambios de comportamiento por cte por el cambio del valor de energia en la franja de cansancio
                 {
-                    return ChaseState.Finished;
+                    descansando = false;
                 }
 
                 return ChaseState.Enproceso;
@@ -447,7 +449,7 @@ public class Castor : MonoBehaviour
         _energia = this.getEnergia();
         _miedo = this.getMiedo();
 
-        if (_energia < 60)
+        if (_energia < 60  || descansando)
         {
             bool_Hambre = false;
             bool_Miedo = false;
@@ -479,17 +481,6 @@ public class Castor : MonoBehaviour
             BT_PalosPresa.SetActive(false);
             BT_EnergiaMiedo.SetActive(false);
             BT_Hambre.SetActive(true);
-        }
-        else if (_energia < 90)
-        {
-            bool_Hambre = false;
-            bool_Miedo = false;
-            isDefaultMov = false;
-            bool_Energia = true;
-            aSalvo = true; // Mantener aSalvo en true hasta que la energía alcance 90
-            BT_Hambre.SetActive(false);
-            BT_PalosPresa.SetActive(false);
-            BT_EnergiaMiedo.SetActive(true);
         }
         else
         {

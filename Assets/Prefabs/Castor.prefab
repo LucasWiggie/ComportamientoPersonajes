@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 2687580973120299419}
+  selectedEditorNode: {fileID: 3865291111655414643}
   repeatOnFinish: 1
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
@@ -70,8 +70,8 @@ MonoBehaviour:
   title: Root
   rect:
     serializedVersion: 2
-    x: 232
-    y: 103
+    x: 220
+    y: 100
     width: 160
     height: 44
   parent: {fileID: 0}
@@ -95,8 +95,8 @@ MonoBehaviour:
   title: Sequence
   rect:
     serializedVersion: 2
-    x: 231
-    y: 185
+    x: 220
+    y: 180
     width: 160
     height: 44
   parent: {fileID: 5491301373270869018}
@@ -123,7 +123,7 @@ MonoBehaviour:
   title: Cast_HayPalo
   rect:
     serializedVersion: 2
-    x: -40
+    x: 20
     y: 300
     width: 160
     height: 44
@@ -148,7 +148,7 @@ MonoBehaviour:
   title: Cast_IrPalo
   rect:
     serializedVersion: 2
-    x: 200
+    x: 220
     y: 400
     width: 160
     height: 44
@@ -197,7 +197,7 @@ MonoBehaviour:
   rect:
     serializedVersion: 2
     x: 220
-    y: 320
+    y: 300
     width: 160
     height: 44
   parent: {fileID: 4135439964892121966}
@@ -311,7 +311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 0}
+  selectedEditorNode: {fileID: 5482933645832930924}
   repeatOnFinish: 1
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
@@ -383,8 +383,8 @@ MonoBehaviour:
   title: Cast_HayPalo
   rect:
     serializedVersion: 2
-    x: -20
-    y: 360
+    x: 40
+    y: 320
     width: 160
     height: 44
   parent: {fileID: 3546488175222063647}
@@ -432,8 +432,8 @@ MonoBehaviour:
   title: Cast_ComerPalo
   rect:
     serializedVersion: 2
-    x: 620
-    y: 360
+    x: 495
+    y: 345
     width: 160
     height: 44
   parent: {fileID: 3546488175222063647}

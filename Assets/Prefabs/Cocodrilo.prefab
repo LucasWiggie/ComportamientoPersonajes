@@ -500,7 +500,7 @@ MonoBehaviour:
     m_Bits: 0
   huirPatito:
     serializedVersion: 2
-    m_Bits: 65536
+    m_Bits: 0
   puedeVer: 0
   puedeVerArena: 0
   btHambre: {fileID: 1356444491322341819}

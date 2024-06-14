@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1800,10 +1800,10 @@ MonoBehaviour:
   pato: {fileID: 385287219224526871, guid: 0e0713aa9ebc07640b01992d3fa21da8, type: 3}
   palo: {fileID: 5656048564650677434, guid: cc04d654acd24d244808316233ee9eb8, type: 3}
   mosca: {fileID: 473223151736451685, guid: 2612d0139ca15cd4487fb287783742ad, type: 3}
-  nCocodrilos: 1
+  nCocodrilos: 0
   nCastores: 0
-  nSalamandras: 0
-  nPatos: 1
+  nSalamandras: 1
+  nPatos: 0
   nPalos: 0
   nMoscas: 0
 --- !u!4 &362074959

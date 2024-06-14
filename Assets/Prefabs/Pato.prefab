@@ -139,6 +139,7 @@ MonoBehaviour:
   BT_Miedo: {fileID: 5958547077724282190}
   aSalvo: 0
   isDefaultMov: 1
+  salamandraScript: {fileID: -5968839395692330149, guid: 8fbaf18edefc9b84e921f3cac4508485, type: 3}
   movementInterval: 3
 --- !u!195 &4023073068378583411
 NavMeshAgent:
