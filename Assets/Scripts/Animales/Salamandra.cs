@@ -65,6 +65,7 @@ public class Salamandra : MonoBehaviour
     public bool aSalvo = false;
     private bool descansando = false;
     public bool poniendoHuevos = false;
+    private bool comeMosca = false;
 
     private float tiempoInicioPonerHuevos = 0f;
     private const float tiempoPonerHuevos = 4f;
@@ -80,6 +81,7 @@ public class Salamandra : MonoBehaviour
     // Objetivos
     private Transform eggsTarget;//huevos objetivo
     private Transform sandTarget;//arena
+    private Transform moscaTarget;
 
     //Peligros
     private List<Transform> patosCercanos = new List<Transform>();
@@ -135,7 +137,7 @@ public class Salamandra : MonoBehaviour
         salamandraNav = GetComponent<NavMeshAgent>();
         //InvokeRepeating("NuevoDestinoAleatorio", 0f, movementInterval);
 
-        hambre = 30;
+        hambre = 68;
         energia = 60;
         miedo = 0;
         temorHuevos = 0;
@@ -156,6 +158,14 @@ public class Salamandra : MonoBehaviour
         UpdateVariables();
         DetectarPatosCercanos();
         ActualizarMiedo();
+
+        if (moscaTarget != null)
+        {
+            if (transform.position.x == moscaTarget.position.x && transform.position.z == moscaTarget.position.z && !comeMosca)
+            {
+                comeMosca = true;
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -500,7 +510,7 @@ public class Salamandra : MonoBehaviour
 
     public ChaseState HayMosca()
     {
-        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMaskArena);
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
         //Debug.Log("Number of objects found: " + rangeChecks.Length);
 
         if (rangeChecks.Length > 0)
@@ -533,8 +543,8 @@ public class Salamandra : MonoBehaviour
 
             if (closestTarget != null)
             {
-                // Asignar la presa m�s cercana como el objetivo
-                sandTarget = closestTarget;
+                // Asignar la presa más cercana como el objetivo
+                moscaTarget = closestTarget;
                 puedeVer = true;
                 return ChaseState.Finished;
             }
@@ -550,6 +560,44 @@ public class Salamandra : MonoBehaviour
             return ChaseState.Failed;
         }
         return ChaseState.Failed;
+    }
+
+    public ChaseState IrMosca()
+    {
+        salamandraNav.stoppingDistance = 0;
+
+        if (moscaTarget != null)
+        {
+            salamandraNav.SetDestination(moscaTarget.position);
+            //StartCoroutine(EsperarLlegada());
+            if (comeMosca)
+            {
+                return ChaseState.Finished;
+            }
+            return ChaseState.Enproceso;
+        }
+        else
+        {
+            //HayMosca();
+            return ChaseState.Failed;
+        }
+    }
+
+    public ChaseState ComerMosca()
+    {
+        if (comeMosca)
+        {
+            Destroy(moscaTarget.gameObject);
+            moscaTarget = null;
+            moscasComidas++;
+            hambre -= 20;
+
+            return ChaseState.Finished;
+        }
+        else
+        {
+            return ChaseState.Failed;
+        }
     }
 
     public ChaseState PonerHuevos()
