@@ -172,7 +172,12 @@ public class Castor : MonoBehaviour
         _energia = this.getEnergia();
         _miedo = this.getMiedo();
 
-        if (_energia < 60 || descansando)
+        if (_hambre >= 100 || _energia <= 0)
+        {
+            Debug.Log(this.gameObject + " ha muerto");
+            Destroy(this.gameObject);
+        }
+        else if (_energia < 60 || descansando)
         {
             bool_Hambre = false;
             bool_Miedo = false;

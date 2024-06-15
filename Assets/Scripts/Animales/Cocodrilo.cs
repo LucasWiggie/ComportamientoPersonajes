@@ -199,7 +199,12 @@ public class Cocodrilo : MonoBehaviour
 
         huevosIndefensos = ObtenerHuevosIndefensos();
 
-        if (_uEnergia < 50 && huevosIndefensos.Count != 0)
+        if (_uHambre >= 100 || _uEnergia <= 0)
+        {
+            Debug.Log(this.gameObject + " ha muerto");
+            Destroy(this.gameObject);
+        }
+        else if (_uEnergia < 50 && huevosIndefensos.Count != 0)
         {
             boolHambre = false;
             boolMiedo = false;

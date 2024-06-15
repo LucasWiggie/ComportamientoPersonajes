@@ -156,8 +156,12 @@ public class Pato : MonoBehaviour
         _miedo = this.getMiedo();
         animalesNoASalvo = ObtenerAnimalesNoASalvo();
 
-
-        if (_energia < 50 || descansando) //si energia baja o descansando -> arbol de energia
+        if (_hambre >= 100 || _energia <= 0)
+        {
+            Debug.Log(this.gameObject + " ha muerto");
+            Destroy(this.gameObject);
+        }
+        else if (_energia < 50 || descansando) //si energia baja o descansando -> arbol de energia
         {
             bool_Hambre = false;
             bool_Miedo = false;

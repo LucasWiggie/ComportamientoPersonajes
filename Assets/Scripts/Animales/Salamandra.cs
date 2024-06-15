@@ -239,7 +239,12 @@ public class Salamandra : MonoBehaviour
         _uTemorHuevos = this.getTemorHuevos();
         _uMoscasComidas = this.getMoscasComidas();
 
-        if (_uMiedo > 50) 
+        if (_uHambre >= 100 || _uEnergia <= 0)
+        {
+            Debug.Log(this.gameObject + " ha muerto");
+            Destroy(this.gameObject);
+        }
+        else if (_uMiedo > 50) 
         {
             isDefaultMov = false;
             boolHambre = false;
