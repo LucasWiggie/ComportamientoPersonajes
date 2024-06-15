@@ -170,11 +170,7 @@ public class Salamandra : MonoBehaviour
     private void FixedUpdate()
     {
         UtilitySystem();
-        if (isDefaultMov)
-        {
-            movimientoAleatorio();
-        }
-        else if (boolHambre)
+        if (boolHambre)
         {
             btHambre.GetComponent<MonoBehaviourTree>().Tick();
         }
@@ -189,12 +185,17 @@ public class Salamandra : MonoBehaviour
         else if (boolProtegerHuevos)
         {
             //btProtegerHuevos.GetComponent<MonoBehaviourTree>().Tick();
-            Debug.Log("Entro a proteger heuvos");
+            Debug.Log("Entro a proteger huevos");
             ProtegerHuevo();
-        } 
+        }
         else if (boolPonerHuevos)
         {
             btPonerHuevos.GetComponent<MonoBehaviourTree>().Tick();
+        }
+        else
+        {
+            Debug.Log("Entro al mov aleatorio");
+            movimientoAleatorio();
         }
     }
 
@@ -323,8 +324,9 @@ public class Salamandra : MonoBehaviour
             btMiedoPatos.SetActive(false);
             btPonerHuevos.SetActive(true);
         }
-        else
+        else if(!boolProtegerHuevos)
         {
+            Debug.Log("ENTRA EN EL ELSE");
             isDefaultMov = true;
 
             aSalvo = false;
@@ -673,6 +675,7 @@ public class Salamandra : MonoBehaviour
 
     public void ProtegerHuevo()
     {
+        isDefaultMov = false;
         if (huevoAProteger != null)
         {
             salamandraNav.SetDestination(huevoAProteger.position); //se pone como punto de destino la posicion de la arena
@@ -681,6 +684,10 @@ public class Salamandra : MonoBehaviour
             {
                 aSalvo = true;
                 huevoAProteger.GetComponentInParent<Huevo>().aSalvo = true;
+            } 
+            else
+            {
+                huevoAProteger.GetComponentInParent<Huevo>().aSalvo = false;
             }
         }
         else

@@ -37,6 +37,7 @@ public class Huevo : MonoBehaviour
         else
         {
             madreSalamandra.boolProtegerHuevos = false;
+            aSalvo = false;
         }
     }
 
@@ -108,6 +109,7 @@ public class Huevo : MonoBehaviour
         Debug.Log("Entra a Avisar a la salamandra");
         madreSalamandra.boolProtegerHuevos = true;
         madreSalamandra.huevoAProteger = transform;
+        madreSalamandra.isDefaultMov = false;
     }
 
 

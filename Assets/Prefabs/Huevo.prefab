@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc563ff2c0acee642aa0393f50d9c3d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radio: 300
+  radio: 50
   angulo: 0
   targetMask:
     serializedVersion: 2
