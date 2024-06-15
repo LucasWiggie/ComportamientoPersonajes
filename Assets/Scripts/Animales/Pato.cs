@@ -321,17 +321,13 @@ public class Pato : MonoBehaviour
         // Verificar si hay objetivos no a salvo
         if (salamandrasNoASalvo.Count > 0)
         {
-            // Utilizar el primer objetivo no a salvo encontrado
-            Transform target = salamandrasNoASalvo[0].transform;
+            Transform target = salamandrasNoASalvo[0].transform; // Utilizar el primer objetivo no a salvo encontrado
             salTarget = target;
 
             Vector3 directionToTarget = (target.position - transform.position).normalized;
+            float dotProduct = Vector3.Dot(transform.forward, directionToTarget); // Utilizar el producto punto para verificar el �ngulo
+            float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2)); // Establecer un umbral para el �ngulo (ajustar seg�n sea necesario)
 
-            // Utilizar el producto punto para verificar el �ngulo
-            float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
-
-            // Establecer un umbral para el �ngulo (ajustar seg�n sea necesario)
-            float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
             if (dotProduct > angleThreshold)
             {
                 float distanciaToTarget = Vector3.Distance(transform.position, target.position);
@@ -568,27 +564,27 @@ public class Pato : MonoBehaviour
 
     public List<Collider> ObtenerAnimalesNoASalvo()
     {
-    // Obtener todos los colisionadores en el rango especificado
-    Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
+        // Obtener todos los colisionadores en el rango especificado
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
 
-    // Lista para almacenar colisionadores de animales no a salvo
-    List<Collider> animalesNoASalvo = new List<Collider>();
+        // Lista para almacenar colisionadores de animales no a salvo
+        List<Collider> animalesNoASalvo = new List<Collider>();
 
-    foreach (Collider col in rangeChecks)
-    {
-        // Obtener el GameObject padre del colisionador
-        GameObject targetParent = col.transform.parent != null ? col.transform.parent.gameObject : col.gameObject;
-
-        // Verificar si el objetivo es un castor o un pato y si no está a salvo
-        Salamandra salamandra = targetParent.GetComponent<Salamandra>();
-
-        if ((salamandra != null && !salamandra.aSalvo))
+        foreach (Collider col in rangeChecks)
         {
-            animalesNoASalvo.Add(col);
-        }
-    }
+            // Obtener el GameObject padre del colisionador
+            GameObject targetParent = col.transform.parent != null ? col.transform.parent.gameObject : col.gameObject;
 
-    return animalesNoASalvo;
+            // Verificar si el objetivo es un castor o un pato y si no está a salvo
+            Salamandra salamandra = targetParent.GetComponent<Salamandra>();
+
+            if ((salamandra != null && !salamandra.aSalvo))
+            {
+                animalesNoASalvo.Add(col);
+            }
+        }
+
+        return animalesNoASalvo;
     }
 }
 

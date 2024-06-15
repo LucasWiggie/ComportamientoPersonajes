@@ -26,7 +26,7 @@ namespace CustomNodes
                 }
             }
 
-            Cocodrilo.ChaseState chaseState = crocodile.Chase();
+            Cocodrilo.ChaseState chaseState = crocodile.Perseguir();
             switch (chaseState)
             {
                 case Cocodrilo.ChaseState.Finished:

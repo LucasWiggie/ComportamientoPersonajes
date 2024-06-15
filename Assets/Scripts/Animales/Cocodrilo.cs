@@ -22,6 +22,7 @@ public class Cocodrilo : MonoBehaviour
 
     public bool puedeVer;
     public bool puedeVerArena;
+    public bool puedeVerHuevos;
 
 
     // BTs de cada acci�n
@@ -31,7 +32,7 @@ public class Cocodrilo : MonoBehaviour
 
     //Bool bts
     private bool boolHambre = false;
-    private bool boolEnergia = false;
+    public bool boolEnergia = false;
     private bool boolMiedo = false;
     public bool aSalvo = false;
 
@@ -74,6 +75,8 @@ public class Cocodrilo : MonoBehaviour
     public List<Transform> patitosCercanos = new List<Transform>();
     private float distanciaMax = 30f;
 
+    private List<Collider> huevosIndefensos = new List<Collider>();
+
     public enum ChaseState
     {
         Finished,
@@ -113,8 +116,8 @@ public class Cocodrilo : MonoBehaviour
         crocNav = GetComponent<NavMeshAgent>();
 
         hambre = 20;
-        energia = 80;
-        miedo = 100;
+        energia = 20;
+        miedo = 0;
 
         _uHambre = hambre;
         _uEnergia = energia;
@@ -194,7 +197,9 @@ public class Cocodrilo : MonoBehaviour
         _uMiedo = this.getMiedo();
         List<Collider> animalesNoASalvo = ObtenerAnimalesNoASalvo();
 
-        if (_uEnergia < 50)
+        huevosIndefensos = ObtenerHuevosIndefensos();
+
+        if (_uEnergia < 50 && huevosIndefensos.Count != 0)
         {
             boolHambre = false;
             boolMiedo = false;
@@ -260,23 +265,6 @@ public class Cocodrilo : MonoBehaviour
     }
 
     return animalesNoASalvo;
-    }
-
-    public void HambreAction()
-    {
-        // BT de cuando el Cocodrilo tiene hambre
-        Debug.Log("Activo BT Hambre");
-        
-    }
-
-    public void EnergiaAction()
-    {
-        
-    }
-    
-    public void MiedoAction()
-    {
-        
     }
     #endregion
 
@@ -356,9 +344,26 @@ public class Cocodrilo : MonoBehaviour
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radioHuevos, targetMaskHuevos);
         Debug.Log("ENTRA EN METODO HAY HUEVOS. HAY: " + rangeChecks.Length);
 
-        if (rangeChecks.Length > 0)
+        //Huevos que no estan resguardadas
+        List<Collider> huevosIndefensos = new List<Collider>();
+
+        foreach (Collider col in rangeChecks)
         {
-            Transform target = rangeChecks[0].transform;
+            // Obtener el GameObject padre del colisionador
+            GameObject targetParent = col.transform.parent != null ? col.transform.parent.gameObject : col.gameObject;
+
+            // Verificar si el objetivo es una salamandra y si no est� a salvo
+            Huevo huevo = targetParent.GetComponent<Huevo>();
+
+            if ((huevo != null && !huevo.aSalvo))
+            {
+                huevosIndefensos.Add(col);
+            }
+        }
+
+        if (huevosIndefensos.Count > 0)
+        {
+            Transform target = huevosIndefensos[0].transform;
             eggsTarget = target;
 
             Vector3 directionToTarget = (target.position - transform.position).normalized;
@@ -371,26 +376,24 @@ public class Cocodrilo : MonoBehaviour
 
                 if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
                 {
-                    puedeVerArena = true;
+                    puedeVerHuevos = true;
                     return ChaseState.Finished;
-
                 }
                 else
                 {
-                    puedeVerArena = false;
+                    puedeVerHuevos = false;
                     return ChaseState.Failed;
-
                 }
             }
             else
             {
-                puedeVerArena = false;
+                puedeVerHuevos = false;
                 return ChaseState.Failed;
             }
         }
-        else if (puedeVerArena)
+        else if (puedeVerHuevos)
         {
-            puedeVerArena = false;
+            puedeVerHuevos = false;
             return ChaseState.Failed;
         }
 
@@ -452,7 +455,7 @@ public class Cocodrilo : MonoBehaviour
     }
 
     //Acci�n perseguir animales
-   public ChaseState Chase()
+    public ChaseState Perseguir()
     {
         GameObject targetParent = animalTarget.gameObject.transform.parent.gameObject;
         var castor = targetParent.GetComponent<Castor>();
@@ -464,8 +467,8 @@ public class Cocodrilo : MonoBehaviour
             return ChaseState.Failed; // No hay objetivo
         }
 
-        if(castor.aSalvo /*|| pato.aSalvo*/)  ////////////////////////////////////ACTIVAR CUANDO SE METAN PATOS A LA ESCENAAAA///////////////////////////////////////////
-        { 
+        if (castor.aSalvo || pato.aSalvo)  ////////////////////////////////////ACTIVAR CUANDO SE METAN PATOS A LA ESCENAAAA///////////////////////////////////////////
+        {
             return ChaseState.Finished;
         }
         float minDist = crocNav.stoppingDistance;
@@ -500,27 +503,27 @@ public class Cocodrilo : MonoBehaviour
             var pato = targetParent.GetComponent<Pato>();
             if (castor != null)
             {
-                if(!castor.aSalvo)
-                {  
-                    // Destruir el GameObject del animal y su padre
-                    GameObject.Destroy(targetParent);
-                    // Restablecer la cantidad de hambre a cero
-                    hambre = 0;
-                }
-            
-            }
-            if (pato != null)
-            {
-                if(!pato.aSalvo)
+                if (!castor.aSalvo)
                 {
                     // Destruir el GameObject del animal y su padre
                     GameObject.Destroy(targetParent);
                     // Restablecer la cantidad de hambre a cero
                     hambre = 0;
                 }
-            
+
             }
-        
+            if (pato != null)
+            {
+                if (!pato.aSalvo)
+                {
+                    // Destruir el GameObject del animal y su padre
+                    GameObject.Destroy(targetParent);
+                    // Restablecer la cantidad de hambre a cero
+                    hambre = 0;
+                }
+
+            }
+
         }
         else if (eggs && eggsTarget != null) // Si vamos a comer huevos y hay un objetivo de huevos
         {
@@ -537,11 +540,11 @@ public class Cocodrilo : MonoBehaviour
             energia = Mathf.Clamp(energia, 0f, 100f);
 
         }
-    
+
     }
 
     //Acci�n huir a arena
-    public ChaseState irArena()
+    public ChaseState IrArena()
     {
         if (sandTarget != null)
         {
@@ -571,29 +574,34 @@ public class Cocodrilo : MonoBehaviour
             return ChaseState.Failed; //no haya animal al que perseguir
         }
     }
+    
     public ChaseState IrAHuevos()
     {
-        if (eggsTarget != null)
+        if (eggsTarget != null && !eggsTarget.GetComponent<Huevo>().aSalvo)
         {
             crocNav.SetDestination(eggsTarget.position);
 
-            if ((transform.position.x - eggsTarget.position.x <=0.5) && (transform.position.z - eggsTarget.position.z <= 0.5))
+            if (!eggsTarget.GetComponentInParent<Huevo>().aSalvo)
             {
-
-                Debug.Log("COCODRILO EN HUEVOS"); 
-                crocNav.isStopped = true;
+                if ((transform.position.x - eggsTarget.position.x <= 0.5) && (transform.position.z - eggsTarget.position.z <= 0.5))
+                {
+                    Debug.Log("COCODRILO EN HUEVOS");
+                    crocNav.isStopped = true;
+                    return ChaseState.Finished;
+                }
+            } 
+            else
+            {
                 return ChaseState.Finished;
-
             }
-            return ChaseState.Enproceso;
 
+            return ChaseState.Enproceso;
         }
         else
         {
             crocNav.stoppingDistance = 2;
             return ChaseState.Failed; //no haya animal al que perseguir
         }
-
     }
 
     public IEnumerator EsperarLlegada()
@@ -660,5 +668,29 @@ public class Cocodrilo : MonoBehaviour
 
             miedo = Mathf.Max(miedo, miedoIncremental); // Mantener el mayor valor de miedo
         }
+    }
+
+    public List<Collider> ObtenerHuevosIndefensos()
+    {
+        // Obtener todos los colisionadores en el rango especificado
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMaskHuevos);
+
+        // Lista para almacenar colisionadores de animales no a salvo
+        List<Collider> huevosIndefensos = new List<Collider>();
+
+        foreach (Collider col in rangeChecks)
+        {
+            // Obtener el GameObject padre del colisionador
+            GameObject targetParent = col.transform.parent != null ? col.transform.parent.gameObject : col.gameObject;
+
+            Huevo huevo = targetParent.GetComponent<Huevo>();
+
+            if ((huevo != null && !huevo.aSalvo))
+            {
+                huevosIndefensos.Add(col);
+            }
+        }
+
+        return huevosIndefensos;
     }
 }

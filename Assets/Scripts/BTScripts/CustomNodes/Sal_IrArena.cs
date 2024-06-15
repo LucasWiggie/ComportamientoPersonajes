@@ -30,7 +30,7 @@ namespace CustomNodes
                 }
             }
 
-            Salamandra.ChaseState estadoHuida = salamandraScript.irArena();
+            Salamandra.ChaseState estadoHuida = salamandraScript.IrArena();
             switch (estadoHuida)
             {
                 case Salamandra.ChaseState.Enproceso:

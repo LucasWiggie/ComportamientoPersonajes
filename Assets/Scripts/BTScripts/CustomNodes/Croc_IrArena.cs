@@ -30,7 +30,7 @@ namespace CustomNodes
                 }
             }
             // AQUI LA EJECUCIÓN DE QUE EL COCODRILO SE MUEVA A LA ARENA
-            Cocodrilo.ChaseState estadoHuida = crocodile.irArena();
+            Cocodrilo.ChaseState estadoHuida = crocodile.IrArena();
             switch (estadoHuida)
             {
                 case Cocodrilo.ChaseState.Enproceso:

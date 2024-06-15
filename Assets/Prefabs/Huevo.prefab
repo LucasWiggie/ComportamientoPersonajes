@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4228598821186494499}
   - component: {fileID: -7625833318841799888}
   - component: {fileID: 7968679378519121202}
+  - component: {fileID: 3822198883832611394}
   m_Layer: 12
   m_Name: Huevo
   m_TagString: Huevo
@@ -99,6 +100,29 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3822198883832611394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2295779056263190461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc563ff2c0acee642aa0393f50d9c3d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radio: 300
+  angulo: 0
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 2048
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 0
+  madreSalamandra: {fileID: -5968839395692330149, guid: 8fbaf18edefc9b84e921f3cac4508485, type: 3}
+  puedeVer: 0
+  aSalvo: 0
 --- !u!1001 &3756534977183136046
 PrefabInstance:
   m_ObjectHideFlags: 0

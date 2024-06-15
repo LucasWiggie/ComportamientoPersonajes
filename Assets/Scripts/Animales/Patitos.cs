@@ -90,7 +90,7 @@ public class Patitos : MonoBehaviour
             // Verificar si el objetivo es una salamandra y si no est� a salvo
             Cocodrilo cocodrilo = targetParent.GetComponent<Cocodrilo>();
 
-            if ((cocodrilo != null)) //&& !cocodrilo.aSalvo)) //PONER CUANDO SE PUEDA PONER A SALVO UN COCODRILO
+            if (cocodrilo != null && !cocodrilo.aSalvo) //PONER CUANDO SE PUEDA PONER A SALVO UN COCODRILO
             {
                 crocsNoASalvo.Add(col);
             }

@@ -18,7 +18,7 @@ public class Salamandra : MonoBehaviour
     public LayerMask targetMaskHuevos;
     public LayerMask targetMaskArena;
     public LayerMask huirPato;
-    public GameObject huevosPrefab; // Prefab de los huevos
+    public GameObject huevoPrefab; // Prefab de los huevos
     public bool puedeVer;
 
     public float hambre; //Rango 0-100 las 3
@@ -46,7 +46,7 @@ public class Salamandra : MonoBehaviour
     private bool boolHambre = false;
     private bool boolEnergia = false;
     private bool boolMiedoPato = false;
-    private bool boolProtegerHuevos = false;
+    public bool boolProtegerHuevos = false;
     private bool boolPonerHuevos = false;
 
     //Utilidades
@@ -60,7 +60,6 @@ public class Salamandra : MonoBehaviour
     float energiaRate = 0.05f;
 
     public bool isDefaultMov = true;
-    private bool dirtyUS = false;
 
     public bool aSalvo = false;
     private bool descansando = false;
@@ -82,11 +81,11 @@ public class Salamandra : MonoBehaviour
     private Transform eggsTarget;//huevos objetivo
     private Transform sandTarget;//arena
     private Transform moscaTarget;
+    public Transform huevoAProteger;
 
     //Peligros
     private List<Transform> patosCercanos = new List<Transform>();
     public float distanciaMaxima = 25;
-
 
     //Getters y Setters
     public float getHambre()
@@ -137,8 +136,8 @@ public class Salamandra : MonoBehaviour
         salamandraNav = GetComponent<NavMeshAgent>();
         //InvokeRepeating("NuevoDestinoAleatorio", 0f, movementInterval);
 
-        hambre = 68;
-        energia = 60;
+        hambre = 30;
+        energia = 80;
         miedo = 0;
         temorHuevos = 0;
         moscasComidas = 5;
@@ -189,7 +188,9 @@ public class Salamandra : MonoBehaviour
         }
         else if (boolProtegerHuevos)
         {
-            btProtegerHuevos.GetComponent<MonoBehaviourTree>().Tick();
+            //btProtegerHuevos.GetComponent<MonoBehaviourTree>().Tick();
+            Debug.Log("Entro a proteger heuvos");
+            ProtegerHuevo();
         } 
         else if (boolPonerHuevos)
         {
@@ -255,7 +256,6 @@ public class Salamandra : MonoBehaviour
             btHambre.SetActive(false);
             btEnergia.SetActive(false);
             btMiedoPatos.SetActive(true);
-            btProtegerHuevos.SetActive(false);
             btPonerHuevos.SetActive(false);
         }
         else if (_uTemorHuevos > 60)
@@ -272,7 +272,6 @@ public class Salamandra : MonoBehaviour
             btHambre.SetActive(false);
             btEnergia.SetActive(false);
             btMiedoPatos.SetActive(false);
-            btProtegerHuevos.SetActive(true);
             btPonerHuevos.SetActive(false);
         }
         else if (_uEnergia < 20 || descansando)
@@ -289,7 +288,6 @@ public class Salamandra : MonoBehaviour
             btHambre.SetActive(false);
             btEnergia.SetActive(true);
             btMiedoPatos.SetActive(false);
-            btProtegerHuevos.SetActive(false);
             btPonerHuevos.SetActive(false);
         }
         else if (_uHambre > 70)
@@ -306,7 +304,6 @@ public class Salamandra : MonoBehaviour
             btHambre.SetActive(true);
             btEnergia.SetActive(false);
             btMiedoPatos.SetActive(false);
-            btProtegerHuevos.SetActive(false);
             btPonerHuevos.SetActive(false);
         }
         else if (_uMoscasComidas >= 5)
@@ -324,7 +321,6 @@ public class Salamandra : MonoBehaviour
             btHambre.SetActive(false);
             btEnergia.SetActive(false);
             btMiedoPatos.SetActive(false);
-            btProtegerHuevos.SetActive(false);
             btPonerHuevos.SetActive(true);
         }
         else
@@ -342,7 +338,6 @@ public class Salamandra : MonoBehaviour
             btHambre.SetActive(false);
             btEnergia.SetActive(false);
             btMiedoPatos.SetActive(false);
-            btProtegerHuevos.SetActive(false);
             btPonerHuevos.SetActive(false);
         }
     }
@@ -460,7 +455,7 @@ public class Salamandra : MonoBehaviour
         return ChaseState.Failed;
     }
 
-    public ChaseState irArena()
+    public ChaseState IrArena()
     {
         if (sandTarget != null)
         {
@@ -615,7 +610,6 @@ public class Salamandra : MonoBehaviour
                 Debug.Log("Salamandra en arena");
                 aSalvo = true;
                 poniendoHuevos = true;
-                descansando = true;
 
                 if (Time.time - tiempoInicioPonerHuevos >= tiempoPonerHuevos) // Si han pasado los 4 segundos
                 {
@@ -677,6 +671,24 @@ public class Salamandra : MonoBehaviour
         }
     }
 
+    public void ProtegerHuevo()
+    {
+        if (huevoAProteger != null)
+        {
+            salamandraNav.SetDestination(huevoAProteger.position); //se pone como punto de destino la posicion de la arena
+
+            if (transform.position.x == huevoAProteger.position.x && transform.position.z == huevoAProteger.position.z)
+            {
+                aSalvo = true;
+                huevoAProteger.GetComponentInParent<Huevo>().aSalvo = true;
+            }
+        }
+        else
+        {
+            salamandraNav.stoppingDistance = 0;
+            salamandraNav.speed--;
+        }
+    }
 
     public IEnumerator ReanudarMovimiento()
     {
@@ -695,7 +707,9 @@ public class Salamandra : MonoBehaviour
     private void InstanciarHuevos()
     {
         Vector3 posicionHuevos = new Vector3(transform.position.x + 0.5f, transform.position.y + 1.75f, transform.position.z + 0.5f); // Ajustar esta posición según sea necesario
-        Instantiate(huevosPrefab, posicionHuevos, Quaternion.identity);
+        GameObject huevoInstanciado = Instantiate(huevoPrefab, posicionHuevos, Quaternion.identity);
+        Huevo huevoScript = huevoInstanciado.GetComponent<Huevo>();
+        huevoScript.madreSalamandra = this;
         huevosPuestos = true;
         Debug.Log("Huevos instanciados en la arena");
     }

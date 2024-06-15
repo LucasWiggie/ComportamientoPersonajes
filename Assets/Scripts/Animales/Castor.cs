@@ -166,6 +166,59 @@ public class Castor : MonoBehaviour
         }
     }
 
+    public void UtilitySystem()
+    {
+        _hambre = this.getHambre();
+        _energia = this.getEnergia();
+        _miedo = this.getMiedo();
+
+        if (_energia < 60 || descansando)
+        {
+            bool_Hambre = false;
+            bool_Miedo = false;
+            isDefaultMov = false;
+            bool_Energia = true;
+            aSalvo = false;
+            BT_Hambre.SetActive(false);
+            BT_PalosPresa.SetActive(false);
+            BT_EnergiaMiedo.SetActive(true);
+        }
+        else if (_miedo > 70)
+        {
+            bool_Energia = false;
+            bool_Hambre = false;
+            isDefaultMov = false;
+            bool_Miedo = true;
+            aSalvo = false;
+            BT_Hambre.SetActive(false);
+            BT_PalosPresa.SetActive(false);
+            BT_EnergiaMiedo.SetActive(true);
+        }
+        else if (_hambre > 50)
+        {
+            bool_Energia = false;
+            bool_Miedo = false;
+            isDefaultMov = false;
+            bool_Hambre = true;
+            aSalvo = false;
+            BT_PalosPresa.SetActive(false);
+            BT_EnergiaMiedo.SetActive(false);
+            BT_Hambre.SetActive(true);
+        }
+        else
+        {
+            bool_Energia = false;
+            bool_Hambre = false;
+            bool_Miedo = false;
+            isDefaultMov = true;
+            aSalvo = false;
+            BT_EnergiaMiedo.SetActive(false);
+            BT_Hambre.SetActive(false);
+            BT_PalosPresa.SetActive(true);
+        }
+    }
+
+
     private void UpdateVariables()
     {
         hambre += hambreRate * Time.deltaTime;
@@ -443,57 +496,6 @@ public class Castor : MonoBehaviour
         cogePalo = true;
     }
 
-    public void UtilitySystem()
-    {
-        _hambre = this.getHambre();
-        _energia = this.getEnergia();
-        _miedo = this.getMiedo();
-
-        if (_energia < 60  || descansando)
-        {
-            bool_Hambre = false;
-            bool_Miedo = false;
-            isDefaultMov = false;
-            bool_Energia = true;
-            aSalvo = false;
-            BT_Hambre.SetActive(false);
-            BT_PalosPresa.SetActive(false);
-            BT_EnergiaMiedo.SetActive(true);
-        }
-        else if (_miedo > 70)
-        {
-            bool_Energia = false;
-            bool_Hambre = false;
-            isDefaultMov = false;
-            bool_Miedo = true;
-            aSalvo = false;
-            BT_Hambre.SetActive(false);
-            BT_PalosPresa.SetActive(false);
-            BT_EnergiaMiedo.SetActive(true);
-        }
-        else if (_hambre > 50)
-        {
-            bool_Energia = false;
-            bool_Miedo = false;
-            isDefaultMov = false;
-            bool_Hambre = true;
-            aSalvo = false;
-            BT_PalosPresa.SetActive(false);
-            BT_EnergiaMiedo.SetActive(false);
-            BT_Hambre.SetActive(true);
-        }
-        else
-        {
-            bool_Energia = false;
-            bool_Hambre = false;
-            bool_Miedo = false;
-            isDefaultMov = true;
-            aSalvo = false;
-            BT_EnergiaMiedo.SetActive(false);
-            BT_Hambre.SetActive(false);
-            BT_PalosPresa.SetActive(true);
-        }
-    }
 
     /*public void HambreAction()
     {
