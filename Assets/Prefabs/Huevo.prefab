@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc563ff2c0acee642aa0393f50d9c3d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radio: 50
+  radio: 20
   angulo: 0
   targetMask:
     serializedVersion: 2
@@ -121,6 +121,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   madreSalamandra: {fileID: -5968839395692330149, guid: 8fbaf18edefc9b84e921f3cac4508485, type: 3}
+  transformMadreSalamandra: {fileID: 0}
   puedeVer: 0
   aSalvo: 0
 --- !u!1001 &3756534977183136046

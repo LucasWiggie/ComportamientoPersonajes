@@ -26,6 +26,7 @@ public class Salamandra : MonoBehaviour
     public float miedo;
     public float temorHuevos;
     public int moscasComidas;
+    private float distMinHuevo = 3.0f;
 
     public enum ChaseState
     {
@@ -148,8 +149,6 @@ public class Salamandra : MonoBehaviour
         _uTemorHuevos = temorHuevos;
         _uMoscasComidas = moscasComidas;
 
-
-        StartCoroutine(FOVRoutine());
     }
 
     private void Update()
@@ -185,7 +184,6 @@ public class Salamandra : MonoBehaviour
         else if (boolProtegerHuevos)
         {
             //btProtegerHuevos.GetComponent<MonoBehaviourTree>().Tick();
-            Debug.Log("Entro a proteger huevos");
             ProtegerHuevo();
         }
         else if (boolPonerHuevos)
@@ -194,7 +192,6 @@ public class Salamandra : MonoBehaviour
         }
         else
         {
-            Debug.Log("Entro al mov aleatorio");
             movimientoAleatorio();
         }
     }
@@ -326,7 +323,6 @@ public class Salamandra : MonoBehaviour
         }
         else if(!boolProtegerHuevos)
         {
-            Debug.Log("ENTRA EN EL ELSE");
             isDefaultMov = true;
 
             aSalvo = false;
@@ -351,18 +347,6 @@ public class Salamandra : MonoBehaviour
 
         hambre = Mathf.Clamp(hambre, 0f, 100f);
         energia = Mathf.Clamp(energia, 0f, 100f);
-    }
-
-    // NO LO HE MIRADO TODAV�A, ECHADLE UN OJO. Lucas
-    private IEnumerator FOVRoutine()
-    {
-        float delay = 0.2f;
-        WaitForSeconds wait = new WaitForSeconds(delay);
-        while (true)
-        {
-            yield return wait;
-            ComprobarVision();
-        }
     }
 
     private void ComprobarVision()
@@ -468,7 +452,6 @@ public class Salamandra : MonoBehaviour
 
             if (transform.position.x == sandTarget.position.x && transform.position.z == sandTarget.position.z)
             {
-                Debug.Log("Salamandra en arena");
                 aSalvo = true;
 
                 // Incrementa la energ�a del castor mientras est� en la presa
@@ -675,26 +658,48 @@ public class Salamandra : MonoBehaviour
 
     public void ProtegerHuevo()
     {
-        isDefaultMov = false;
         if (huevoAProteger != null)
         {
-            salamandraNav.SetDestination(huevoAProteger.position); //se pone como punto de destino la posicion de la arena
-
-            if (transform.position.x == huevoAProteger.position.x && transform.position.z == huevoAProteger.position.z)
+            float distanceToEgg = Vector3.Distance(transform.position, huevoAProteger.position);
+            if (distanceToEgg > distMinHuevo)
             {
-                aSalvo = true;
-                huevoAProteger.GetComponentInParent<Huevo>().aSalvo = true;
-            } 
+                salamandraNav.SetDestination(huevoAProteger.position);
+                aSalvo = false;
+            }
             else
             {
-                huevoAProteger.GetComponentInParent<Huevo>().aSalvo = false;
+                aSalvo = true;
             }
+            huevoAProteger.GetComponentInParent<Huevo>().aSalvo = aSalvo;
         }
         else
         {
+            // Opcional: Lógica adicional si no hay un huevo a proteger
             salamandraNav.stoppingDistance = 0;
             salamandraNav.speed--;
         }
+
+        //isDefaultMov = false;
+        //if (huevoAProteger != null)
+        //{
+        //    salamandraNav.SetDestination(huevoAProteger.position); //se pone como punto de destino la posicion de la arena
+
+        //    if (Vector3.Distance(transform.position, huevoAProteger.position) < distMinHuevo)
+        //    {
+        //        aSalvo = true;
+        //        huevoAProteger.GetComponentInParent<Huevo>().aSalvo = true;
+        //    } 
+        //    else
+        //    {
+        //        Debug.Log("Entra al else para poner el aSalvo del huevo a false");
+        //        huevoAProteger.GetComponentInParent<Huevo>().aSalvo = false;
+        //    }
+        //}
+        //else
+        //{
+        //    salamandraNav.stoppingDistance = 0;
+        //    salamandraNav.speed--;
+        //}
     }
 
     public IEnumerator ReanudarMovimiento()
@@ -717,8 +722,8 @@ public class Salamandra : MonoBehaviour
         GameObject huevoInstanciado = Instantiate(huevoPrefab, posicionHuevos, Quaternion.identity);
         Huevo huevoScript = huevoInstanciado.GetComponent<Huevo>();
         huevoScript.madreSalamandra = this;
+        huevoScript.transformMadreSalamandra = transform;
         huevosPuestos = true;
-        Debug.Log("Huevos instanciados en la arena");
     }
 }
 

@@ -342,7 +342,6 @@ public class Cocodrilo : MonoBehaviour
     public ChaseState HayHuevos()
     {
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radioHuevos, targetMaskHuevos);
-        Debug.Log("ENTRA EN METODO HAY HUEVOS. HAY: " + rangeChecks.Length);
 
         //Huevos que no estan resguardadas
         List<Collider> huevosIndefensos = new List<Collider>();
@@ -585,7 +584,6 @@ public class Cocodrilo : MonoBehaviour
             {
                 if ((transform.position.x - eggsTarget.position.x <= 0.5) && (transform.position.z - eggsTarget.position.z <= 0.5))
                 {
-                    Debug.Log("COCODRILO EN HUEVOS");
                     crocNav.isStopped = true;
                     return ChaseState.Finished;
                 }

@@ -7,11 +7,13 @@ public class Huevo : MonoBehaviour
     public float radio;
     [Range(0, 360)]
     public float angulo;
+    private float distanciaMinima = 3.0f;
 
     public LayerMask targetMask;
     public LayerMask obstructionMask;
     private Transform crocTarget;
     public Salamandra madreSalamandra;
+    public Transform transformMadreSalamandra;
 
     public bool puedeVer;
     public bool aSalvo;
@@ -26,19 +28,26 @@ public class Huevo : MonoBehaviour
     {
         if (HayCroc())
         {
-            Debug.Log("Entra en el IF");
             // Avisar a la salamandra solo si NO está protegiendo ya a otro huevo
             if (!madreSalamandra.boolProtegerHuevos)
             {
-                Debug.Log("Entra en el IF para avisar a la salamandra");
                 AvisarSalamandra();
             }
         }
         else
         {
             madreSalamandra.boolProtegerHuevos = false;
-            aSalvo = false;
         }
+
+        aSalvo = Vector3.Distance(transform.position, transformMadreSalamandra.position) < distanciaMinima;
+        //if (Vector3.Distance(transform.position, transformMadreSalamandra.position) < distanciaMinima)
+        //{
+        //    aSalvo = true;
+        //}
+        //else
+        //{
+        //    aSalvo = false;
+        //}
     }
 
     public bool HayCroc()
@@ -62,10 +71,8 @@ public class Huevo : MonoBehaviour
             }
         }
 
-        // Verificar si hay objetivos no a salvo
         if (crocsAcechando.Count > 0)
         {
-            Debug.Log("COCODRILOS " + crocsAcechando.Count + crocsAcechando[0]);
             // Utilizar el primer objetivo no a salvo encontrado
             Transform target = crocsAcechando[0].transform;
             crocTarget = target;
@@ -79,12 +86,10 @@ public class Huevo : MonoBehaviour
             float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
             //if (dotProduct > angleThreshold)
             //{
-                Debug.Log("ENTRA EN ÁNGULO");
                 float distanciaToTarget = Vector3.Distance(transform.position, target.position);
 
                 if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
                 {
-                    Debug.Log("LO VEO");
                     return puedeVer = true;
                 }
                 else
@@ -106,12 +111,9 @@ public class Huevo : MonoBehaviour
 
     public void AvisarSalamandra()
     {
-        Debug.Log("Entra a Avisar a la salamandra");
         madreSalamandra.boolProtegerHuevos = true;
         madreSalamandra.huevoAProteger = transform;
         madreSalamandra.isDefaultMov = false;
     }
-
-
 }
 
