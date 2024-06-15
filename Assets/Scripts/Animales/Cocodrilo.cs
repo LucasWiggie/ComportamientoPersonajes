@@ -532,6 +532,7 @@ public class Cocodrilo : MonoBehaviour
             StartCoroutine(ReanudarMovimiento(2.0f));
 
             // Destruir el GameObject de los huevos y su padre
+            eggsTarget.gameObject.GetComponent<Huevo>().madreSalamandra.boolProtegerHuevos = false;
             GameObject.Destroy(targetParent);
 
             // Aumentar la energía

@@ -993,7 +993,7 @@ MonoBehaviour:
   aSalvo: 0
   poniendoHuevos: 0
   huevosPuestos: 0
-  movementInterval: 3
+  movementInterval: 5
   huevoAProteger: {fileID: 0}
   distanciaMaxima: 25
 --- !u!195 &783188113347528045

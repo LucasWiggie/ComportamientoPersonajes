@@ -40,7 +40,6 @@ public class Salamandra : MonoBehaviour
     public GameObject btHambre;
     public GameObject btEnergia;
     public GameObject btMiedoPatos;
-    public GameObject btProtegerHuevos;
     public GameObject btPonerHuevos;
 
     //Bool bts
