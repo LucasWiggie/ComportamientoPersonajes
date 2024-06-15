@@ -140,7 +140,7 @@ public class Salamandra : MonoBehaviour
         energia = 80;
         miedo = 0;
         temorHuevos = 0;
-        moscasComidas = 5;
+        moscasComidas = 0;
 
         _uHambre = hambre;
         _uEnergia = energia;

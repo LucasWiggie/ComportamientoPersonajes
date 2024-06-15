@@ -115,8 +115,8 @@ public class Cocodrilo : MonoBehaviour
         playerRef = this.gameObject;
         crocNav = GetComponent<NavMeshAgent>();
 
-        hambre = 20;
-        energia = 20;
+        hambre = 50;
+        energia = 30;
         miedo = 0;
 
         _uHambre = hambre;
