@@ -400,10 +400,10 @@ public class Castor : MonoBehaviour
             {
                 Debug.Log("en presa");
                 aSalvo = true;
-
+                castNav.speed = 3.5f;
                 // Incrementa la energía del castor mientras está en la presa
-                energia += 0.08f;
-
+                energia += 0.4f;
+                hambreRate -= 0.005f;
                 descansando = true;
                 if (energia > 90)//una cantidad necesaria de energia que reponer para poder salir del nenufar, evitando cambios de comportamiento por cte por el cambio del valor de energia en la franja de cansancio
                 {
@@ -417,7 +417,7 @@ public class Castor : MonoBehaviour
                 if (miedo > 70)
                 {
                     energia -= 0.02f;
-                    castNav.speed += 0.002f;
+                    castNav.speed = 3.75f;
                 }
             }
             return ChaseState.Enproceso;

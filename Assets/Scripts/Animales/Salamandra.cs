@@ -85,7 +85,7 @@ public class Salamandra : MonoBehaviour
 
     //Peligros
     private List<Transform> patosCercanos = new List<Transform>();
-    public float distanciaMaxima = 25;
+    public float distanciaMaxima = 35;
 
     //Getters y Setters
     public float getHambre()

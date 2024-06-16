@@ -443,10 +443,11 @@ public class Pato : MonoBehaviour
             if (transform.position.x == nenufarTarget.position.x && transform.position.z == nenufarTarget.position.z)
             {
                 Debug.Log("pato en nenufar");
-                energia += 0.08f;//vuelve a tener energia
+                energia += 0.4f;//vuelve a tener energia
+                hambreRate -= 0.005f;
                 aSalvo = true;
                 descansando = true;
-                if (energia > 80)//una cantidad necesaria de energia que reponer para poder salir del nenufar, evitando cambios de comportamiento por cte por el cambio del valor de energia en la franja de cansancio
+                if (energia > 90)//una cantidad necesaria de energia que reponer para poder salir del nenufar, evitando cambios de comportamiento por cte por el cambio del valor de energia en la franja de cansancio
                 {
                     descansando = false;
                 }
@@ -472,7 +473,7 @@ public class Pato : MonoBehaviour
         
                 patoNav.SetDestination(nenufarTarget.position); //se pone como punto de destino la posicion del nenufar
                 patoNav.speed = patoNav.speed + 2f;
-                energia -= 2;
+                energia -= 0.02f;
                 energia = Mathf.Clamp(energia, 0f, 100f);
 
             if (transform.position.x == nenufarTarget.position.x && transform.position.z == nenufarTarget.position.z)
@@ -533,6 +534,7 @@ public class Pato : MonoBehaviour
             return ChaseState.Failed; 
         }
 
+        patoNav.speed = 4.0f;
         GameObject targetParent = salTarget.gameObject;
         var salamandra = targetParent.GetComponent<Salamandra>();
 
@@ -543,9 +545,10 @@ public class Pato : MonoBehaviour
 
         if (salamandra.aSalvo) 
         {
+            patoNav.speed = 3.5f;
             return ChaseState.Failed;
         }
-
+        
         float distanciaMinimaParaComer = 2.0f; 
         float distanciaActual = Vector3.Distance(salTarget.position, transform.position);
 
@@ -558,6 +561,7 @@ public class Pato : MonoBehaviour
         }
         else
         {
+            patoNav.speed = 3.5f;
             return ChaseState.Finished; // Suficientemente cerca para intentar comer
         }
     }

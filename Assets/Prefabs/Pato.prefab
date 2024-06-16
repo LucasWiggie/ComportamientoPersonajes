@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c06b0e4145960fd4fb7f20dbe51bdc73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radio: 300
+  radio: 30
   radioNenufar: 300
   angulo: 360
   playerRef: {fileID: 0}

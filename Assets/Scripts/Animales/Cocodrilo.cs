@@ -116,7 +116,7 @@ public class Cocodrilo : MonoBehaviour
         crocNav = GetComponent<NavMeshAgent>();
 
         hambre = 80;
-        energia = 30;
+        energia = 90;
         miedo = 0;
 
         uHambre = hambre;
@@ -484,6 +484,7 @@ public class Cocodrilo : MonoBehaviour
             }
         }
         else if(targetParent.tag=="Pato"){
+            Debug.Log("Entro a perseguir pato");
             var pato = targetParent.GetComponent<Pato>();
             if (pato.aSalvo)
             {
