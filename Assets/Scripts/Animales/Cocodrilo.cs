@@ -298,9 +298,9 @@ public class Cocodrilo : MonoBehaviour
 
             // Verificar si el objetivo es un castor o un pato y si no está a salvo
             Castor castor = targetParent.GetComponent<Castor>();
-            //Pato pato = targetParent.GetComponent<Pato>();
+            Pato pato = targetParent.GetComponent<Pato>();
 
-            if ((castor != null && !castor.aSalvo) ) //|| (pato != null && !pato.aSalvo)) HAY QUE METER ESTO QUE NO SE OLVIDEEEEEEEEEEEEEEEEEE
+            if ((castor != null && !castor.aSalvo)  || (pato != null && !pato.aSalvo)) 
             {
                 animalesNoASalvo.Add(col);
             }
