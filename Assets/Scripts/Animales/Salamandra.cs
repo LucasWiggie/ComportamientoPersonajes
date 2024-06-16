@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using static UnityEngine.GraphicsBuffer;
+using Random = UnityEngine.Random;
+
 
 public class Salamandra : MonoBehaviour
 {
@@ -136,8 +138,8 @@ public class Salamandra : MonoBehaviour
         salamandraNav = GetComponent<NavMeshAgent>();
         //InvokeRepeating("NuevoDestinoAleatorio", 0f, movementInterval);
 
-        hambre = 30;
-        energia = 80;
+        hambre = Random.Range(50, 60);
+        energia = Random.Range(80, 100);
         miedo = 0;
         temorHuevos = 0;
         moscasComidas = 0;
@@ -314,7 +316,7 @@ public class Salamandra : MonoBehaviour
             btMiedoPatos.SetActive(true);
             btPonerHuevos.SetActive(false);
         }
-        else if (uMoscasComidas >= 5)
+        else if (uMoscasComidas >= 3)
         {
             // A poner huevos
             isDefaultMov = false;

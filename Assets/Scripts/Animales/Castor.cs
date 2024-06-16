@@ -6,6 +6,8 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
+
 
 public class Castor : MonoBehaviour
 {
@@ -102,8 +104,8 @@ public class Castor : MonoBehaviour
         playerRef = this.gameObject;
         castNav = GetComponent<NavMeshAgent>();
 
-        hambre = 30;
-        energia = 70;
+        hambre = Random.Range(30, 50);
+        energia = Random.Range(80, 100);
         miedo = 0;
 
         uHambre = hambre;

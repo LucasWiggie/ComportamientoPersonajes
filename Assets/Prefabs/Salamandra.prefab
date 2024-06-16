@@ -981,14 +981,13 @@ MonoBehaviour:
   btHambre: {fileID: 4751725006468547131}
   btEnergia: {fileID: 735421246916199322}
   btMiedoPatos: {fileID: 1821917573401748153}
-  btProtegerHuevos: {fileID: 0}
   btPonerHuevos: {fileID: 7503248831314225843}
   boolProtegerHuevos: 0
-  _uHambre: 0
-  _uEnergia: 0
-  _uMiedo: 0
-  _uTemorHuevos: 0
-  _uMoscasComidas: 0
+  uHambre: 0
+  uEnergia: 0
+  uMiedo: 0
+  uTemorHuevos: 0
+  uMoscasComidas: 0
   isDefaultMov: 1
   aSalvo: 0
   poniendoHuevos: 0
@@ -1006,7 +1005,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 3
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

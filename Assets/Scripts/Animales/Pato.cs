@@ -6,6 +6,8 @@ using UnityEngine;
 using UnityEngine.AI;
 using static Cocodrilo;
 using static UnityEngine.GraphicsBuffer;
+using Random = UnityEngine.Random;
+
 
 public class Pato : MonoBehaviour
 {
@@ -99,8 +101,8 @@ public class Pato : MonoBehaviour
         patoNav = GetComponent<NavMeshAgent>();
         playerRef = this.gameObject;
 
-        hambre = 60;
-        energia = 100;
+        hambre = Random.Range(15, 40);
+        energia = Random.Range(80, 100);
         miedo = 0;
 
         uHambre = hambre;

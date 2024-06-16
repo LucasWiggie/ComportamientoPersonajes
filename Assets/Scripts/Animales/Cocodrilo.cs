@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class Cocodrilo : MonoBehaviour
 {
@@ -47,7 +48,7 @@ public class Cocodrilo : MonoBehaviour
     private float uMiedo;
 
     float hambreRate = 2f;
-    float energiaRate = 2f;
+    float energiaRate = 1f;
 
     //NavMeshAgent
     public NavMeshAgent crocNav;
@@ -112,11 +113,12 @@ public class Cocodrilo : MonoBehaviour
 
     private void Start()
     {
+
         playerRef = this.gameObject;
         crocNav = GetComponent<NavMeshAgent>();
 
-        hambre = 80;
-        energia = 90;
+        hambre = Random.Range(20, 45);
+        energia = Random.Range(80, 100);
         miedo = 0;
 
         uHambre = hambre;
