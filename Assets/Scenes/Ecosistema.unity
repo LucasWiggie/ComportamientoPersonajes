@@ -1805,7 +1805,7 @@ MonoBehaviour:
   palo: {fileID: 5656048564650677434, guid: cc04d654acd24d244808316233ee9eb8, type: 3}
   mosca: {fileID: 473223151736451685, guid: 2612d0139ca15cd4487fb287783742ad, type: 3}
   nCocodrilos: 1
-  nCastores: 2
+  nCastores: 1
   nSalamandras: 0
   nPatos: 0
   nPalos: 6

@@ -123,9 +123,6 @@ public class Cocodrilo : MonoBehaviour
         uEnergia = energia;
         uMiedo = miedo;
 
-        //InvokeRepeating("NuevoDestinoAleatorio", 0f, movementInterval);
-        //InvokeRepeating("UtilitySystem", 0f, 2.0f);
-        //StartCoroutine(FOVRoutine());
     }
     
     private void Update()
@@ -471,20 +468,29 @@ public class Cocodrilo : MonoBehaviour
     //Acci�n perseguir animales
     public ChaseState Perseguir()
     {
-        GameObject targetParent = animalTarget.gameObject.transform.parent.gameObject;
-        var castor = targetParent.GetComponent<Castor>();
-        var pato = targetParent.GetComponent<Pato>();
-
         if (animalTarget == null)
         {
             Debug.Log("Chase failed: no target.");
             return ChaseState.Failed; // No hay objetivo
         }
 
-        if (castor.aSalvo || pato.aSalvo)  ////////////////////////////////////ACTIVAR CUANDO SE METAN PATOS A LA ESCENAAAA///////////////////////////////////////////
-        {
-            return ChaseState.Finished;
+        GameObject targetParent = animalTarget.gameObject.transform.parent.gameObject;
+
+        if(targetParent.tag=="Castor"){
+            var castor = targetParent.GetComponent<Castor>();
+            if (castor.aSalvo) 
+            {
+                return ChaseState.Finished;
+            }
         }
+        else if(targetParent.tag=="Pato"){
+            var pato = targetParent.GetComponent<Pato>();
+            if (pato.aSalvo)
+            {
+                return ChaseState.Finished;
+            }
+        }
+
         float minDist = crocNav.stoppingDistance;
         float dist = Vector3.Distance(animalTarget.position, transform.position);
 
@@ -495,8 +501,8 @@ public class Cocodrilo : MonoBehaviour
             Debug.Log("Chase finished: target reached.");
             return ChaseState.Finished; // Se ha llegado al objetivo
         }
-
-        if (crocNav.pathPending || crocNav.remainingDistance > minDist)
+    
+        if (crocNav.pathPending || dist > minDist)
         {
             crocNav.SetDestination(animalTarget.position); // Actualiza el destino
             return ChaseState.Enproceso; // La persecución está en curso

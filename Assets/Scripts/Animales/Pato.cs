@@ -53,8 +53,8 @@ public class Pato : MonoBehaviour
     private bool fertil;
     private bool descansando = false;
 
-    float hambreRate = 0.2f;
-    float energiaRate = 0.05f;
+    float hambreRate = 2f;
+    float energiaRate = 2f;
 
     public bool aSalvo = false;
     //NavMeshAgent
@@ -154,7 +154,19 @@ public class Pato : MonoBehaviour
             Debug.Log(this.gameObject + " ha muerto");
             Destroy(this.gameObject);
         }
-        else if (uEnergia < 50 || descansando) //si energia baja o descansando -> arbol de energia
+        else if (uMiedo > 90)//si miedo -> arbol de miedo
+        {
+            boolEnergia = false;
+            boolHambre = false;
+            isDefaultMov = false;
+            fertil = false;
+            aSalvo = false;
+            boolMiedo = true;
+            btHambre.SetActive(false);
+            btEnergia.SetActive(false);
+            btMiedo.SetActive(true);
+        }
+        else if (uEnergia < 20 || descansando) //si energia baja o descansando -> arbol de energia
         {
             boolHambre = false;
             boolMiedo = false;
@@ -178,19 +190,7 @@ public class Pato : MonoBehaviour
             btHambre.SetActive(false);
             btMiedo.SetActive(false);
         }
-        else if (uMiedo > 50)//si miedo -> arbol de miedo
-        {
-            boolEnergia = false;
-            boolHambre = false;
-            isDefaultMov = false;
-            fertil = false;
-            aSalvo = false;
-            boolMiedo = true;
-            btHambre.SetActive(false);
-            btEnergia.SetActive(false);
-            btMiedo.SetActive(true);
-        }
-        else if (uHambre > 50 && animalesNoASalvo.Count!=0)// si hambre -> arbol de hambre
+        else if (uHambre > 80 && animalesNoASalvo.Count!=0)// si hambre -> arbol de hambre
         {
             boolEnergia = false;
             boolMiedo = false;
@@ -201,6 +201,18 @@ public class Pato : MonoBehaviour
             btMiedo.SetActive(false);
             btEnergia.SetActive(false);
             btHambre.SetActive(true);
+        }
+        else if (uMiedo > 70)//si miedo -> arbol de miedo
+        {
+            boolEnergia = false;
+            boolHambre = false;
+            isDefaultMov = false;
+            fertil = false;
+            aSalvo = false;
+            boolMiedo = true;
+            btHambre.SetActive(false);
+            btEnergia.SetActive(false);
+            btMiedo.SetActive(true);
         }
         else //si nada -> movimiento estandar
         {

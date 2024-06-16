@@ -131,12 +131,12 @@ MonoBehaviour:
   hambre: 45
   energia: 100
   miedo: 0
-  _hambre: 0
-  _energia: 0
-  _miedo: 0
-  BT_Hambre: {fileID: 1485185606296902250}
-  BT_Energia: {fileID: 5955136895735176969}
-  BT_Miedo: {fileID: 5958547077724282190}
+  uHambre: 0
+  uEnergia: 0
+  uMiedo: 0
+  btHambre: {fileID: 1485185606296902250}
+  btEnergia: {fileID: 5955136895735176969}
+  btMiedo: {fileID: 5958547077724282190}
   aSalvo: 0
   isDefaultMov: 1
   salamandraScript: {fileID: -5968839395692330149, guid: 8fbaf18edefc9b84e921f3cac4508485, type: 3}

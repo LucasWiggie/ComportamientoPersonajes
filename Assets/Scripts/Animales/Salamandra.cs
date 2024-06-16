@@ -56,8 +56,8 @@ public class Salamandra : MonoBehaviour
     public float uTemorHuevos;
     public int uMoscasComidas;
 
-    float hambreRate = 1f;
-    float energiaRate = 1f;
+    float hambreRate = 2f;
+    float energiaRate = 2f;
 
     public bool isDefaultMov = true;
 
@@ -234,7 +234,7 @@ public class Salamandra : MonoBehaviour
             Debug.Log(this.gameObject + " ha muerto");
             Destroy(this.gameObject);
         }
-        else if (uMiedo > 50) 
+        else if (uMiedo > 90) 
         {
             isDefaultMov = false;
             boolHambre = false;
@@ -296,6 +296,22 @@ public class Salamandra : MonoBehaviour
             btHambre.SetActive(true);
             btEnergia.SetActive(false);
             btMiedoPatos.SetActive(false);
+            btPonerHuevos.SetActive(false);
+        }
+        else if (uMiedo > 70) 
+        {
+            isDefaultMov = false;
+            boolHambre = false;
+            boolEnergia = false;
+            boolMiedoPato = true;
+            boolProtegerHuevos = false;
+            boolPonerHuevos = false;
+            aSalvo = false;
+            huevosPuestos = false;
+
+            btHambre.SetActive(false);
+            btEnergia.SetActive(false);
+            btMiedoPatos.SetActive(true);
             btPonerHuevos.SetActive(false);
         }
         else if (uMoscasComidas >= 5)

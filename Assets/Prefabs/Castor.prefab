@@ -740,9 +740,9 @@ MonoBehaviour:
   puedeVer: 0
   puedeVerPresa: 0
   distanciaMaxima: 25
-  BT_Hambre: {fileID: 574407034648764920}
-  BT_EnergiaMiedo: {fileID: 5381213649540830934}
-  BT_PalosPresa: {fileID: 375552894631194235}
+  btHambre: {fileID: 574407034648764920}
+  btEnergiaMiedo: {fileID: 5381213649540830934}
+  btPalosPresa: {fileID: 375552894631194235}
   hambre: 50
   energia: 100
   miedo: 0
@@ -752,9 +752,9 @@ MonoBehaviour:
   castNav: {fileID: 0}
   paloTarget: {fileID: 0}
   presaTarget: {fileID: 0}
-  _hambre: 0
-  _energia: 0
-  _miedo: 0
+  uHambre: 0
+  uEnergia: 0
+  uMiedo: 0
   aSalvo: 0
 --- !u!195 &423692016732171011
 NavMeshAgent:

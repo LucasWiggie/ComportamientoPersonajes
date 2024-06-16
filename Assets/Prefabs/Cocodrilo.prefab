@@ -482,8 +482,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5885c41659d5d48429f799eee670450c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radio: 300
-  radioHuevos: 300
+  radio: 50
+  radioHuevos: 40
   angulo: 360
   playerRef: {fileID: 0}
   targetMask:

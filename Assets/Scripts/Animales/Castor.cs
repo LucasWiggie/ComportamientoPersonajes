@@ -103,7 +103,7 @@ public class Castor : MonoBehaviour
         castNav = GetComponent<NavMeshAgent>();
 
         hambre = 30;
-        energia = 30;
+        energia = 70;
         miedo = 0;
 
         uHambre = hambre;
@@ -195,7 +195,7 @@ public class Castor : MonoBehaviour
             btPalosPresa.SetActive(false);
             btEnergiaMiedo.SetActive(true);
         }
-        else if (uHambre > 70)
+        else if (uHambre > 80)
         {
             boolEnergia = false;
             boolMiedo = false;
