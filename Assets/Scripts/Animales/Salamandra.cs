@@ -50,11 +50,11 @@ public class Salamandra : MonoBehaviour
     private bool boolPonerHuevos = false;
 
     //Utilidades
-    public float _uHambre;
-    public float _uEnergia;
-    public float _uMiedo;
-    public float _uTemorHuevos;
-    public int _uMoscasComidas;
+    public float uHambre;
+    public float uEnergia;
+    public float uMiedo;
+    public float uTemorHuevos;
+    public int uMoscasComidas;
 
     float hambreRate = 1f;
     float energiaRate = 1f;
@@ -142,11 +142,11 @@ public class Salamandra : MonoBehaviour
         temorHuevos = 0;
         moscasComidas = 0;
 
-        _uHambre = hambre;
-        _uEnergia = energia;
-        _uMiedo = miedo;
-        _uTemorHuevos = temorHuevos;
-        _uMoscasComidas = moscasComidas;
+        uHambre = hambre;
+        uEnergia = energia;
+        uMiedo = miedo;
+        uTemorHuevos = temorHuevos;
+        uMoscasComidas = moscasComidas;
 
     }
 
@@ -182,7 +182,6 @@ public class Salamandra : MonoBehaviour
         }
         else if (boolProtegerHuevos)
         {
-            //btProtegerHuevos.GetComponent<MonoBehaviourTree>().Tick();
             ProtegerHuevo();
         }
         else if (boolPonerHuevos)
@@ -205,15 +204,6 @@ public class Salamandra : MonoBehaviour
         }
     }
 
-    //private void NuevoDestinoAleatorio()
-    //{
-    //    if (isDefaultMov)
-    //    {
-    //        Vector3 randomPoint = RandomNavmeshLocation(60f); // Obtener un punto aleatorio en el NavMesh
-    //        salamandraNav.SetDestination(randomPoint); // Establecer el punto como destino
-    //    }    
-    //}
-
     // Funci�n para encontrar un punto aleatorio en el NavMesh dentro de un radio dado
     private Vector3 RandomNavmeshLocation(float radius)
     {
@@ -233,18 +223,18 @@ public class Salamandra : MonoBehaviour
 
     public void UtilitySystem()
     {
-        _uHambre = this.getHambre();
-        _uEnergia = this.getEnergia();
-        _uMiedo = this.getMiedo();
-        _uTemorHuevos = this.getTemorHuevos();
-        _uMoscasComidas = this.getMoscasComidas();
+        uHambre = this.getHambre();
+        uEnergia = this.getEnergia();
+        uMiedo = this.getMiedo();
+        uTemorHuevos = this.getTemorHuevos();
+        uMoscasComidas = this.getMoscasComidas();
 
-        if (_uHambre >= 100 || _uEnergia <= 0)
+        if (uHambre >= 100 || uEnergia <= 0)
         {
             Debug.Log(this.gameObject + " ha muerto");
             Destroy(this.gameObject);
         }
-        else if (_uMiedo > 50) 
+        else if (uMiedo > 50) 
         {
             isDefaultMov = false;
             boolHambre = false;
@@ -260,7 +250,7 @@ public class Salamandra : MonoBehaviour
             btMiedoPatos.SetActive(true);
             btPonerHuevos.SetActive(false);
         }
-        else if (_uTemorHuevos > 60)
+        else if (uTemorHuevos > 60)
         {
             isDefaultMov = false;
             boolHambre = false;
@@ -276,7 +266,7 @@ public class Salamandra : MonoBehaviour
             btMiedoPatos.SetActive(false);
             btPonerHuevos.SetActive(false);
         }
-        else if (_uEnergia < 20 || descansando)
+        else if (uEnergia < 20 || descansando)
         {
             isDefaultMov = false;
             boolHambre = false;
@@ -292,7 +282,7 @@ public class Salamandra : MonoBehaviour
             btMiedoPatos.SetActive(false);
             btPonerHuevos.SetActive(false);
         }
-        else if (_uHambre > 70)
+        else if (uHambre > 70)
         {
             isDefaultMov = false;
             boolHambre = true;
@@ -308,7 +298,7 @@ public class Salamandra : MonoBehaviour
             btMiedoPatos.SetActive(false);
             btPonerHuevos.SetActive(false);
         }
-        else if (_uMoscasComidas >= 5)
+        else if (uMoscasComidas >= 5)
         {
             // A poner huevos
             isDefaultMov = false;

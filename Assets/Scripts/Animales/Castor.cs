@@ -30,14 +30,14 @@ public class Castor : MonoBehaviour
 
 
     // BTs de cada acci�n
-    public GameObject BT_Hambre;
-    public GameObject BT_EnergiaMiedo;
-    public GameObject BT_PalosPresa; // *Acci�n por defecto
+    public GameObject btHambre;
+    public GameObject btEnergiaMiedo;
+    public GameObject btPalosPresa; // *Acci�n por defecto
 
     //Bool bts
-    private bool bool_Hambre = false;
-    private bool bool_Energia = false;
-    private bool bool_Miedo = false;
+    private bool boolHambre = false;
+    private bool boolEnergia = false;
+    private bool boolMiedo = false;
 
 
     public float hambre; //Rango 0-100 las 3
@@ -58,13 +58,11 @@ public class Castor : MonoBehaviour
     public Transform presaTarget;
 
     private bool isDefaultMov = true;
-    private bool dirtyUS = false;
-
 
     // Utilidades
-    public float _hambre;
-    public float _energia;
-    public float _miedo;
+    public float uHambre;
+    public float uEnergia;
+    public float uMiedo;
 
     float hambreRate = 2f;
     float energiaRate = 2f;
@@ -108,9 +106,9 @@ public class Castor : MonoBehaviour
         energia = 30;
         miedo = 0;
 
-        _hambre = hambre;
-        _energia = energia;
-        _miedo = miedo;
+        uHambre = hambre;
+        uEnergia = energia;
+        uMiedo = miedo;
 
         StartCoroutine(FOVRoutine());
     }
@@ -141,15 +139,15 @@ public class Castor : MonoBehaviour
         UtilitySystem();
         if (isDefaultMov)
         {
-            BT_PalosPresa.GetComponent<MonoBehaviourTree>().Tick();
+            btPalosPresa.GetComponent<MonoBehaviourTree>().Tick();
         }
-        else if (bool_Hambre)
+        else if (boolHambre)
         {
-            BT_Hambre.GetComponent<MonoBehaviourTree>().Tick();
+            btHambre.GetComponent<MonoBehaviourTree>().Tick();
         }
-        else if (bool_Miedo || bool_Energia)
+        else if (boolMiedo || boolEnergia)
         {
-            BT_EnergiaMiedo.GetComponent<MonoBehaviourTree>().Tick();
+            btEnergiaMiedo.GetComponent<MonoBehaviourTree>().Tick();
         }
     }
 
@@ -165,70 +163,70 @@ public class Castor : MonoBehaviour
 
     public void UtilitySystem()
     {
-        _hambre = this.getHambre();
-        _energia = this.getEnergia();
-        _miedo = this.getMiedo();
+        uHambre = this.getHambre();
+        uEnergia = this.getEnergia();
+        uMiedo = this.getMiedo();
 
 
-        if (_hambre >= 100 || _energia <= 0)
+        if (uHambre >= 100 || uEnergia <= 0)
         {
             Debug.Log(this.gameObject + " ha muerto");
             Destroy(this.gameObject);
         }
-        else if (_miedo > 90)
+        else if (uMiedo > 90)
         {
-            bool_Energia = false;
-            bool_Hambre = false;
+            boolEnergia = false;
+            boolHambre = false;
             isDefaultMov = false;
-            bool_Miedo = true;
+            boolMiedo = true;
             aSalvo = false;
-            BT_Hambre.SetActive(false);
-            BT_PalosPresa.SetActive(false);
-            BT_EnergiaMiedo.SetActive(true);
+            btHambre.SetActive(false);
+            btPalosPresa.SetActive(false);
+            btEnergiaMiedo.SetActive(true);
         }
-        else if (_energia < 20  || descansando)
+        else if (uEnergia < 20  || descansando)
         {
-            bool_Hambre = false;
-            bool_Miedo = false;
+            boolHambre = false;
+            boolMiedo = false;
             isDefaultMov = false;
-            bool_Energia = true;
+            boolEnergia = true;
             aSalvo = false;
-            BT_Hambre.SetActive(false);
-            BT_PalosPresa.SetActive(false);
-            BT_EnergiaMiedo.SetActive(true);
+            btHambre.SetActive(false);
+            btPalosPresa.SetActive(false);
+            btEnergiaMiedo.SetActive(true);
         }
-        else if (_hambre > 70)
+        else if (uHambre > 70)
         {
-            bool_Energia = false;
-            bool_Miedo = false;
+            boolEnergia = false;
+            boolMiedo = false;
             isDefaultMov = false;
-            bool_Hambre = true;
+            boolHambre = true;
             aSalvo = false;
-            BT_PalosPresa.SetActive(false);
-            BT_EnergiaMiedo.SetActive(false);
-            BT_Hambre.SetActive(true);
+            btPalosPresa.SetActive(false);
+            btEnergiaMiedo.SetActive(false);
+            btHambre.SetActive(true);
         }
-        else if (_miedo > 70)
+        else if (uMiedo > 70)
         {
-            bool_Energia = false;
-            bool_Hambre = false;
+            boolEnergia = false;
+            boolHambre = false;
             isDefaultMov = false;
-            bool_Miedo = true;
+            boolMiedo = true;
             aSalvo = false;
-            BT_Hambre.SetActive(false);
-            BT_PalosPresa.SetActive(false);
-            BT_EnergiaMiedo.SetActive(true);
+            btHambre.SetActive(false);
+            btPalosPresa.SetActive(false);
+            btEnergiaMiedo.SetActive(true);
         }
         else
         {
-            bool_Energia = false;
-            bool_Hambre = false;
-            bool_Miedo = false;
+            boolEnergia = false;
+            boolHambre = false;
+            boolMiedo = false;
             isDefaultMov = true;
             aSalvo = false;
-            BT_EnergiaMiedo.SetActive(false);
-            BT_Hambre.SetActive(false);
-            BT_PalosPresa.SetActive(true);
+            btEnergiaMiedo.SetActive(false);
+            btHambre.SetActive(false);
+            btPalosPresa.SetActive(true);
         }
     }
 

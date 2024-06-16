@@ -42,9 +42,9 @@ public class Cocodrilo : MonoBehaviour
     public float miedo;
 
     // Utilidades
-    private float _uHambre;
-    private float _uEnergia;
-    private float _uMiedo;
+    private float uHambre;
+    private float uEnergia;
+    private float uMiedo;
 
     float hambreRate = 2f;
     float energiaRate = 2f;
@@ -61,7 +61,6 @@ public class Cocodrilo : MonoBehaviour
     private Collider collidedObject;
 
     public bool isDefaultMov = false;
-    private bool dirtyUS = false;
 
     //Para indicar si esta aSalvo
     public Pato patoScript; // Aseg�rate de asignar esto desde el Inspector
@@ -73,6 +72,7 @@ public class Cocodrilo : MonoBehaviour
 
     //Lista con los patitos cercanos al cocodrilo
     public List<Transform> patitosCercanos = new List<Transform>();
+    private List<Collider> animalesNoASalvo = new List<Collider>();
     private float distanciaMax = 30f;
 
     private List<Collider> huevosIndefensos = new List<Collider>();
@@ -119,9 +119,9 @@ public class Cocodrilo : MonoBehaviour
         energia = 30;
         miedo = 0;
 
-        _uHambre = hambre;
-        _uEnergia = energia;
-        _uMiedo = miedo;
+        uHambre = hambre;
+        uEnergia = energia;
+        uMiedo = miedo;
 
         //InvokeRepeating("NuevoDestinoAleatorio", 0f, movementInterval);
         //InvokeRepeating("UtilitySystem", 0f, 2.0f);
@@ -192,19 +192,19 @@ public class Cocodrilo : MonoBehaviour
     #region "Utility system"
     public void UtilitySystem()
     {
-        _uHambre = this.getHambre();
-        _uEnergia = this.getEnergia();
-        _uMiedo = this.getMiedo();
-        List<Collider> animalesNoASalvo = ObtenerAnimalesNoASalvo();
+        uHambre = this.getHambre();
+        uEnergia = this.getEnergia();
+        uMiedo = this.getMiedo();
+        animalesNoASalvo = ObtenerAnimalesNoASalvo();
 
         huevosIndefensos = ObtenerHuevosIndefensos();
 
-        if (_uHambre >= 100 || _uEnergia <= 0)
+        if (uHambre >= 100 || uEnergia <= 0)
         {
             Debug.Log(this.gameObject + " ha muerto");
             Destroy(this.gameObject);
         }
-        else if (_uMiedo > 90)
+        else if (uMiedo > 90)
         {
             boolEnergia = false;
             boolHambre = false;
@@ -214,7 +214,7 @@ public class Cocodrilo : MonoBehaviour
             btEnergia.SetActive(false);
             btMiedo.SetActive(true);
         }
-        else if (_uEnergia < 20 && huevosIndefensos.Count != 0)
+        else if (uEnergia < 20 && huevosIndefensos.Count != 0)
         {
             boolHambre = false;
             boolMiedo = false;
@@ -224,7 +224,7 @@ public class Cocodrilo : MonoBehaviour
             btMiedo.SetActive(false);
             btEnergia.SetActive(true);
         }
-        else if (_uHambre > 70 &&  animalesNoASalvo.Count!=0)
+        else if (uHambre > 70 &&  animalesNoASalvo.Count!=0)
         {
             boolEnergia = false;
             boolMiedo = false;
@@ -234,7 +234,7 @@ public class Cocodrilo : MonoBehaviour
             btMiedo.SetActive(false);
             btHambre.SetActive(true);
         }
-        else if (_uMiedo > 70)
+        else if (uMiedo > 70)
         {
             boolEnergia = false;
             boolHambre = false;

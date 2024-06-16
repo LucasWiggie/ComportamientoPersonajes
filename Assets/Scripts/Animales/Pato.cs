@@ -37,19 +37,19 @@ public class Pato : MonoBehaviour
     public float miedo;
 
     //Utilidades
-    public float _hambre;
-    public float _energia;
-    public float _miedo;
+    public float uHambre;
+    public float uEnergia;
+    public float uMiedo;
 
     //BTs
-    public GameObject BT_Hambre;
-    public GameObject BT_Energia;
-    public GameObject BT_Miedo;
+    public GameObject btHambre;
+    public GameObject btEnergia;
+    public GameObject btMiedo;
 
     //bool Necesidades
-    private bool bool_Hambre;
-    private bool bool_Energia;
-    private bool bool_Miedo;
+    private bool boolHambre;
+    private bool boolEnergia;
+    private bool boolMiedo;
     private bool fertil;
     private bool descansando = false;
 
@@ -64,7 +64,6 @@ public class Pato : MonoBehaviour
     private Transform salTarget;
 
     public bool isDefaultMov = true;
-    private bool dirtyUS = false;
 
     //Para indicar si esta aSalvo
     public Salamandra salamandraScript;
@@ -104,18 +103,18 @@ public class Pato : MonoBehaviour
         energia = 100;
         miedo = 0;
 
-        _hambre = hambre;
-        _energia = energia;
-        _miedo = miedo;
+        uHambre = hambre;
+        uEnergia = energia;
+        uMiedo = miedo;
 
         StartCoroutine(FOVRoutine());
     }
+
     private void Update()
     {
         UpdateVariables();//actualizamos necesidades
         DetectarObjetivos();//detectamos cocodrilos
         ActualizarMiedo();//actualizamos miedo
-
     }
 
     private void FixedUpdate()
@@ -123,103 +122,97 @@ public class Pato : MonoBehaviour
         UtilitySystem();
         if (isDefaultMov)
         {
-            Debug.Log("Me muevo");
             movimientoAleatorio();
         }
-        else if (bool_Hambre)
+        else if (boolHambre)
         {
-            Debug.Log("Tengo Hambre");
-            BT_Hambre.GetComponent<MonoBehaviourTree>().Tick();
+            btHambre.GetComponent<MonoBehaviourTree>().Tick();
         }
-        else if (bool_Miedo)
+        else if (boolMiedo)
         {
-            Debug.Log("Tengo Miedo");
-            BT_Miedo.GetComponent<MonoBehaviourTree>().Tick();
+            btMiedo.GetComponent<MonoBehaviourTree>().Tick();
         }
-        else if (bool_Energia)
+        else if (boolEnergia)
         {
-            Debug.Log("Tengo cansancio");
-            BT_Energia.GetComponent<MonoBehaviourTree>().Tick();
+            btEnergia.GetComponent<MonoBehaviourTree>().Tick();
         }
         else if (fertil)
         {
-            Debug.Log("Genero patitos");
             GenerarPatitos();
         }
-
     }
 
     public void UtilitySystem() 
     {
-        _hambre = this.getHambre();
-        _energia = this.getEnergia();
-        _miedo = this.getMiedo();
+        uHambre = this.getHambre();
+        uEnergia = this.getEnergia();
+        uMiedo = this.getMiedo();
         animalesNoASalvo = ObtenerAnimalesNoASalvo();
 
-        if (_hambre >= 100 || _energia <= 0)
+        if (uHambre >= 100 || uEnergia <= 0)
         {
             Debug.Log(this.gameObject + " ha muerto");
             Destroy(this.gameObject);
         }
-        else if (_energia < 50 || descansando) //si energia baja o descansando -> arbol de energia
+        else if (uEnergia < 50 || descansando) //si energia baja o descansando -> arbol de energia
         {
-            bool_Hambre = false;
-            bool_Miedo = false;
+            boolHambre = false;
+            boolMiedo = false;
             isDefaultMov = false;
             fertil = false;
             aSalvo = false;
-            bool_Energia = true;
-            BT_Hambre.SetActive(false);
-            BT_Miedo.SetActive(false);
-            BT_Energia.SetActive(true);
+            boolEnergia = true;
+            btHambre.SetActive(false);
+            btMiedo.SetActive(false);
+            btEnergia.SetActive(true);
 
-        }else if (_hambre < 20 && _energia > 70) //si sufienciente energia y poca hambre -> generar patitos
+        }else if (uHambre < 20 && uEnergia > 70) //si sufienciente energia y poca hambre -> generar patitos
         {
-            bool_Energia = false;
-            bool_Hambre = false;
-            bool_Miedo = false;
+            boolEnergia = false;
+            boolHambre = false;
+            boolMiedo = false;
             isDefaultMov = false;
             aSalvo = false;
             fertil = true;
-            BT_Energia.SetActive(false);
-            BT_Hambre.SetActive(false);
-            BT_Miedo.SetActive(false);
+            btEnergia.SetActive(false);
+            btHambre.SetActive(false);
+            btMiedo.SetActive(false);
         }
-        else if (_miedo > 50)//si miedo -> arbol de miedo
+        else if (uMiedo > 50)//si miedo -> arbol de miedo
         {
-            bool_Energia = false;
-            bool_Hambre = false;
+            boolEnergia = false;
+            boolHambre = false;
             isDefaultMov = false;
             fertil = false;
             aSalvo = false;
-            bool_Miedo = true;
-            BT_Hambre.SetActive(false);
-            BT_Energia.SetActive(false);
-            BT_Miedo.SetActive(true);
+            boolMiedo = true;
+            btHambre.SetActive(false);
+            btEnergia.SetActive(false);
+            btMiedo.SetActive(true);
         }
-        else if (_hambre > 50 && animalesNoASalvo.Count!=0)// si hambre -> arbol de hambre
+        else if (uHambre > 50 && animalesNoASalvo.Count!=0)// si hambre -> arbol de hambre
         {
-            bool_Energia = false;
-            bool_Miedo = false;
+            boolEnergia = false;
+            boolMiedo = false;
             isDefaultMov = false;
             fertil = false;
-            bool_Hambre = true;
+            boolHambre = true;
             aSalvo = false;
-            BT_Miedo.SetActive(false);
-            BT_Energia.SetActive(false);
-            BT_Hambre.SetActive(true);
+            btMiedo.SetActive(false);
+            btEnergia.SetActive(false);
+            btHambre.SetActive(true);
         }
         else //si nada -> movimiento estandar
         {
-            bool_Energia = false;
-            bool_Hambre = false;
-            bool_Miedo = false;
+            boolEnergia = false;
+            boolHambre = false;
+            boolMiedo = false;
             fertil= false;
             isDefaultMov = true;
             aSalvo = false;
-            BT_Energia.SetActive(false);
-            BT_Hambre.SetActive(false);
-            BT_Miedo.SetActive(false);
+            btEnergia.SetActive(false);
+            btHambre.SetActive(false);
+            btMiedo.SetActive(false);
         }
     }
 
