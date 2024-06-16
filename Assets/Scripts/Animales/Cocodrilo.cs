@@ -46,8 +46,8 @@ public class Cocodrilo : MonoBehaviour
     private float _uEnergia;
     private float _uMiedo;
 
-    float hambreRate = 0.2f;
-    float energiaRate = 0.05f;
+    float hambreRate = 2f;
+    float energiaRate = 2f;
 
     //NavMeshAgent
     public NavMeshAgent crocNav;
@@ -115,7 +115,7 @@ public class Cocodrilo : MonoBehaviour
         playerRef = this.gameObject;
         crocNav = GetComponent<NavMeshAgent>();
 
-        hambre = 50;
+        hambre = 80;
         energia = 30;
         miedo = 0;
 
@@ -204,7 +204,17 @@ public class Cocodrilo : MonoBehaviour
             Debug.Log(this.gameObject + " ha muerto");
             Destroy(this.gameObject);
         }
-        else if (_uEnergia < 50 && huevosIndefensos.Count != 0)
+        else if (_uMiedo > 90)
+        {
+            boolEnergia = false;
+            boolHambre = false;
+            isDefaultMov = false;
+            boolMiedo = true;
+            btHambre.SetActive(false);
+            btEnergia.SetActive(false);
+            btMiedo.SetActive(true);
+        }
+        else if (_uEnergia < 20 && huevosIndefensos.Count != 0)
         {
             boolHambre = false;
             boolMiedo = false;
@@ -214,7 +224,7 @@ public class Cocodrilo : MonoBehaviour
             btMiedo.SetActive(false);
             btEnergia.SetActive(true);
         }
-        else if (_uHambre > 70 && _uHambre > _uMiedo && _uEnergia > 50 && animalesNoASalvo.Count!=0)
+        else if (_uHambre > 70 &&  animalesNoASalvo.Count!=0)
         {
             boolEnergia = false;
             boolMiedo = false;
@@ -224,7 +234,7 @@ public class Cocodrilo : MonoBehaviour
             btMiedo.SetActive(false);
             btHambre.SetActive(true);
         }
-        else if (_uMiedo > 70 && _uMiedo > _uHambre && _uEnergia > 50)
+        else if (_uMiedo > 70)
         {
             boolEnergia = false;
             boolHambre = false;

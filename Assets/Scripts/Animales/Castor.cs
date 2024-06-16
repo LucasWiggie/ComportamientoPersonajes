@@ -66,8 +66,8 @@ public class Castor : MonoBehaviour
     public float _energia;
     public float _miedo;
 
-    float hambreRate = 0.2f;
-    float energiaRate = 0.05f;
+    float hambreRate = 2f;
+    float energiaRate = 2f;
 
     public bool aSalvo = false;
     private bool descansando = false;
@@ -141,29 +141,26 @@ public class Castor : MonoBehaviour
         UtilitySystem();
         if (isDefaultMov)
         {
-            //BT_PalosPresa.SetActive(true);
             BT_PalosPresa.GetComponent<MonoBehaviourTree>().Tick();
-
-            //BT_Hambre.SetActive(true);
-            //BT_Hambre.GetComponent<MonoBehaviourTree>().Tick();
-
-            //BT_EnergiaMiedo.SetActive(true);
-            //BT_EnergiaMiedo.GetComponent<MonoBehaviourTree>().Tick();
         }
         else if (bool_Hambre)
         {
-            Debug.Log("Tengo Hambre");
             BT_Hambre.GetComponent<MonoBehaviourTree>().Tick();
         }
         else if (bool_Miedo || bool_Energia)
         {
             BT_EnergiaMiedo.GetComponent<MonoBehaviourTree>().Tick();
         }
+    }
 
-        if (dirtyUS)
-        {
+    private void UpdateVariables()
+    {
+        hambre += hambreRate * Time.deltaTime;
+        energia -= energiaRate * Time.deltaTime;
 
-        }
+        hambre = Mathf.Clamp(hambre, 0f, 100f);
+        energia = Mathf.Clamp(energia, 0f, 100f);
+
     }
 
     public void UtilitySystem()
@@ -172,12 +169,24 @@ public class Castor : MonoBehaviour
         _energia = this.getEnergia();
         _miedo = this.getMiedo();
 
+
         if (_hambre >= 100 || _energia <= 0)
         {
             Debug.Log(this.gameObject + " ha muerto");
             Destroy(this.gameObject);
         }
-        else if (_energia < 60 || descansando)
+        else if (_miedo > 90)
+        {
+            bool_Energia = false;
+            bool_Hambre = false;
+            isDefaultMov = false;
+            bool_Miedo = true;
+            aSalvo = false;
+            BT_Hambre.SetActive(false);
+            BT_PalosPresa.SetActive(false);
+            BT_EnergiaMiedo.SetActive(true);
+        }
+        else if (_energia < 20  || descansando)
         {
             bool_Hambre = false;
             bool_Miedo = false;
@@ -187,6 +196,17 @@ public class Castor : MonoBehaviour
             BT_Hambre.SetActive(false);
             BT_PalosPresa.SetActive(false);
             BT_EnergiaMiedo.SetActive(true);
+        }
+        else if (_hambre > 70)
+        {
+            bool_Energia = false;
+            bool_Miedo = false;
+            isDefaultMov = false;
+            bool_Hambre = true;
+            aSalvo = false;
+            BT_PalosPresa.SetActive(false);
+            BT_EnergiaMiedo.SetActive(false);
+            BT_Hambre.SetActive(true);
         }
         else if (_miedo > 70)
         {
@@ -199,17 +219,6 @@ public class Castor : MonoBehaviour
             BT_PalosPresa.SetActive(false);
             BT_EnergiaMiedo.SetActive(true);
         }
-        else if (_hambre > 50)
-        {
-            bool_Energia = false;
-            bool_Miedo = false;
-            isDefaultMov = false;
-            bool_Hambre = true;
-            aSalvo = false;
-            BT_PalosPresa.SetActive(false);
-            BT_EnergiaMiedo.SetActive(false);
-            BT_Hambre.SetActive(true);
-        }
         else
         {
             bool_Energia = false;
@@ -221,18 +230,6 @@ public class Castor : MonoBehaviour
             BT_Hambre.SetActive(false);
             BT_PalosPresa.SetActive(true);
         }
-    }
-
-
-    private void UpdateVariables()
-    {
-        hambre += hambreRate * Time.deltaTime;
-        energia -= energiaRate * Time.deltaTime;
-
-        hambre = Mathf.Clamp(hambre, 0f, 100f);
-        energia = Mathf.Clamp(energia, 0f, 100f);
-
-       // if(hambre<= 20) { }
     }
 
     private IEnumerator FOVRoutine()
@@ -452,8 +449,7 @@ public class Castor : MonoBehaviour
 
         }
         else { Debug.Log("presa null"); return ChaseState.Failed; }
-        
-        
+    
     }
 
     public ChaseState comerPalo()

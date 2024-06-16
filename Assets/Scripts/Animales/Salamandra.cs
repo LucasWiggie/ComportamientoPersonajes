@@ -56,8 +56,8 @@ public class Salamandra : MonoBehaviour
     public float _uTemorHuevos;
     public int _uMoscasComidas;
 
-    float hambreRate = 0.2f;
-    float energiaRate = 0.05f;
+    float hambreRate = 1f;
+    float energiaRate = 1f;
 
     public bool isDefaultMov = true;
 
