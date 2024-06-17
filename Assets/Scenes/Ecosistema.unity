@@ -1804,12 +1804,12 @@ MonoBehaviour:
   pato: {fileID: 385287219224526871, guid: 0e0713aa9ebc07640b01992d3fa21da8, type: 3}
   palo: {fileID: 5656048564650677434, guid: cc04d654acd24d244808316233ee9eb8, type: 3}
   mosca: {fileID: 473223151736451685, guid: 2612d0139ca15cd4487fb287783742ad, type: 3}
-  nCocodrilos: 2
+  nCocodrilos: 0
   nCastores: 0
-  nSalamandras: 0
-  nPatos: 3
-  nPalos: 5
-  nMoscas: 0
+  nSalamandras: 3
+  nPatos: 0
+  nPalos: 0
+  nMoscas: 12
 --- !u!4 &362074959
 Transform:
   m_ObjectHideFlags: 0
@@ -4924,7 +4924,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 50
+  field of view: 49
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -4950,13 +4950,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1436136787}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071063, y: -0.0000000019790607, z: 0.0000000012441889, w: 0.7071073}
-  m_LocalPosition: {x: -1.3048701, y: 35.953506, z: -0.03}
+  m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: 0.5}
+  m_LocalPosition: {x: -0.5, y: 70.01, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: -90, z: 0}
 --- !u!4 &1441928151 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6628377900774639656, guid: 2ed6731405fe8a64999760120c8ef51b, type: 3}
