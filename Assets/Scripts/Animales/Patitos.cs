@@ -17,7 +17,7 @@ public class Patitos : MonoBehaviour
     public LayerMask obstructionMask;
 
     private NavMeshAgent patitoNav;
-    public float lifeTime = 60f;
+    float lifeTime = 15f;
     public bool puedeVer;
 
     private Transform crocTarget;

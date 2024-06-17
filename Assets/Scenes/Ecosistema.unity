@@ -3042,7 +3042,6 @@ GameObject:
   - component: {fileID: 480034775}
   - component: {fileID: 480034774}
   - component: {fileID: 480034773}
-  - component: {fileID: 480034772}
   - component: {fileID: 480034777}
   m_Layer: 5
   m_Name: Canvas
@@ -3051,30 +3050,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &480034772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 480034771}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c2144eb2d93df043b902060d6e95814, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  numCastor: {fileID: 1754431562}
-  numPato: {fileID: 415614841}
-  numCroc: {fileID: 1337702985}
-  numSal: {fileID: 657335390}
-  sumarCastor: {fileID: 479126561}
-  sumarPato: {fileID: 506236391}
-  sumarCroc: {fileID: 1974095529}
-  sumarSal: {fileID: 934407519}
-  restarCastor: {fileID: 1847785953}
-  restarPato: {fileID: 1906717205}
-  restarCroc: {fileID: 364304145}
-  restarSal: {fileID: 1389433030}
 --- !u!114 &480034773
 MonoBehaviour:
   m_ObjectHideFlags: 0

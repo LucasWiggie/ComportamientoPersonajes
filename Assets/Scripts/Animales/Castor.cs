@@ -132,7 +132,7 @@ public class Castor : MonoBehaviour
 
         if (presaTarget != null)
         {
-            if (transform.position.x == presaTarget.position.x && transform.position.z == presaTarget.position.z && !dejaPalo)
+            if ((transform.position.x - presaTarget.position.x <= 0.5f) && (transform.position.z - presaTarget.position.z <= 0.5f) && !dejaPalo)
             {
                 SoltarPalo();
             }
@@ -165,6 +165,7 @@ public class Castor : MonoBehaviour
         if (uHambre >= 100 || uEnergia <= 0)
         {
             Debug.Log(this.gameObject + " ha muerto");
+            castNav = null;
             Destroy(this.gameObject);
         }
         else if (uMiedo > 90)
@@ -379,88 +380,101 @@ public class Castor : MonoBehaviour
 
     public ChaseState irPresa()
     {
-        if (presaTarget != null)
+        try
         {
-            castNav.SetDestination(presaTarget.position);
-            float distanciaX = Mathf.Abs(transform.position.x - presaTarget.position.x);
-            float distanciaZ = Mathf.Abs(transform.position.z - presaTarget.position.z);
-
-            if (distanciaX <= 2 && distanciaZ <= 2)
+            if (presaTarget != null)
             {
-                Debug.Log("en presa");
-                aSalvo = true;
-                castNav.speed = 3.5f;
-                // Incrementa la energía del castor mientras está en la presa
-                energia += 0.4f;
-                hambreRate -= 0.005f;
-                descansando = true;
-                if (energia > 90)//una cantidad necesaria de energia que reponer para poder salir del nenufar, evitando cambios de comportamiento por cte por el cambio del valor de energia en la franja de cansancio
-                {
-                    descansando = false;
-                }
+                castNav?.SetDestination(presaTarget.position);
+                float distanciaX = Mathf.Abs(transform.position.x - presaTarget.position.x);
+                float distanciaZ = Mathf.Abs(transform.position.z - presaTarget.position.z);
 
+                if (distanciaX <= 2 && distanciaZ <= 2)
+                {
+                    Debug.Log("en presa");
+                    aSalvo = true;
+                    castNav.speed = 3.5f;
+                    // Incrementa la energía del castor mientras está en la presa
+                    energia += 0.4f;
+                    hambreRate -= 0.005f;
+                    descansando = true;
+                    if (energia > 90)//una cantidad necesaria de energia que reponer para poder salir del nenufar, evitando cambios de comportamiento por cte por el cambio del valor de energia en la franja de cansancio
+                    {
+                        descansando = false;
+                    }
+
+                    return ChaseState.Enproceso;
+                }
+                else
+                {
+                    if (miedo > 70)
+                    {
+                        energia -= 0.02f;
+                        castNav.speed = 3.75f;
+                    }
+                }
                 return ChaseState.Enproceso;
             }
             else
             {
-                if (miedo > 70)
-                {
-                    energia -= 0.02f;
-                    castNav.speed = 3.75f;
-                }
+                Debug.Log("presa null");
+                return ChaseState.Failed;
             }
-            return ChaseState.Enproceso;
         }
-        else
-        {
-            Debug.Log("presa null");
-            return ChaseState.Failed;
-        }
+        catch { return ChaseState.Failed; }
     }
 
     public ChaseState irPalo()
     {
-        Debug.Log("irpalo");
-        castNav.stoppingDistance = 0;
+        try
+        {
+            Debug.Log("irpalo");
+            castNav.stoppingDistance = 0;
 
-        if (paloTarget != null)
-        {
-            castNav.SetDestination(paloTarget.position);
-            //StartCoroutine(EsperarLlegada());
-            if (cogePalo)
+            if (paloTarget != null)
             {
-                return ChaseState.Finished;
+                castNav?.SetDestination(paloTarget.position);
+                //StartCoroutine(EsperarLlegada());
+                if (cogePalo)
+                {
+                    return ChaseState.Finished;
+                }
+                return ChaseState.Enproceso;
             }
-            return ChaseState.Enproceso;
+            else
+            {
+                Debug.Log("fallo");
+                ComprobarVision();
+                return ChaseState.Failed;
+            }
         }
-        else
-        {
-            Debug.Log("fallo");
-            ComprobarVision();
-            return ChaseState.Failed;
-        }
+        catch { return ChaseState.Failed;}
+        
     }
 
     
     public ChaseState llevarAPresa()
     {
-        Debug.Log("lleva palo a presa");
-        HayPresa();
-        
-        castNav.stoppingDistance = 0;
-
-        if (presaTarget != null)
+        try
         {
-            castNav.SetDestination(presaTarget.position);
-            if (dejaPalo)
-            {
-                Debug.Log("finished llevarapresa");
-                return ChaseState.Finished;
-            }
-            return ChaseState.Enproceso;
+            Debug.Log("lleva palo a presa");
+            HayPresa();
 
+            castNav.stoppingDistance = 0;
+
+            if (presaTarget != null)
+            {
+                castNav?.SetDestination(presaTarget.position);
+                if (dejaPalo)
+                {
+                    Debug.Log("finished llevarapresa");
+                    return ChaseState.Finished;
+                }
+                return ChaseState.Enproceso;
+
+            }
+            else { Debug.Log("presa null"); return ChaseState.Failed; }
         }
-        else { Debug.Log("presa null"); return ChaseState.Failed; }
+        catch { return ChaseState.Failed;}
     
     }
 

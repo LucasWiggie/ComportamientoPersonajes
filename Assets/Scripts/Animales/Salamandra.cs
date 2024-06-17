@@ -162,7 +162,7 @@ public class Salamandra : MonoBehaviour
 
         if (moscaTarget != null)
         {
-            if (transform.position.x == moscaTarget.position.x && transform.position.z == moscaTarget.position.z && !comeMosca)
+            if ((transform.position.x - moscaTarget.position.x <= 0.05f) && (transform.position.z - moscaTarget.position.z <= 0.05f) && !comeMosca)
             {
                 comeMosca = true;
             }
@@ -209,6 +209,7 @@ public class Salamandra : MonoBehaviour
         if (uHambre >= 100 || uEnergia <= 0)
         {
             Debug.Log(this.gameObject + " ha muerto");
+            salamandraNav = null;
             Destroy(this.gameObject);
         }
         else if (uMiedo > 90) 
@@ -259,7 +260,7 @@ public class Salamandra : MonoBehaviour
             btMiedoPatos.SetActive(false);
             btPonerHuevos.SetActive(false);
         }
-        else if (uHambre > 70)
+        else if (uHambre > 60)
         {
             isDefaultMov = false;
             boolHambre = true;
@@ -291,7 +292,7 @@ public class Salamandra : MonoBehaviour
             btMiedoPatos.SetActive(true);
             btPonerHuevos.SetActive(false);
         }
-        else if (uMoscasComidas >= 3)
+        else if (uMoscasComidas >= 2)
         {
             // A poner huevos
             isDefaultMov = false;
@@ -338,18 +339,22 @@ public class Salamandra : MonoBehaviour
 
     private void movimientoAleatorio()
     {
-        if (Time.time >= nextRandomMovementTime)
+        try
         {
-            Vector3 randomPoint = RandomNavmeshLocation(60f); // Obtener un punto aleatorio en el NavMesh
-            salamandraNav.SetDestination(randomPoint); // Establecer el punto como destino
-            nextRandomMovementTime = Time.time + movementInterval; // Actualizar el tiempo para el pr�ximo movimiento
+            if (Time.time >= nextRandomMovementTime)
+            {
+                Vector3 randomPoint = RandomNavmeshLocation(60f); // Obtener un punto aleatorio en el NavMesh
+                salamandraNav?.SetDestination(randomPoint); // Establecer el punto como destino
+                nextRandomMovementTime = Time.time + movementInterval; // Actualizar el tiempo para el pr�ximo movimiento
+            }
         }
+        catch { }
     }
 
     // Funci�n para encontrar un punto aleatorio en el NavMesh dentro de un radio dado
     private Vector3 RandomNavmeshLocation(float radius)
     {
-        Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
+        Vector3 randomDirection = Random.insideUnitSphere * radius;
         randomDirection += transform.position;
 
         NavMeshHit hit;
@@ -457,49 +462,49 @@ public class Salamandra : MonoBehaviour
 
     public ChaseState IrArena()
     {
-        if (sandTarget != null)
+        try
         {
-            salamandraNav.SetDestination(sandTarget.position); //se pone como punto de destino la posicion de la arena
-            //salamandraNav.speed = salamandraNav.speed + 5f;
-            //energia -= 0.05f;
-            //energia = Mathf.Clamp(energia, 0f, 100f);
-
-            if (transform.position.x == sandTarget.position.x && transform.position.z == sandTarget.position.z)
+            if (sandTarget != null)
             {
-                aSalvo = true;
+                salamandraNav?.SetDestination(sandTarget.position); //se pone como punto de destino la posicion de la arena
 
-                // Incrementa la energ�a del castor mientras est� en la presa
-                energia += 0.4f;
-                hambreRate -= 0.005f;
-                // Permitir que el castor salga de la presa solo si su energ�a es >= 90
-                descansando = true;
-                if (energia > 80)//una cantidad necesaria de energia que reponer para poder salir del nenufar, evitando cambios de comportamiento por cte por el cambio del valor de energia en la franja de cansancio
+                if ((transform.position.x - sandTarget.position.x <= 0.5f) && (transform.position.z - sandTarget.position.z <= 0.5f))
                 {
-                    descansando = false;
-                    return ChaseState.Finished;
+                    aSalvo = true;
+
+                    // Incrementa la energ�a del castor mientras est� en la presa
+                    energia += 0.4f;
+                    // Permitir que el castor salga de la presa solo si su energ�a es >= 90
+                    descansando = true;
+                    if (energia > 80)//una cantidad necesaria de energia que reponer para poder salir del nenufar, evitando cambios de comportamiento por cte por el cambio del valor de energia en la franja de cansancio
+                    {
+                        descansando = false;
+                        return ChaseState.Finished;
+                    }
+
+                    return ChaseState.Enproceso;
+
+                    //salamandraNav.speed = salamandraNav.speed - 5f;
                 }
-
-                return ChaseState.Enproceso;
-
+                else
+                {
+                    if (miedo > 70)
+                    {
+                        energia -= 0.02f;
+                        salamandraNav.speed += 0.003f;
+                    }
+                }
                 //salamandraNav.speed = salamandraNav.speed - 5f;
-            } 
+                return ChaseState.Enproceso;
+            }
             else
             {
-                if (miedo > 70)
-                {
-                    energia -= 0.02f;
-                    salamandraNav.speed += 0.003f;
-                }
+                salamandraNav.stoppingDistance = 0;
+                salamandraNav.speed--;
+                return ChaseState.Failed;
             }
-            //salamandraNav.speed = salamandraNav.speed - 5f;
-            return ChaseState.Enproceso;
         }
-        else
-        {
-            salamandraNav.stoppingDistance = 0;
-            salamandraNav.speed--;
-            return ChaseState.Failed; 
-        }
+        catch { return ChaseState.Failed; }
     }
 
     public ChaseState HayMosca()
@@ -558,23 +563,27 @@ public class Salamandra : MonoBehaviour
 
     public ChaseState IrMosca()
     {
-        salamandraNav.stoppingDistance = 0;
+        try
+        {
+            salamandraNav.stoppingDistance = 0;
 
-        if (moscaTarget != null)
-        {
-            salamandraNav.SetDestination(moscaTarget.position);
-            if (comeMosca)
+            if (moscaTarget != null)
             {
-                return ChaseState.Finished;
+                salamandraNav?.SetDestination(moscaTarget.position);
+                if (comeMosca)
+                {
+                    return ChaseState.Finished;
+                }
+                return ChaseState.Enproceso;
             }
-            return ChaseState.Enproceso;
+            else
+            {
+                //HayMosca();
+                comeMosca = false;
+                return ChaseState.Failed;
+            }
         }
-        else
-        {
-            //HayMosca();
-            comeMosca = false;
-            return ChaseState.Failed;
-        }
+        catch { return ChaseState.Failed; }
     }
 
     public ChaseState ComerMosca()
@@ -597,54 +606,50 @@ public class Salamandra : MonoBehaviour
 
     public ChaseState PonerHuevos()
     {
-        if (sandTarget != null)
+        try
         {
-            salamandraNav.SetDestination(sandTarget.position); //se pone como punto de destino la posicion de la arena
-            //salamandraNav.speed = salamandraNav.speed + 5f;
-            //energia -= 0.05f;
-            //energia = Mathf.Clamp(energia, 0f, 100f);
-
-            // Si está en la arena
-            if (transform.position.x == sandTarget.position.x && transform.position.z == sandTarget.position.z)
+            if (sandTarget != null)
             {
-                Debug.Log("Salamandra en arena");
-                aSalvo = true;
-                poniendoHuevos = true;
+                salamandraNav?.SetDestination(sandTarget.position); //se pone como punto de destino la posicion de la arena
 
-                if (Time.time - tiempoInicioPonerHuevos >= tiempoPonerHuevos) // Si han pasado los 4 segundos
+                // Si está en la arena
+                if ((transform.position.x - sandTarget.position.x <= 0.5f) && (transform.position.z - sandTarget.position.z <= 0.5f))
                 {
-                    if (!huevosPuestos)
+                    Debug.Log("Salamandra en arena");
+                    aSalvo = true;
+                    poniendoHuevos = true;
+
+                    if (Time.time - tiempoInicioPonerHuevos >= tiempoPonerHuevos) // Si han pasado los 4 segundos
                     {
-                        InstanciarHuevos();
+                        if (!huevosPuestos)
+                        {
+                            InstanciarHuevos();
+                        }
+
+                        poniendoHuevos = false;
+                        moscasComidas = 0;
+                        return ChaseState.Finished;
                     }
 
-                    poniendoHuevos = false;
-                    moscasComidas = 0;
-                    return ChaseState.Finished;
+                    return ChaseState.Enproceso;
+
+                    //salamandraNav.speed = salamandraNav.speed - 5f;
                 }
-
-                return ChaseState.Enproceso;
-
+                else
+                {
+                    tiempoInicioPonerHuevos = Time.time; // reestablecemos el tiempo en el que se ponen los huevos
+                }
                 //salamandraNav.speed = salamandraNav.speed - 5f;
+                return ChaseState.Enproceso;
             }
             else
             {
-                tiempoInicioPonerHuevos = Time.time; // reestablecemos el tiempo en el que se ponen los huevos
-                //if (miedo > 70)
-                //{
-                //    energia -= 0.02f;
-                //    salamandraNav.speed += 0.003f;
-                //}
+                salamandraNav.stoppingDistance = 0;
+                salamandraNav.speed--;
+                return ChaseState.Failed;
             }
-            //salamandraNav.speed = salamandraNav.speed - 5f;
-            return ChaseState.Enproceso;
         }
-        else
-        {
-            salamandraNav.stoppingDistance = 0;
-            salamandraNav.speed--;
-            return ChaseState.Failed;
-        }
+        catch { return ChaseState.Failed; }
     }
 
     void DetectarPatosCercanos()
@@ -673,48 +678,30 @@ public class Salamandra : MonoBehaviour
 
     public void ProtegerHuevo()
     {
-        if (huevoAProteger != null)
+        try
         {
-            float distanceToEgg = Vector3.Distance(transform.position, huevoAProteger.position);
-            if (distanceToEgg > distMinHuevo)
+            if (huevoAProteger != null)
             {
-                salamandraNav.SetDestination(huevoAProteger.position);
-                aSalvo = false;
+                float distanceToEgg = Vector3.Distance(transform.position, huevoAProteger.position);
+                if (distanceToEgg > distMinHuevo)
+                {
+                    salamandraNav?.SetDestination(huevoAProteger.position);
+                    aSalvo = false;
+                }
+                else
+                {
+                    aSalvo = true;
+                }
+                huevoAProteger.GetComponentInParent<Huevo>().aSalvo = aSalvo;
             }
             else
             {
-                aSalvo = true;
+                // Opcional: Lógica adicional si no hay un huevo a proteger
+                salamandraNav.stoppingDistance = 0;
+                salamandraNav.speed--;
             }
-            huevoAProteger.GetComponentInParent<Huevo>().aSalvo = aSalvo;
         }
-        else
-        {
-            // Opcional: Lógica adicional si no hay un huevo a proteger
-            salamandraNav.stoppingDistance = 0;
-            salamandraNav.speed--;
-        }
-
-        //isDefaultMov = false;
-        //if (huevoAProteger != null)
-        //{
-        //    salamandraNav.SetDestination(huevoAProteger.position); //se pone como punto de destino la posicion de la arena
-
-        //    if (Vector3.Distance(transform.position, huevoAProteger.position) < distMinHuevo)
-        //    {
-        //        aSalvo = true;
-        //        huevoAProteger.GetComponentInParent<Huevo>().aSalvo = true;
-        //    } 
-        //    else
-        //    {
-        //        Debug.Log("Entra al else para poner el aSalvo del huevo a false");
-        //        huevoAProteger.GetComponentInParent<Huevo>().aSalvo = false;
-        //    }
-        //}
-        //else
-        //{
-        //    salamandraNav.stoppingDistance = 0;
-        //    salamandraNav.speed--;
-        //}
+        catch(Exception e) { }
     }
 
     public IEnumerator ReanudarMovimiento()
@@ -734,7 +721,7 @@ public class Salamandra : MonoBehaviour
     private void InstanciarHuevos()
     {
         // Definir el rango de variación para las posiciones X y Z
-        float rangoVariacion = 0.5f;
+        float rangoVariacion = 0.85f;
 
         // Generar valores aleatorios dentro del rango para X y Z
         float variacionX = Random.Range(-rangoVariacion, rangoVariacion);

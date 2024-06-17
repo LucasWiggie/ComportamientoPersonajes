@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3948536347483914517}
@@ -58,7 +58,7 @@ CapsuleCollider:
   m_Radius: 0.32867098
   m_Height: 0.71721745
   m_Direction: 1
-  m_Center: {x: -4.5402217, y: 3.4748769, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &385287219224526871
 GameObject:
   m_ObjectHideFlags: 0
@@ -112,7 +112,6 @@ MonoBehaviour:
   radioNenufar: 300
   angulo: 360
   playerRef: {fileID: 0}
-  patito: {fileID: 5842986526443527119, guid: fcd7e96b0af642c45930bff60bce15b1, type: 3}
   targetMask:
     serializedVersion: 2
     m_Bits: 256
@@ -127,20 +126,21 @@ MonoBehaviour:
     m_Bits: 2048
   puedeVer: 0
   puedeVerNenufar: 0
-  distanciaMaxima: 25
-  hambre: 45
-  energia: 100
-  miedo: 0
-  uHambre: 0
-  uEnergia: 0
-  uMiedo: 0
   btHambre: {fileID: 1485185606296902250}
   btEnergia: {fileID: 5955136895735176969}
   btMiedo: {fileID: 5958547077724282190}
-  aSalvo: 0
+  uHambre: 0
+  uEnergia: 0
+  uMiedo: 0
+  hambre: 45
+  energia: 100
+  miedo: 0
   isDefaultMov: 1
+  aSalvo: 0
   salamandraScript: {fileID: -5968839395692330149, guid: 8fbaf18edefc9b84e921f3cac4508485, type: 3}
+  patito: {fileID: 5842986526443527119, guid: fcd7e96b0af642c45930bff60bce15b1, type: 3}
   movementInterval: 3
+  distanciaMaxima: 25
 --- !u!195 &4023073068378583411
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -26,28 +26,24 @@ public class Huevo : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (HayCroc())
+        if(madreSalamandra != null )
         {
-            // Avisar a la salamandra solo si NO está protegiendo ya a otro huevo
-            if (!madreSalamandra.boolProtegerHuevos)
+            if (HayCroc())
             {
-                AvisarSalamandra();
+                // Avisar a la salamandra solo si NO está protegiendo ya a otro huevo
+                if (!madreSalamandra.boolProtegerHuevos)
+                {
+                    AvisarSalamandra();
+                }
             }
-        }
-        else
-        {
-            madreSalamandra.boolProtegerHuevos = false;
-        }
+            else
+            {
+                madreSalamandra.boolProtegerHuevos = false;
+            }
 
-        aSalvo = Vector3.Distance(transform.position, transformMadreSalamandra.position) < distanciaMinima;
-        //if (Vector3.Distance(transform.position, transformMadreSalamandra.position) < distanciaMinima)
-        //{
-        //    aSalvo = true;
-        //}
-        //else
-        //{
-        //    aSalvo = false;
-        //}
+             aSalvo = Vector3.Distance(transform.position, transformMadreSalamandra.position) < distanciaMinima;            
+        }
+       
     }
 
     public bool HayCroc()

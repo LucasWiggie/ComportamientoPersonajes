@@ -50,12 +50,12 @@ public class GeneracionAleatoria : MonoBehaviour
 
         for (int i = 0; i < nPalos; i++)
         {
-            InstantiateAnimal(palo, 2.92f);
+            InstantiateAnimal(palo);
         }
 
         for (int i = 0; i < nMoscas; i++)
         {
-            InstantiateAnimal(mosca, 3.23f);
+            InstantiateAnimal(mosca, 1f);
         }
     }
 

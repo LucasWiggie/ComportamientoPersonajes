@@ -53,12 +53,12 @@ public class Cocodrilo : MonoBehaviour
     public float miedo;
 
     float hambreRate = 2f;
-    float energiaRate = 1f;
+    float energiaRate = 1.5f;
 
     public bool isDefaultMov = false;
 
     public bool aSalvo = false;
-    public Pato patoScript; 
+    public Pato patoScript;
     public Castor castorScript;
 
     //Objetivos
@@ -125,7 +125,7 @@ public class Cocodrilo : MonoBehaviour
         uMiedo = miedo;
 
     }
-    
+
     private void Update()
     {
         UpdateVariables();
@@ -140,23 +140,24 @@ public class Cocodrilo : MonoBehaviour
         {
             NuevoDestinoAleatorio();
         }
-        else if (boolHambre) {
-            
+        else if (boolHambre)
+        {
+
             btHambre.GetComponent<MonoBehaviourTree>().Tick();
 
         }
         else if (boolEnergia)
         {
-            
+
             btEnergia.GetComponent<MonoBehaviourTree>().Tick();
         }
         else if (boolMiedo)
         {
-            
-           btMiedo.GetComponent<MonoBehaviourTree>().Tick();
+
+            btMiedo.GetComponent<MonoBehaviourTree>().Tick();
         }
     }
-    
+
     public void UtilitySystem()
     {
         uHambre = this.getHambre();
@@ -169,6 +170,7 @@ public class Cocodrilo : MonoBehaviour
         if (uHambre >= 100 || uEnergia <= 0)
         {
             Debug.Log(this.gameObject + " ha muerto");
+            crocNav = null;
             Destroy(this.gameObject);
         }
         else if (uMiedo > 90)
@@ -185,13 +187,13 @@ public class Cocodrilo : MonoBehaviour
         {
             boolHambre = false;
             boolMiedo = false;
-            isDefaultMov= false;
+            isDefaultMov = false;
             boolEnergia = true;
             btHambre.SetActive(false);
             btMiedo.SetActive(false);
             btEnergia.SetActive(true);
         }
-        else if (uHambre > 70 &&  animalesNoASalvo.Count!=0)
+        else if (uHambre > 70 && animalesNoASalvo.Count != 0)
         {
             boolEnergia = false;
             boolMiedo = false;
@@ -236,13 +238,17 @@ public class Cocodrilo : MonoBehaviour
     # region "Movimiento"
     private void NuevoDestinoAleatorio()
     {
-        if (Time.time >= nextRandomMovementTime)
+        try
         {
-            Vector3 randomPoint = RandomNavmeshLocation(60f); // Obtener un punto aleatorio en el NavMesh
-            crocNav.SetDestination(randomPoint); // Establecer el punto como destino
-            //Debug.Log("croc se mueve");
-            nextRandomMovementTime = Time.time + movementInterval; // Actualizar el tiempo para el pr�ximo movimiento
+            if (Time.time >= nextRandomMovementTime)
+            {
+                Vector3 randomPoint = RandomNavmeshLocation(60f); // Obtener un punto aleatorio en el NavMesh
+                crocNav?.SetDestination(randomPoint); // Establecer el punto como destino
+                                                     //Debug.Log("croc se mueve");
+                nextRandomMovementTime = Time.time + movementInterval; // Actualizar el tiempo para el pr�ximo movimiento
+            }
         }
+        catch { }
     }
 
     // Funci�n para encontrar un punto aleatorio en el NavMesh dentro de un radio dado
@@ -283,7 +289,7 @@ public class Cocodrilo : MonoBehaviour
             Castor castor = targetParent.GetComponent<Castor>();
             Pato pato = targetParent.GetComponent<Pato>();
 
-            if ((castor != null && !castor.aSalvo)  || (pato != null && !pato.aSalvo)) 
+            if ((castor != null && !castor.aSalvo) || (pato != null && !pato.aSalvo))
             {
                 animalesNoASalvo.Add(col);
             }
@@ -331,55 +337,62 @@ public class Cocodrilo : MonoBehaviour
             return ChaseState.Failed;
         }
         return ChaseState.Failed;
-       
+
     }
 
     //Acci�n perseguir animales
     public ChaseState Perseguir()
     {
-        if (animalTarget == null)
+        try
         {
-            Debug.Log("Chase failed: no target.");
-            return ChaseState.Failed; // No hay objetivo
-        }
-
-        GameObject targetParent = animalTarget.gameObject.transform.parent.gameObject;
-
-        if(targetParent.tag=="Castor"){
-            var castor = targetParent.GetComponent<Castor>();
-            if (castor.aSalvo) 
+            if (animalTarget == null)
             {
-                return ChaseState.Finished;
+                Debug.Log("Chase failed: no target.");
+                return ChaseState.Failed; // No hay objetivo
             }
-        }
-        else if(targetParent.tag=="Pato"){
-            Debug.Log("Entro a perseguir pato");
-            var pato = targetParent.GetComponent<Pato>();
-            if (pato.aSalvo)
+
+            GameObject targetParent = animalTarget.gameObject.transform.parent.gameObject;
+
+            if (targetParent.tag == "Castor")
             {
-                return ChaseState.Finished;
+                var castor = targetParent.GetComponent<Castor>();
+                if (castor.aSalvo)
+                {
+                    return ChaseState.Finished;
+                }
             }
+            else if (targetParent.tag == "Pato")
+            {
+                Debug.Log("Entro a perseguir pato");
+                var pato = targetParent.GetComponent<Pato>();
+                if (pato.aSalvo)
+                {
+                    return ChaseState.Finished;
+                }
+            }
+
+            float minDist = crocNav.stoppingDistance;
+            float dist = Vector3.Distance(animalTarget.position, transform.position);
+
+            Debug.Log($"Chasing target. Current distance: {dist}, Minimum distance: {minDist}");
+
+            if (dist <= 2.0)
+            {
+                Debug.Log("Chase finished: target reached.");
+                return ChaseState.Finished; // Se ha llegado al objetivo
+            }
+
+            if (crocNav.pathPending || dist > minDist)
+            {
+                crocNav?.SetDestination(animalTarget.position); // Actualiza el destino
+                energiaRate += 0.5f;
+                return ChaseState.Enproceso; // La persecución está en curso
+            }
+
+            Debug.Log("Chase finished: close enough to target.");
+            return ChaseState.Finished; // Se ha llegado suficientemente cerca
         }
-
-        float minDist = crocNav.stoppingDistance;
-        float dist = Vector3.Distance(animalTarget.position, transform.position);
-
-        Debug.Log($"Chasing target. Current distance: {dist}, Minimum distance: {minDist}");
-
-        if (dist <= 2.0)
-        {
-            Debug.Log("Chase finished: target reached.");
-            return ChaseState.Finished; // Se ha llegado al objetivo
-        }
-    
-        if (crocNav.pathPending || dist > minDist)
-        {
-            crocNav.SetDestination(animalTarget.position); // Actualiza el destino
-            return ChaseState.Enproceso; // La persecución está en curso
-        }
-
-        Debug.Log("Chase finished: close enough to target.");
-        return ChaseState.Finished; // Se ha llegado suficientemente cerca
+        catch { return ChaseState.Failed; } 
     }
 
     //Acci�n comer tanto huevos como animales
@@ -397,6 +410,7 @@ public class Cocodrilo : MonoBehaviour
                 {
                     // Destruir el GameObject del animal y su padre
                     GameObject.Destroy(targetParent);
+                    energiaRate = 1.5f;
                     // Restablecer la cantidad de hambre a cero
                     hambre = 0;
                 }
@@ -408,6 +422,7 @@ public class Cocodrilo : MonoBehaviour
                 {
                     // Destruir el GameObject del animal y su padre
                     GameObject.Destroy(targetParent);
+                    energiaRate = 1.5f;
                     // Restablecer la cantidad de hambre a cero
                     hambre = 0;
                 }
@@ -427,7 +442,7 @@ public class Cocodrilo : MonoBehaviour
             GameObject.Destroy(targetParent);
 
             // Aumentar la energía
-            energia += 20;
+            energia += 40;
             energia = Mathf.Clamp(energia, 0f, 100f);
 
         }
@@ -490,33 +505,38 @@ public class Cocodrilo : MonoBehaviour
     //Acci�n huir a arena
     public ChaseState IrArena()
     {
-        if (sandTarget != null)
+        try 
         {
-            crocNav.SetDestination(sandTarget.position); //se pone como punto de destino la posicion de la arena
-            crocNav.speed = crocNav.speed + 5f;
-            energiaRate = 0.1f;
-            energia = Mathf.Clamp(energia, 0f, 100f);
-
-            if (transform.position.x == sandTarget.position.x && transform.position.z == sandTarget.position.z)
+            if (sandTarget != null)
             {
-                Debug.Log("COCODRILO EN ARENA");
-                miedo = 0; //reducimos el miedo
-                energiaRate = 0.05f;
-                crocNav.isStopped = true;//paramos el movimiento
-                StartCoroutine(ReanudarMovimiento(5.0f));
-                crocNav.speed = crocNav.speed - 5f;
-                return ChaseState.Finished;
-            }
-            crocNav.speed = crocNav.speed -5f;
-            return ChaseState.Enproceso;// se ha llegado al punto indicado aunque el animal ya no este (muerto o escondido)
+                crocNav?.SetDestination(sandTarget.position); //se pone como punto de destino la posicion de la arena
+                crocNav.speed = crocNav.speed + 5f;
+                //energiaRate = 0.1f;
+                energia = Mathf.Clamp(energia, 0f, 100f);
 
+                if ((transform.position.x - sandTarget.position.x <= 0.5f) && (transform.position.z - sandTarget.position.z <= 0.5f))
+                {
+                    Debug.Log("COCODRILO EN ARENA");
+                    miedo = 0; //reducimos el miedo
+                    //energiaRate = 0.05f;
+                    crocNav.isStopped = true;//paramos el movimiento
+                    aSalvo = true;
+                    StartCoroutine(ReanudarMovimiento(5.0f));
+                    crocNav.speed = crocNav.speed - 5f;
+                    return ChaseState.Finished;
+                }
+                crocNav.speed = crocNav.speed - 5f;
+                return ChaseState.Enproceso;// se ha llegado al punto indicado aunque el animal ya no este (muerto o escondido)
+
+            }
+            else
+            {
+                crocNav.stoppingDistance = 0;
+                crocNav.speed--;
+                return ChaseState.Failed; //no haya animal al que perseguir
+            }
         }
-        else
-        {
-            crocNav.stoppingDistance = 0;
-            crocNav.speed--;
-            return ChaseState.Failed; //no haya animal al que perseguir
-        }
+        catch { return ChaseState.Failed; }
     }
 
     public ChaseState HayHuevos()
@@ -582,30 +602,34 @@ public class Cocodrilo : MonoBehaviour
 
     public ChaseState IrAHuevos()
     {
-        if (eggsTarget != null && !eggsTarget.GetComponent<Huevo>().aSalvo)
+        try
         {
-            crocNav.SetDestination(eggsTarget.position);
-
-            if (!eggsTarget.GetComponentInParent<Huevo>().aSalvo)
+            if (eggsTarget != null && !eggsTarget.GetComponent<Huevo>().aSalvo)
             {
-                if ((transform.position.x - eggsTarget.position.x <= 0.5) && (transform.position.z - eggsTarget.position.z <= 0.5))
+                crocNav?.SetDestination(eggsTarget.position);
+
+                if (!eggsTarget.GetComponentInParent<Huevo>().aSalvo)
                 {
-                    crocNav.isStopped = true;
+                    if ((transform.position.x - eggsTarget.position.x <= 0.5) && (transform.position.z - eggsTarget.position.z <= 0.5))
+                    {
+                        crocNav.isStopped = true;
+                        return ChaseState.Finished;
+                    }
+                }
+                else
+                {
                     return ChaseState.Finished;
                 }
-            } 
+
+                return ChaseState.Enproceso;
+            }
             else
             {
-                return ChaseState.Finished;
+                crocNav.stoppingDistance = 2;
+                return ChaseState.Failed; //no haya animal al que perseguir
             }
-
-            return ChaseState.Enproceso;
         }
-        else
-        {
-            crocNav.stoppingDistance = 2;
-            return ChaseState.Failed; //no haya animal al que perseguir
-        }
+        catch { return ChaseState.Failed; }
     }
     #endregion
 
@@ -652,28 +676,28 @@ public class Cocodrilo : MonoBehaviour
 
     public List<Collider> ObtenerAnimalesNoASalvo()
     {
-    // Obtener todos los colisionadores en el rango especificado
-    Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
+        // Obtener todos los colisionadores en el rango especificado
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
 
-    // Lista para almacenar colisionadores de animales no a salvo
-    List<Collider> animalesNoASalvo = new List<Collider>();
+        // Lista para almacenar colisionadores de animales no a salvo
+        List<Collider> animalesNoASalvo = new List<Collider>();
 
-    foreach (Collider col in rangeChecks)
-    {
-        // Obtener el GameObject padre del colisionador
-        GameObject targetParent = col.transform.parent != null ? col.transform.parent.gameObject : col.gameObject;
-
-        // Verificar si el objetivo es un castor o un pato y si no está a salvo
-        Castor castor = targetParent.GetComponent<Castor>();
-        Pato pato = targetParent.GetComponent<Pato>();
-
-        if ((castor != null && !castor.aSalvo) || (pato != null && !pato.aSalvo))
+        foreach (Collider col in rangeChecks)
         {
-            animalesNoASalvo.Add(col);
-        }
-    }
+            // Obtener el GameObject padre del colisionador
+            GameObject targetParent = col.transform.parent != null ? col.transform.parent.gameObject : col.gameObject;
 
-    return animalesNoASalvo;
+            // Verificar si el objetivo es un castor o un pato y si no está a salvo
+            Castor castor = targetParent.GetComponent<Castor>();
+            Pato pato = targetParent.GetComponent<Pato>();
+
+            if ((castor != null && !castor.aSalvo) || (pato != null && !pato.aSalvo))
+            {
+                animalesNoASalvo.Add(col);
+            }
+        }
+
+        return animalesNoASalvo;
     }
 
     public List<Collider> ObtenerHuevosIndefensos()
@@ -700,7 +724,7 @@ public class Cocodrilo : MonoBehaviour
         return huevosIndefensos;
     }
 
-     public IEnumerator ReanudarMovimiento(float tiempo)
+    public IEnumerator ReanudarMovimiento(float tiempo)
     {
         aSalvo = true;
         yield return new WaitForSeconds(tiempo);
