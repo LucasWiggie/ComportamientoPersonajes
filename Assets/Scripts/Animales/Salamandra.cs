@@ -733,7 +733,18 @@ public class Salamandra : MonoBehaviour
 
     private void InstanciarHuevos()
     {
-        Vector3 posicionHuevos = new Vector3(transform.position.x + 0.5f, transform.position.y + 1.75f, transform.position.z + 0.5f); // Ajustar esta posición según sea necesario
+        // Definir el rango de variación para las posiciones X y Z
+        float rangoVariacion = 0.5f;
+
+        // Generar valores aleatorios dentro del rango para X y Z
+        float variacionX = Random.Range(-rangoVariacion, rangoVariacion);
+        float variacionZ = Random.Range(-rangoVariacion, rangoVariacion);
+
+        // Crear una nueva posición con las variaciones aleatorias
+        Vector3 posicionHuevos = new Vector3(transform.position.x + variacionX, transform.position.y + 1.75f, transform.position.z + variacionZ);
+
+        //Vector3 posicionHuevos = new Vector3(transform.position.x + 0.5f, transform.position.y + 1.75f, transform.position.z + 0.5f); // Ajustar esta posición según sea necesario
+
         GameObject huevoInstanciado = Instantiate(huevoPrefab, posicionHuevos, Quaternion.identity);
         Huevo huevoScript = huevoInstanciado.GetComponent<Huevo>();
         huevoScript.madreSalamandra = this;
