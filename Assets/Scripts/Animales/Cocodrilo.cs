@@ -82,7 +82,7 @@ public class Cocodrilo : MonoBehaviour
 
     //Peligros
     public List<Transform> patitosCercanos = new List<Transform>();
-    private float distanciaMax = 30f;
+    public float distanciaMax = 35f;
 
     //Getters y Setters
     public float getHambre()
