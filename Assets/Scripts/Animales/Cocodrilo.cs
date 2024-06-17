@@ -25,6 +25,12 @@ public class Cocodrilo : MonoBehaviour
     public bool puedeVerArena;
     public bool puedeVerHuevos;
 
+    public enum ChaseState
+    {
+        Finished,
+        Failed,
+        Enproceso
+    }
 
     // BTs de cada acci�n
     public GameObject btHambre;
@@ -35,23 +41,25 @@ public class Cocodrilo : MonoBehaviour
     private bool boolHambre = false;
     public bool boolEnergia = false;
     private bool boolMiedo = false;
-    public bool aSalvo = false;
-
-    //Rango 0-100 las 3 
-    public float hambre;
-    public float energia;
-    public float miedo;
 
     // Utilidades
     private float uHambre;
     private float uEnergia;
     private float uMiedo;
 
+    //Rango 0-100 las 3 
+    public float hambre;
+    public float energia;
+    public float miedo;
+
     float hambreRate = 2f;
     float energiaRate = 1f;
 
-    //NavMeshAgent
-    public NavMeshAgent crocNav;
+    public bool isDefaultMov = false;
+
+    public bool aSalvo = false;
+    public Pato patoScript; 
+    public Castor castorScript;
 
     //Objetivos
     private Transform animalTarget; //animal que va a ser objetivo
@@ -61,29 +69,20 @@ public class Cocodrilo : MonoBehaviour
     //Collider el objeto con el que se ha chocado
     private Collider collidedObject;
 
-    public bool isDefaultMov = false;
-
-    //Para indicar si esta aSalvo
-    public Pato patoScript; // Aseg�rate de asignar esto desde el Inspector
-    public Castor castorScript;
+    //NavMeshAgent
+    public NavMeshAgent crocNav;
 
     // Variables para controlar el intervalo de movimiento
     private float nextRandomMovementTime = 0f;
     public float movementInterval = 7.0f;
 
-    //Lista con los patitos cercanos al cocodrilo
-    public List<Transform> patitosCercanos = new List<Transform>();
-    private List<Collider> animalesNoASalvo = new List<Collider>();
-    private float distanciaMax = 30f;
-
+    //Presas y huevos indefensos
     private List<Collider> huevosIndefensos = new List<Collider>();
+    private List<Collider> animalesNoASalvo = new List<Collider>();
 
-    public enum ChaseState
-    {
-        Finished,
-        Failed,
-        Enproceso
-    }
+    //Peligros
+    public List<Transform> patitosCercanos = new List<Transform>();
+    private float distanciaMax = 30f;
 
     //Getters y Setters
     public float getHambre()
@@ -157,38 +156,7 @@ public class Cocodrilo : MonoBehaviour
            btMiedo.GetComponent<MonoBehaviourTree>().Tick();
         }
     }
-
-    # region "Movimiento"
-    private void NuevoDestinoAleatorio()
-    {
-        if (Time.time >= nextRandomMovementTime)
-        {
-            Vector3 randomPoint = RandomNavmeshLocation(60f); // Obtener un punto aleatorio en el NavMesh
-            crocNav.SetDestination(randomPoint); // Establecer el punto como destino
-            //Debug.Log("croc se mueve");
-            nextRandomMovementTime = Time.time + movementInterval; // Actualizar el tiempo para el pr�ximo movimiento
-        }
-    }
-
-    // Funci�n para encontrar un punto aleatorio en el NavMesh dentro de un radio dado
-    private Vector3 RandomNavmeshLocation(float radius)
-    {
-        Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
-        randomDirection += transform.position;
-
-        NavMeshHit hit;
-        Vector3 finalPosition = Vector3.zero;
-
-        if (NavMesh.SamplePosition(randomDirection, out hit, radius, 1))
-        {
-            finalPosition = hit.position;
-        }
-
-        return finalPosition;
-    }
-    #endregion 
     
-    #region "Utility system"
     public void UtilitySystem()
     {
         uHambre = this.getHambre();
@@ -255,32 +223,45 @@ public class Cocodrilo : MonoBehaviour
         }
     }
 
-    public List<Collider> ObtenerAnimalesNoASalvo()
+    private void UpdateVariables()
     {
-    // Obtener todos los colisionadores en el rango especificado
-    Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
+        hambre += hambreRate * Time.deltaTime;
+        energia -= energiaRate * Time.deltaTime;
 
-    // Lista para almacenar colisionadores de animales no a salvo
-    List<Collider> animalesNoASalvo = new List<Collider>();
+        hambre = Mathf.Clamp(hambre, 0f, 100f);
+        energia = Mathf.Clamp(energia, 0f, 100f);
+    }
 
-    foreach (Collider col in rangeChecks)
+
+    # region "Movimiento"
+    private void NuevoDestinoAleatorio()
     {
-        // Obtener el GameObject padre del colisionador
-        GameObject targetParent = col.transform.parent != null ? col.transform.parent.gameObject : col.gameObject;
-
-        // Verificar si el objetivo es un castor o un pato y si no está a salvo
-        Castor castor = targetParent.GetComponent<Castor>();
-        Pato pato = targetParent.GetComponent<Pato>();
-
-        if ((castor != null && !castor.aSalvo) || (pato != null && !pato.aSalvo))
+        if (Time.time >= nextRandomMovementTime)
         {
-            animalesNoASalvo.Add(col);
+            Vector3 randomPoint = RandomNavmeshLocation(60f); // Obtener un punto aleatorio en el NavMesh
+            crocNav.SetDestination(randomPoint); // Establecer el punto como destino
+            //Debug.Log("croc se mueve");
+            nextRandomMovementTime = Time.time + movementInterval; // Actualizar el tiempo para el pr�ximo movimiento
         }
     }
 
-    return animalesNoASalvo;
+    // Funci�n para encontrar un punto aleatorio en el NavMesh dentro de un radio dado
+    private Vector3 RandomNavmeshLocation(float radius)
+    {
+        Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
+        randomDirection += transform.position;
+
+        NavMeshHit hit;
+        Vector3 finalPosition = Vector3.zero;
+
+        if (NavMesh.SamplePosition(randomDirection, out hit, radius, 1))
+        {
+            finalPosition = hit.position;
+        }
+
+        return finalPosition;
     }
-    #endregion
+    #endregion 
 
     #region "Acciones"
     public ChaseState HayCaza()
@@ -351,120 +332,6 @@ public class Cocodrilo : MonoBehaviour
         }
         return ChaseState.Failed;
        
-    }
-
-    public ChaseState HayHuevos()
-    {
-        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radioHuevos, targetMaskHuevos);
-
-        //Huevos que no estan resguardadas
-        List<Collider> huevosIndefensos = new List<Collider>();
-
-        foreach (Collider col in rangeChecks)
-        {
-            // Obtener el GameObject padre del colisionador
-            GameObject targetParent = col.transform.parent != null ? col.transform.parent.gameObject : col.gameObject;
-
-            // Verificar si el objetivo es una salamandra y si no est� a salvo
-            Huevo huevo = targetParent.GetComponent<Huevo>();
-
-            if ((huevo != null && !huevo.aSalvo))
-            {
-                huevosIndefensos.Add(col);
-            }
-        }
-
-        if (huevosIndefensos.Count > 0)
-        {
-            Transform target = huevosIndefensos[0].transform;
-            eggsTarget = target;
-
-            Vector3 directionToTarget = (target.position - transform.position).normalized;
-            float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
-            float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
-
-            if (dotProduct > angleThreshold)
-            {
-                float distanciaToTarget = Vector3.Distance(transform.position, target.position);
-
-                if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
-                {
-                    puedeVerHuevos = true;
-                    return ChaseState.Finished;
-                }
-                else
-                {
-                    puedeVerHuevos = false;
-                    return ChaseState.Failed;
-                }
-            }
-            else
-            {
-                puedeVerHuevos = false;
-                return ChaseState.Failed;
-            }
-        }
-        else if (puedeVerHuevos)
-        {
-            puedeVerHuevos = false;
-            return ChaseState.Failed;
-        }
-
-        Debug.Log("devuelve fail? ");
-        return ChaseState.Failed;
-    }
-
-    public ChaseState HayArena()
-    {
-        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMaskArena);
-
-        if (rangeChecks.Length > 0)
-        {
-            Transform closestTarget = null;
-            float closestDistance = float.MaxValue;
-
-            foreach (Collider col in rangeChecks)
-            {
-                Transform target = col.transform;
-                Vector3 directionToTarget = (target.position - transform.position).normalized;
-
-                float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
-                float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
-
-                if (dotProduct > angleThreshold)
-                {
-                    float distanceToTarget = Vector3.Distance(transform.position, target.position);
-
-                    if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
-                    {
-                        if (distanceToTarget < closestDistance)
-                        {
-                            closestDistance = distanceToTarget;
-                            closestTarget = target;
-                        }
-                    }
-                }
-            }
-
-            if (closestTarget != null)
-            {
-                // Asignar la presa m�s cercana como el objetivo
-                sandTarget = closestTarget;
-                puedeVer = true;
-                return ChaseState.Finished;
-            }
-            else
-            {
-                puedeVer = false;
-                return ChaseState.Failed;
-            }
-        }
-        else if (puedeVer)
-        {
-            puedeVer = false;
-            return ChaseState.Failed;
-        }
-        return ChaseState.Failed;
     }
 
     //Acci�n perseguir animales
@@ -567,6 +434,59 @@ public class Cocodrilo : MonoBehaviour
 
     }
 
+    public ChaseState HayArena()
+    {
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMaskArena);
+
+        if (rangeChecks.Length > 0)
+        {
+            Transform closestTarget = null;
+            float closestDistance = float.MaxValue;
+
+            foreach (Collider col in rangeChecks)
+            {
+                Transform target = col.transform;
+                Vector3 directionToTarget = (target.position - transform.position).normalized;
+
+                float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
+                float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
+
+                if (dotProduct > angleThreshold)
+                {
+                    float distanceToTarget = Vector3.Distance(transform.position, target.position);
+
+                    if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
+                    {
+                        if (distanceToTarget < closestDistance)
+                        {
+                            closestDistance = distanceToTarget;
+                            closestTarget = target;
+                        }
+                    }
+                }
+            }
+
+            if (closestTarget != null)
+            {
+                // Asignar la presa m�s cercana como el objetivo
+                sandTarget = closestTarget;
+                puedeVer = true;
+                return ChaseState.Finished;
+            }
+            else
+            {
+                puedeVer = false;
+                return ChaseState.Failed;
+            }
+        }
+        else if (puedeVer)
+        {
+            puedeVer = false;
+            return ChaseState.Failed;
+        }
+        return ChaseState.Failed;
+    }
+
     //Acci�n huir a arena
     public ChaseState IrArena()
     {
@@ -598,7 +518,68 @@ public class Cocodrilo : MonoBehaviour
             return ChaseState.Failed; //no haya animal al que perseguir
         }
     }
-    
+
+    public ChaseState HayHuevos()
+    {
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radioHuevos, targetMaskHuevos);
+
+        //Huevos que no estan resguardadas
+        List<Collider> huevosIndefensos = new List<Collider>();
+
+        foreach (Collider col in rangeChecks)
+        {
+            // Obtener el GameObject padre del colisionador
+            GameObject targetParent = col.transform.parent != null ? col.transform.parent.gameObject : col.gameObject;
+
+            // Verificar si el objetivo es una salamandra y si no est� a salvo
+            Huevo huevo = targetParent.GetComponent<Huevo>();
+
+            if ((huevo != null && !huevo.aSalvo))
+            {
+                huevosIndefensos.Add(col);
+            }
+        }
+
+        if (huevosIndefensos.Count > 0)
+        {
+            Transform target = huevosIndefensos[0].transform;
+            eggsTarget = target;
+
+            Vector3 directionToTarget = (target.position - transform.position).normalized;
+            float dotProduct = Vector3.Dot(transform.forward, directionToTarget);
+            float angleThreshold = Mathf.Cos(Mathf.Deg2Rad * (angulo / 2));
+
+            if (dotProduct > angleThreshold)
+            {
+                float distanciaToTarget = Vector3.Distance(transform.position, target.position);
+
+                if (!Physics.Raycast(transform.position, directionToTarget, distanciaToTarget, obstructionMask))
+                {
+                    puedeVerHuevos = true;
+                    return ChaseState.Finished;
+                }
+                else
+                {
+                    puedeVerHuevos = false;
+                    return ChaseState.Failed;
+                }
+            }
+            else
+            {
+                puedeVerHuevos = false;
+                return ChaseState.Failed;
+            }
+        }
+        else if (puedeVerHuevos)
+        {
+            puedeVerHuevos = false;
+            return ChaseState.Failed;
+        }
+
+        Debug.Log("devuelve fail? ");
+        return ChaseState.Failed;
+    }
+
     public ChaseState IrAHuevos()
     {
         if (eggsTarget != null && !eggsTarget.GetComponent<Huevo>().aSalvo)
@@ -626,33 +607,9 @@ public class Cocodrilo : MonoBehaviour
             return ChaseState.Failed; //no haya animal al que perseguir
         }
     }
-
-    public IEnumerator EsperarLlegada()
-    {
-        yield return new WaitUntil(() => crocNav.remainingDistance <= crocNav.stoppingDistance); //esperar a que el pato llegue a su destino
-    }
-
-    public IEnumerator ReanudarMovimiento(float tiempo)
-    {
-        aSalvo = true;
-        yield return new WaitForSeconds(tiempo);
-        aSalvo = false;
-        crocNav.isStopped = false; //reanudamos el movimiento despues de x segundos
-    }
-
-    
     #endregion
 
     #region "Otros"
-    private void UpdateVariables()
-    {
-        hambre += hambreRate * Time.deltaTime;
-        energia -= energiaRate * Time.deltaTime;
-
-        hambre = Mathf.Clamp(hambre, 0f, 100f);
-        energia = Mathf.Clamp(energia, 0f, 100f);
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
         collidedObject = collision.gameObject.GetComponent<Collider>();
@@ -693,6 +650,32 @@ public class Cocodrilo : MonoBehaviour
         }
     }
 
+    public List<Collider> ObtenerAnimalesNoASalvo()
+    {
+    // Obtener todos los colisionadores en el rango especificado
+    Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
+
+    // Lista para almacenar colisionadores de animales no a salvo
+    List<Collider> animalesNoASalvo = new List<Collider>();
+
+    foreach (Collider col in rangeChecks)
+    {
+        // Obtener el GameObject padre del colisionador
+        GameObject targetParent = col.transform.parent != null ? col.transform.parent.gameObject : col.gameObject;
+
+        // Verificar si el objetivo es un castor o un pato y si no está a salvo
+        Castor castor = targetParent.GetComponent<Castor>();
+        Pato pato = targetParent.GetComponent<Pato>();
+
+        if ((castor != null && !castor.aSalvo) || (pato != null && !pato.aSalvo))
+        {
+            animalesNoASalvo.Add(col);
+        }
+    }
+
+    return animalesNoASalvo;
+    }
+
     public List<Collider> ObtenerHuevosIndefensos()
     {
         // Obtener todos los colisionadores en el rango especificado
@@ -715,5 +698,13 @@ public class Cocodrilo : MonoBehaviour
         }
 
         return huevosIndefensos;
+    }
+
+     public IEnumerator ReanudarMovimiento(float tiempo)
+    {
+        aSalvo = true;
+        yield return new WaitForSeconds(tiempo);
+        aSalvo = false;
+        crocNav.isStopped = false; //reanudamos el movimiento despues de x segundos
     }
 }

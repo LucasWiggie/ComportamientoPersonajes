@@ -21,11 +21,9 @@ public class Salamandra : MonoBehaviour
     public LayerMask targetMaskArena;
     public LayerMask huirPato;
     public GameObject huevoPrefab; // Prefab de los huevos
+
     public bool puedeVer;
 
-    public float hambre; //Rango 0-100 las 3
-    public float energia;
-    public float miedo;
     public float temorHuevos;
     public int moscasComidas;
     private float distMinHuevo = 3.0f;
@@ -58,7 +56,11 @@ public class Salamandra : MonoBehaviour
     public float uTemorHuevos;
     public int uMoscasComidas;
 
-    float hambreRate = 2f;
+    public float hambre; //Rango 0-100 las 3
+    public float energia;
+    public float miedo;
+
+    float hambreRate = 1.5f;
     float energiaRate = 2f;
 
     public bool isDefaultMov = true;
@@ -194,33 +196,6 @@ public class Salamandra : MonoBehaviour
         {
             movimientoAleatorio();
         }
-    }
-
-    private void movimientoAleatorio()
-    {
-        if (Time.time >= nextRandomMovementTime)
-        {
-            Vector3 randomPoint = RandomNavmeshLocation(60f); // Obtener un punto aleatorio en el NavMesh
-            salamandraNav.SetDestination(randomPoint); // Establecer el punto como destino
-            nextRandomMovementTime = Time.time + movementInterval; // Actualizar el tiempo para el pr�ximo movimiento
-        }
-    }
-
-    // Funci�n para encontrar un punto aleatorio en el NavMesh dentro de un radio dado
-    private Vector3 RandomNavmeshLocation(float radius)
-    {
-        Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
-        randomDirection += transform.position;
-
-        NavMeshHit hit;
-        Vector3 finalPosition = Vector3.zero;
-
-        if (NavMesh.SamplePosition(randomDirection, out hit, radius, 1))
-        {
-            finalPosition = hit.position;
-        }
-
-        return finalPosition;
     }
 
     public void UtilitySystem()
@@ -361,6 +336,33 @@ public class Salamandra : MonoBehaviour
         energia = Mathf.Clamp(energia, 0f, 100f);
     }
 
+    private void movimientoAleatorio()
+    {
+        if (Time.time >= nextRandomMovementTime)
+        {
+            Vector3 randomPoint = RandomNavmeshLocation(60f); // Obtener un punto aleatorio en el NavMesh
+            salamandraNav.SetDestination(randomPoint); // Establecer el punto como destino
+            nextRandomMovementTime = Time.time + movementInterval; // Actualizar el tiempo para el pr�ximo movimiento
+        }
+    }
+
+    // Funci�n para encontrar un punto aleatorio en el NavMesh dentro de un radio dado
+    private Vector3 RandomNavmeshLocation(float radius)
+    {
+        Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
+        randomDirection += transform.position;
+
+        NavMeshHit hit;
+        Vector3 finalPosition = Vector3.zero;
+
+        if (NavMesh.SamplePosition(randomDirection, out hit, radius, 1))
+        {
+            finalPosition = hit.position;
+        }
+
+        return finalPosition;
+    }
+
     private void ComprobarVision()
     {
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radio, targetMask);
@@ -467,8 +469,8 @@ public class Salamandra : MonoBehaviour
                 aSalvo = true;
 
                 // Incrementa la energ�a del castor mientras est� en la presa
-                energia += 0.08f;
-
+                energia += 0.4f;
+                hambreRate -= 0.005f;
                 // Permitir que el castor salga de la presa solo si su energ�a es >= 90
                 descansando = true;
                 if (energia > 80)//una cantidad necesaria de energia que reponer para poder salir del nenufar, evitando cambios de comportamiento por cte por el cambio del valor de energia en la franja de cansancio
@@ -561,7 +563,6 @@ public class Salamandra : MonoBehaviour
         if (moscaTarget != null)
         {
             salamandraNav.SetDestination(moscaTarget.position);
-            //StartCoroutine(EsperarLlegada());
             if (comeMosca)
             {
                 return ChaseState.Finished;
@@ -571,6 +572,7 @@ public class Salamandra : MonoBehaviour
         else
         {
             //HayMosca();
+            comeMosca = false;
             return ChaseState.Failed;
         }
     }
@@ -582,7 +584,8 @@ public class Salamandra : MonoBehaviour
             Destroy(moscaTarget.gameObject);
             moscaTarget = null;
             moscasComidas++;
-            hambre -= 20;
+            hambre -= 30;
+            comeMosca = false;
 
             return ChaseState.Finished;
         }

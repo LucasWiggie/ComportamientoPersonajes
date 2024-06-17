@@ -17,9 +17,6 @@ public class Pato : MonoBehaviour
     public float angulo;
     public GameObject playerRef;
 
-    public GameObject patito;
-
-
     public LayerMask targetMask;
     public LayerMask targetMaskNenufar;
     public LayerMask obstructionMask;
@@ -29,19 +26,13 @@ public class Pato : MonoBehaviour
     public bool puedeVer;
     public bool puedeVerNenufar;
 
-    //Lista con los cocodrilos cercanos al pato
-    private List<Transform> cocodrilosCercanos = new List<Transform>();
-    private List<Collider> animalesNoASalvo = new List<Collider>();
-    public float distanciaMaxima = 1f;
-
-    public float hambre; //Rango 0-100 las 3
-    public float energia;
-    public float miedo;
-
-    //Utilidades
-    public float uHambre;
-    public float uEnergia;
-    public float uMiedo;
+    //Acci�n ir a nenufares
+    public enum ChaseState
+    {
+        Finished,
+        Enproceso,
+        Failed
+    }
 
     //BTs
     public GameObject btHambre;
@@ -52,23 +43,44 @@ public class Pato : MonoBehaviour
     private bool boolHambre;
     private bool boolEnergia;
     private bool boolMiedo;
-    private bool fertil;
-    private bool descansando = false;
+
+    //Utilidades
+    public float uHambre;
+    public float uEnergia;
+    public float uMiedo;
+
+    public float hambre; //Rango 0-100 las 3
+    public float energia;
+    public float miedo;
 
     float hambreRate = 2f;
     float energiaRate = 2f;
 
+    public bool isDefaultMov = true;
+
     public bool aSalvo = false;
-    //NavMeshAgent
-    private NavMeshAgent patoNav;
+    public Salamandra salamandraScript;
+    public GameObject patito;
+    private bool fertil;
+    private bool descansando = false;
+
     //objetivos
     private Transform nenufarTarget;//huevos objetivo
     private Transform salTarget;
 
-    public bool isDefaultMov = true;
+    //NavMeshAgent
+    private NavMeshAgent patoNav;
 
-    //Para indicar si esta aSalvo
-    public Salamandra salamandraScript;
+    // Variables para controlar el intervalo de movimiento
+    private float nextRandomMovementTime = 0f;
+    public float movementInterval = 3f;
+
+    //Presas indefensas
+    private List<Collider> animalesNoASalvo = new List<Collider>();
+
+    //Lista con los cocodrilos cercanos al pato
+    private List<Transform> cocodrilosCercanos = new List<Transform>();
+    public float distanciaMaxima = 1f;
 
     //Getters y Setters
     public float getHambre()
@@ -108,8 +120,6 @@ public class Pato : MonoBehaviour
         uHambre = hambre;
         uEnergia = energia;
         uMiedo = miedo;
-
-        StartCoroutine(FOVRoutine());
     }
 
     private void Update()
@@ -230,30 +240,14 @@ public class Pato : MonoBehaviour
         }
     }
 
-    void DetectarObjetivos()
+    private void UpdateVariables()
     {
-        cocodrilosCercanos.Clear();
+        hambre += hambreRate * Time.deltaTime;
+        energia -= energiaRate * Time.deltaTime;
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, distanciaMaxima, huirCocodrilo);
-        foreach (Collider collider in colliders)
-        {
-            cocodrilosCercanos.Add(collider.transform);
-        }
+        hambre = Mathf.Clamp(hambre, 0f, 100f);
+        energia = Mathf.Clamp(energia, 0f, 100f);
     }
-
-    void ActualizarMiedo()
-    {
-        miedo = 0f;
-
-        foreach (Transform objetivo in cocodrilosCercanos)
-        {
-            float distancia = Vector3.Distance(transform.position, objetivo.position);
-            float miedoIncremental = Mathf.Clamp01(1 - distancia / distanciaMaxima) * 100; // Calcular el miedo incremental normalizado
-
-            miedo = Mathf.Max(miedo, miedoIncremental); // Mantener el mayor valor de miedo
-        }
-    }
-
 
     private void movimientoAleatorio()
     {
@@ -266,9 +260,6 @@ public class Pato : MonoBehaviour
         }
     }
 
-    // Variables para controlar el intervalo de movimiento
-    private float nextRandomMovementTime = 0f;
-    public float movementInterval = 3f;
 
     // Funci�n para encontrar un punto aleatorio en el NavMesh dentro de un radio dado
     private Vector3 RandomNavmeshLocation(float radius)
@@ -287,26 +278,6 @@ public class Pato : MonoBehaviour
         return finalPosition;
     }
 
-    private void UpdateVariables()
-    {
-        hambre += hambreRate * Time.deltaTime;
-        energia -= energiaRate * Time.deltaTime;
-
-        hambre = Mathf.Clamp(hambre, 0f, 100f);
-        energia = Mathf.Clamp(energia, 0f, 100f);
-    }
-
-
-    private IEnumerator FOVRoutine()
-    {
-        float delay = 0.2f;
-        WaitForSeconds wait = new WaitForSeconds(delay);
-        while (true)
-        {
-            yield return wait;
-            ComprobarVision();
-        }
-    }
 
     public ChaseState ComprobarVision()
     {
@@ -369,6 +340,75 @@ public class Pato : MonoBehaviour
         return ChaseState.Failed;
     }
 
+    //Acci�n Perseguir Salamandra
+    public ChaseState PerseguirSal()
+    {
+        if (salTarget == null)
+        {
+            return ChaseState.Failed; 
+        }
+
+        patoNav.speed = 4.25f;
+        GameObject targetParent = salTarget.gameObject;
+        var salamandra = targetParent.GetComponent<Salamandra>();
+
+        if (salamandra == null)
+        {
+            return ChaseState.Failed;
+        }
+
+        if (salamandra.aSalvo) 
+        {
+            patoNav.speed = 3.5f;
+            return ChaseState.Failed;
+        }
+        
+        float distanciaMinimaParaComer = 2.0f; 
+        float distanciaActual = Vector3.Distance(salTarget.position, transform.position);
+
+        Debug.Log($"Chasing target. Current distance: {distanciaActual}, Minimum distance: {distanciaMinimaParaComer}");
+
+        if (distanciaActual > distanciaMinimaParaComer)
+        {
+            patoNav.SetDestination(salTarget.position); 
+            return ChaseState.Enproceso; 
+        }
+        else
+        {
+            patoNav.speed = 3.5f;
+            return ChaseState.Finished; // Suficientemente cerca para intentar comer
+        }
+    }
+
+    //Acci�n Comer Salamandra
+    public void ComerSal()
+    {
+        // Verificar si salTarget no es null
+        if (salTarget == null)
+        {
+            return; 
+        }
+
+        GameObject targetParent = salTarget.gameObject;
+        var salamandra = targetParent.GetComponent<Salamandra>();
+
+        if (salamandra != null)
+        {
+            if (!salamandra.aSalvo)
+            {
+                float distanciaMinimaParaComer = 2.0f; 
+                float distanciaActual = Vector3.Distance(salTarget.position, transform.position);
+
+                if (distanciaActual <= distanciaMinimaParaComer)
+                {
+                    GameObject.Destroy(targetParent); // Destruir el GameObject de la salamandra que se ha comido
+                    hambre -= 50; // Bajar el hambre
+                }
+
+            }
+        }
+    }
+
     public ChaseState HayNenufares()
     {
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radioNenufar, targetMaskNenufar);
@@ -424,15 +464,6 @@ public class Pato : MonoBehaviour
 
         return ChaseState.Failed;
     }
-
-    //Acci�n ir a nenufares
-    public enum ChaseState
-    {
-        Finished,
-        Enproceso,
-        Failed
-    }
-
 
     public ChaseState IrNenufares()
     {
@@ -499,74 +530,6 @@ public class Pato : MonoBehaviour
         }
     }
 
-    //Acci�n Comer Salamandra
-    public void ComerSal()
-    {
-        // Verificar si salTarget no es null
-        if (salTarget == null)
-        {
-            return; 
-        }
-
-        GameObject targetParent = salTarget.gameObject;
-        var salamandra = targetParent.GetComponent<Salamandra>();
-
-        if (salamandra != null)
-        {
-            if (!salamandra.aSalvo)
-            {
-                float distanciaMinimaParaComer = 2.0f; 
-                float distanciaActual = Vector3.Distance(salTarget.position, transform.position);
-
-                if (distanciaActual <= distanciaMinimaParaComer)
-                {
-                    GameObject.Destroy(targetParent); // Destruir el GameObject de la salamandra que se ha comido
-                    hambre -= 50; // Bajar el hambre
-                }
-
-            }
-        }
-    }
-
-    //Acci�n Perseguir Salamandra
-    public ChaseState PerseguirSal()
-    {
-        if (salTarget == null)
-        {
-            return ChaseState.Failed; 
-        }
-
-        patoNav.speed = 4.0f;
-        GameObject targetParent = salTarget.gameObject;
-        var salamandra = targetParent.GetComponent<Salamandra>();
-
-        if (salamandra == null)
-        {
-            return ChaseState.Failed;
-        }
-
-        if (salamandra.aSalvo) 
-        {
-            patoNav.speed = 3.5f;
-            return ChaseState.Failed;
-        }
-        
-        float distanciaMinimaParaComer = 2.0f; 
-        float distanciaActual = Vector3.Distance(salTarget.position, transform.position);
-
-        Debug.Log($"Chasing target. Current distance: {distanciaActual}, Minimum distance: {distanciaMinimaParaComer}");
-
-        if (distanciaActual > distanciaMinimaParaComer)
-        {
-            patoNav.SetDestination(salTarget.position); 
-            return ChaseState.Enproceso; 
-        }
-        else
-        {
-            patoNav.speed = 3.5f;
-            return ChaseState.Finished; // Suficientemente cerca para intentar comer
-        }
-    }
 
     public void GenerarPatitos()
     {
@@ -576,6 +539,31 @@ public class Pato : MonoBehaviour
         
        
     }
+
+    void DetectarObjetivos()
+    {
+        cocodrilosCercanos.Clear();
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, distanciaMaxima, huirCocodrilo);
+        foreach (Collider collider in colliders)
+        {
+            cocodrilosCercanos.Add(collider.transform);
+        }
+    }
+
+    void ActualizarMiedo()
+    {
+        miedo = 0f;
+
+        foreach (Transform objetivo in cocodrilosCercanos)
+        {
+            float distancia = Vector3.Distance(transform.position, objetivo.position);
+            float miedoIncremental = Mathf.Clamp01(1 - distancia / distanciaMaxima) * 100; // Calcular el miedo incremental normalizado
+
+            miedo = Mathf.Max(miedo, miedoIncremental); // Mantener el mayor valor de miedo
+        }
+    }
+
 
     public List<Collider> ObtenerAnimalesNoASalvo()
     {

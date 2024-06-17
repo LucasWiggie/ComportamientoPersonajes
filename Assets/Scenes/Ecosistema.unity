@@ -1804,12 +1804,12 @@ MonoBehaviour:
   pato: {fileID: 385287219224526871, guid: 0e0713aa9ebc07640b01992d3fa21da8, type: 3}
   palo: {fileID: 5656048564650677434, guid: cc04d654acd24d244808316233ee9eb8, type: 3}
   mosca: {fileID: 473223151736451685, guid: 2612d0139ca15cd4487fb287783742ad, type: 3}
-  nCocodrilos: 2
-  nCastores: 3
-  nSalamandras: 1
-  nPatos: 2
-  nPalos: 6
-  nMoscas: 6
+  nCocodrilos: 0
+  nCastores: 0
+  nSalamandras: 5
+  nPatos: 3
+  nPalos: 0
+  nMoscas: 9
 --- !u!4 &362074959
 Transform:
   m_ObjectHideFlags: 0

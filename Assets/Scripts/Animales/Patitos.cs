@@ -22,7 +22,6 @@ public class Patitos : MonoBehaviour
 
     private Transform crocTarget;
 
-
     // Start is called before the first frame update
     void Start()
     {

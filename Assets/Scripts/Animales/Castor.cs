@@ -25,11 +25,18 @@ public class Castor : MonoBehaviour
     public bool puedeVer;
     public bool puedeVerPresa;
 
-    //Lista con los cocodrilos cercanos al castor
-    private List<Transform> cocodrilosCercanos = new List<Transform>();
-    public float distanciaMaxima = 2f;
+    public bool cogePalo = false;
+    public bool dejaPalo = false;
+    public bool llegaDestino = false;
+    private static List<Transform> palosRecogidos = new List<Transform>();
+        
 
-
+    public enum ChaseState
+    {
+        Finished,
+        Failed, 
+        Enproceso
+    }
 
     // BTs de cada acci�n
     public GameObject btHambre;
@@ -41,16 +48,22 @@ public class Castor : MonoBehaviour
     private bool boolEnergia = false;
     private bool boolMiedo = false;
 
+    // Utilidades
+    public float uHambre;
+    public float uEnergia;
+    public float uMiedo;
 
     public float hambre; //Rango 0-100 las 3
     public float energia;
     public float miedo;
 
-    public bool cogePalo = false;
-    public bool dejaPalo = false;
-    public bool llegaDestino = false;
-    private static List<Transform> palosRecogidos = new List<Transform>();
+    float hambreRate = 2f;
+    float energiaRate = 2f;
 
+    private bool isDefaultMov = true;
+
+    public bool aSalvo = false;
+    private bool descansando = false;
 
     //NavMeshAgent
     public NavMeshAgent castNav;
@@ -59,19 +72,9 @@ public class Castor : MonoBehaviour
     public Transform paloTarget;
     public Transform presaTarget;
 
-    private bool isDefaultMov = true;
-
-    // Utilidades
-    public float uHambre;
-    public float uEnergia;
-    public float uMiedo;
-
-    float hambreRate = 2f;
-    float energiaRate = 2f;
-
-    public bool aSalvo = false;
-    private bool descansando = false;
-
+    //Peligros
+    private List<Transform> cocodrilosCercanos = new List<Transform>();
+    public float distanciaMaxima = 2f;
 
     //Getters y Setters
     public float getHambre()
@@ -112,7 +115,6 @@ public class Castor : MonoBehaviour
         uEnergia = energia;
         uMiedo = miedo;
 
-        StartCoroutine(FOVRoutine());
     }
 
     private void Update()
@@ -151,16 +153,6 @@ public class Castor : MonoBehaviour
         {
             btEnergiaMiedo.GetComponent<MonoBehaviourTree>().Tick();
         }
-    }
-
-    private void UpdateVariables()
-    {
-        hambre += hambreRate * Time.deltaTime;
-        energia -= energiaRate * Time.deltaTime;
-
-        hambre = Mathf.Clamp(hambre, 0f, 100f);
-        energia = Mathf.Clamp(energia, 0f, 100f);
-
     }
 
     public void UtilitySystem()
@@ -232,21 +224,40 @@ public class Castor : MonoBehaviour
         }
     }
 
-    private IEnumerator FOVRoutine()
+        private void UpdateVariables()
     {
-        float delay = 0.2f;
-        WaitForSeconds wait = new WaitForSeconds(delay);
-        while (true)
+        hambre += hambreRate * Time.deltaTime;
+        energia -= energiaRate * Time.deltaTime;
+
+        hambre = Mathf.Clamp(hambre, 0f, 100f);
+        energia = Mathf.Clamp(energia, 0f, 100f);
+
+    }
+
+    void SoltarPalo()
+    {
+        if (paloTarget != null)
         {
-            yield return wait;
-            ComprobarVision();
+            // Verificar que el palo tenga un padre antes de soltarlo
+            if (paloTarget.parent == transform)
+            {
+                // Desasignar el padre del palo
+                paloTarget.parent = null;
+                dejaPalo = true;
+                cogePalo = false;
+                Destroy(paloTarget.gameObject); // Destruir el palo que estaba llevando el castor
+                paloTarget = null;
+            }
         }
     }
-    public enum ChaseState
+    
+
+    void CogerPalo()
     {
-        Finished,
-        Failed, 
-        Enproceso
+        Debug.Log("cogio");
+        paloTarget.parent = transform;
+        dejaPalo = false;
+        cogePalo = true;
     }
 
     public ChaseState ComprobarVision()
@@ -366,30 +377,6 @@ public class Castor : MonoBehaviour
         return ChaseState.Failed;
     }
 
-
-    public ChaseState irPalo()
-    {
-        Debug.Log("irpalo");
-        castNav.stoppingDistance = 0;
-
-        if (paloTarget != null)
-        {
-            castNav.SetDestination(paloTarget.position);
-            //StartCoroutine(EsperarLlegada());
-            if (cogePalo)
-            {
-                return ChaseState.Finished;
-            }
-            return ChaseState.Enproceso;
-        }
-        else
-        {
-            Debug.Log("fallo");
-            ComprobarVision();
-            return ChaseState.Failed;
-        }
-    }
-
     public ChaseState irPresa()
     {
         if (presaTarget != null)
@@ -430,6 +417,31 @@ public class Castor : MonoBehaviour
             return ChaseState.Failed;
         }
     }
+
+    public ChaseState irPalo()
+    {
+        Debug.Log("irpalo");
+        castNav.stoppingDistance = 0;
+
+        if (paloTarget != null)
+        {
+            castNav.SetDestination(paloTarget.position);
+            //StartCoroutine(EsperarLlegada());
+            if (cogePalo)
+            {
+                return ChaseState.Finished;
+            }
+            return ChaseState.Enproceso;
+        }
+        else
+        {
+            Debug.Log("fallo");
+            ComprobarVision();
+            return ChaseState.Failed;
+        }
+    }
+
+    
     public ChaseState llevarAPresa()
     {
         Debug.Log("lleva palo a presa");
@@ -466,45 +478,6 @@ public class Castor : MonoBehaviour
 
     }
 
-    public IEnumerator EsperarLlegada() 
-    { 
-        yield return new WaitUntil(()=> castNav.remainingDistance <= castNav.stoppingDistance);
-    }
-
-    void SoltarPalo()
-    {
-        if (paloTarget != null)
-        {
-            // Verificar que el palo tenga un padre antes de soltarlo
-            if (paloTarget.parent == transform)
-            {
-                // Desasignar el padre del palo
-                paloTarget.parent = null;
-                dejaPalo = true;
-                cogePalo = false;
-                Destroy(paloTarget.gameObject); // Destruir el palo que estaba llevando el castor
-                paloTarget = null;
-            }
-        }
-    }
-    
-
-    void CogerPalo()
-    {
-        Debug.Log("cogio");
-        paloTarget.parent = transform;
-        dejaPalo = false;
-        cogePalo = true;
-    }
-
-
-    /*public void HambreAction()
-    {
-        // BT de cuando el Cocodrilo tiene hambre
-        //moverse a palo
-        //_hambre = 0;
-    }*/
-
     void DetectarObjetivos()
     {
         cocodrilosCercanos.Clear();
@@ -530,7 +503,6 @@ public class Castor : MonoBehaviour
     }
 
 
-    // Método estático para verificar si un palo ha sido recogido
     public static bool PaloRecogido(Transform palo)
     {
         Castor[] castores = FindObjectsOfType<Castor>(); // Obtener todos los castores en la escena
@@ -546,17 +518,11 @@ public class Castor : MonoBehaviour
         return false; // El palo no ha sido recogido por ningún castor
     }
 
-    // Método para agregar un palo recogido a la lista
     public static void AgregarPaloRecogido(Transform palo)
     {
         if (!palosRecogidos.Contains(palo))
         {
             palosRecogidos.Add(palo);
         }
-    }
-
-    public void EnergiaMiedoAction()
-    {
-        // BT de cuando el Cocodrilo tiene poca energ�a
     }
 }
