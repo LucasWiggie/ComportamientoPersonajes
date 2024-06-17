@@ -817,6 +817,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: cceb8eb4a1f9b6c4db19b93c751099c9, type: 3}
+      propertyPath: m_TagString
+      value: Salamandra
+      objectReference: {fileID: 0}
     - target: {fileID: 1163358967275232369, guid: cceb8eb4a1f9b6c4db19b93c751099c9, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -973,9 +977,6 @@ MonoBehaviour:
     m_Bits: 64
   huevoPrefab: {fileID: 2295779056263190461, guid: 2b41eb1961b62944bacd7fe390b7576b, type: 3}
   puedeVer: 0
-  hambre: 70
-  energia: 10
-  miedo: 0
   temorHuevos: 0
   moscasComidas: 0
   btHambre: {fileID: 4751725006468547131}
@@ -988,6 +989,9 @@ MonoBehaviour:
   uMiedo: 0
   uTemorHuevos: 0
   uMoscasComidas: 0
+  hambre: 70
+  energia: 10
+  miedo: 0
   isDefaultMov: 1
   aSalvo: 0
   poniendoHuevos: 0

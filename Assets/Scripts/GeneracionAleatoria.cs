@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class GeneracionAleatoria : MonoBehaviour
 {
-
     public GameObject cocodrilo;
     public GameObject castor;
     public GameObject salamandra;
@@ -20,89 +19,75 @@ public class GeneracionAleatoria : MonoBehaviour
     public int nPalos;
     public int nMoscas;
 
-
-    // Start is called before the first frame update
     void Awake()
     {
+        // Puedes dejar este bloque vacío si no quieres que se generen animales automáticamente al inicio
+    }
+
+    public void GenerateAnimals()
+    {
+        ClearAnimals();
+
         for (int i = 0; i < nCocodrilos; i++)
         {
-            NavMeshHit hit;
-            Vector3 randomPoint = GetRandomPointOnNavMesh(2.77f);  //No bajar de 2.77 que se cuelga
-            while (!NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
-            {
-                randomPoint = GetRandomPointOnNavMesh(2.77f); //No bajar de 2.77 que se cuelga
-            }
-
-            Instantiate(cocodrilo, hit.position, new Quaternion(0f, 0f, 0f, 0f));
-
-
+            InstantiateAnimal(cocodrilo);
         }
 
         for (int i = 0; i < nCastores; i++)
         {
-            NavMeshHit hit;
-            Vector3 randomPoint = GetRandomPointOnNavMesh(2.77f); //No bajar de 2.77 que se cuelga
-            while (!NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
-            {
-                randomPoint = GetRandomPointOnNavMesh(2.77f); //No bajar de 2.77 que se cuelga
-            }
-
-            Instantiate(castor, hit.position, new Quaternion(0f, 0f, 0f,0f));
+            InstantiateAnimal(castor);
         }
 
         for (int i = 0; i < nSalamandras; i++)
         {
-            NavMeshHit hit;
-            Vector3 randomPoint = GetRandomPointOnNavMesh(2.77f); //No bajar de 2.63 que se cuelga
-            while (!NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
-            {
-                randomPoint = GetRandomPointOnNavMesh(2.77f);//No bajar de 2.63 que se cuelga
-            }
-
-
-            GameObject instance = Instantiate(salamandra, hit.position, new Quaternion(0f, 0f, 0f, 90f));
-            instance.transform.position = new Vector3(hit.position.x, -0.35f, hit.position.z);
+            InstantiateAnimal(salamandra, -0.35f);
         }
 
         for (int i = 0; i < nPatos; i++)
         {
-            NavMeshHit hit;
-            Vector3 randomPoint = GetRandomPointOnNavMeshPato(2.77f);//No bajar de 2.63 que se cuelga
-            while (!NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
-            {
-                randomPoint = GetRandomPointOnNavMeshPato(2.77f);//No bajar de 2.63 que se cuelga
-            }
-
-            GameObject instance = Instantiate(pato, hit.position, new Quaternion(0f, 0f, 0f, 0f));
-            instance.transform.position = new Vector3(hit.position.x, 1.48f, hit.position.z);
+            InstantiateAnimal(pato, 1.48f);
         }
 
         for (int i = 0; i < nPalos; i++)
         {
-            NavMeshHit hit;
-            Vector3 randomPoint = GetRandomPointOnNavMeshPato(2.77f);//No bajar de 2.63 que se cuelga
-            while (!NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
-            {
-                randomPoint = GetRandomPointOnNavMeshPato(2.77f);//No bajar de 2.63 que se cuelga
-            }
-
-            GameObject instance = Instantiate(palo, hit.position, new Quaternion(0f, 0f, 0f, 0f));
-            instance.transform.position = new Vector3(hit.position.x, 2.92f, hit.position.z);
+            InstantiateAnimal(palo, 2.92f);
         }
 
         for (int i = 0; i < nMoscas; i++)
         {
-            NavMeshHit hit;
-            Vector3 randomPoint = GetRandomPointOnNavMeshPato(2.77f);//No bajar de 2.63 que se cuelga
-            while (!NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
-            {
-                randomPoint = GetRandomPointOnNavMeshPato(2.77f);//No bajar de 2.63 que se cuelga
-            }
+            InstantiateAnimal(mosca, 3.23f);
+        }
+    }
 
-            GameObject instance = Instantiate(mosca, hit.position, new Quaternion(0f, 0f, 0f, 0f));
-            instance.transform.position = new Vector3(hit.position.x, 3.23f, hit.position.z);
+    private void InstantiateAnimal(GameObject animalPrefab, float yOffset = 0f)
+    {
+        NavMeshHit hit;
+        Vector3 randomPoint = GetRandomPointOnNavMesh(2.77f);
+        while (!NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
+        {
+            randomPoint = GetRandomPointOnNavMesh(2.77f);
         }
 
+        GameObject instance = Instantiate(animalPrefab, hit.position, Quaternion.identity);
+        instance.transform.position = new Vector3(hit.position.x, hit.position.y + yOffset, hit.position.z);
+    }
+
+    public void ClearAnimals()
+    {
+        DestroyAnimalsWithTag("Castor");
+        DestroyAnimalsWithTag("Pato");
+        DestroyAnimalsWithTag("Cocodrilo");
+        DestroyAnimalsWithTag("Salamandra");
+        DestroyAnimalsWithTag("Palo");
+        DestroyAnimalsWithTag("Mosca");
+    }
+
+    private void DestroyAnimalsWithTag(string tag)
+    {
+        foreach (GameObject animal in GameObject.FindGameObjectsWithTag(tag))
+        {
+            Destroy(animal);
+        }
     }
 
     Vector3 GetRandomPointOnNavMesh(float yOffset)
@@ -110,15 +95,8 @@ public class GeneracionAleatoria : MonoBehaviour
         return new Vector3(Random.Range(-28.0f, 28.0f), yOffset, Random.Range(-28.0f, 28.0f));
     }
 
-    Vector3 GetRandomPointOnNavMeshPato(float yOffset)
-    {
-        return new Vector3(Random.Range(-25.0f, 25.0f), yOffset, Random.Range(-25.0f, 25.0f));
-    }
-
-    // Update is called once per frame
     void Update()
     {
-
+        // Dejar vacío si no hay necesidad de actualizar cada frame
     }
 }
-
