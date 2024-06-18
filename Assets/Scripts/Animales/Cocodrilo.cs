@@ -84,6 +84,8 @@ public class Cocodrilo : MonoBehaviour
     public List<Transform> patitosCercanos = new List<Transform>();
     public float distanciaMax = 35f;
 
+    public Bark bark;
+
     //Getters y Setters
     public float getHambre()
     {
@@ -123,6 +125,8 @@ public class Cocodrilo : MonoBehaviour
         uHambre = hambre;
         uEnergia = energia;
         uMiedo = miedo;
+
+        bark = GetComponentInChildren<Bark>();
 
     }
 
@@ -181,6 +185,9 @@ public class Cocodrilo : MonoBehaviour
             boolMiedo = true;
             btHambre.SetActive(false);
             btEnergia.SetActive(false);
+
+            bark.gameObject.SetActive(true);
+            bark.ChangeImage(2);
             btMiedo.SetActive(true);
         }
         else if (uEnergia < 20 && huevosIndefensos.Count != 0)
@@ -192,6 +199,10 @@ public class Cocodrilo : MonoBehaviour
             btHambre.SetActive(false);
             btMiedo.SetActive(false);
             btEnergia.SetActive(true);
+
+            bark.gameObject.SetActive(true);
+            bark.ChangeImage(1);
+
         }
         else if (uHambre > 70 && animalesNoASalvo.Count != 0)
         {
@@ -202,6 +213,10 @@ public class Cocodrilo : MonoBehaviour
             btEnergia.SetActive(false);
             btMiedo.SetActive(false);
             btHambre.SetActive(true);
+
+            bark.gameObject.SetActive(true);
+            bark.ChangeImage(0);
+
         }
         else if (uMiedo > 70)
         {
@@ -212,6 +227,10 @@ public class Cocodrilo : MonoBehaviour
             btHambre.SetActive(false);
             btEnergia.SetActive(false);
             btMiedo.SetActive(true);
+
+            bark.gameObject.SetActive(true);
+            bark.ChangeImage(2);
+
         }
         else
         {
@@ -222,6 +241,8 @@ public class Cocodrilo : MonoBehaviour
             btHambre.SetActive(false);
             btEnergia.SetActive(false);
             btMiedo.SetActive(false);
+
+            bark.gameObject.SetActive(false);
         }
     }
 

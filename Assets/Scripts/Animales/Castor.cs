@@ -76,6 +76,8 @@ public class Castor : MonoBehaviour
     private List<Transform> cocodrilosCercanos = new List<Transform>();
     public float distanciaMaxima = 2f;
 
+    public Bark bark;
+
     //Getters y Setters
     public float getHambre()
     {
@@ -114,6 +116,8 @@ public class Castor : MonoBehaviour
         uHambre = hambre;
         uEnergia = energia;
         uMiedo = miedo;
+
+        bark = GetComponentInChildren<Bark>();
 
     }
 
@@ -189,6 +193,10 @@ public class Castor : MonoBehaviour
             btHambre.SetActive(false);
             btPalosPresa.SetActive(false);
             btEnergiaMiedo.SetActive(true);
+
+            bark.gameObject.SetActive(true);
+            bark.ChangeImage(3);
+
         }
         else if (uHambre > 80)
         {
@@ -200,6 +208,10 @@ public class Castor : MonoBehaviour
             btPalosPresa.SetActive(false);
             btEnergiaMiedo.SetActive(false);
             btHambre.SetActive(true);
+
+            bark.gameObject.SetActive(true);
+            bark.ChangeImage(0);
+
         }
         else if (uMiedo > 70)
         {
@@ -211,6 +223,10 @@ public class Castor : MonoBehaviour
             btHambre.SetActive(false);
             btPalosPresa.SetActive(false);
             btEnergiaMiedo.SetActive(true);
+
+            bark.gameObject.SetActive(true);
+            bark.ChangeImage(1);
+
         }
         else
         {
@@ -222,6 +238,9 @@ public class Castor : MonoBehaviour
             btEnergiaMiedo.SetActive(false);
             btHambre.SetActive(false);
             btPalosPresa.SetActive(true);
+
+            bark.gameObject.SetActive(true);
+            bark.ChangeImage(2);
         }
     }
 

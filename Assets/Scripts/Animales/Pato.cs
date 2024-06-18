@@ -82,6 +82,8 @@ public class Pato : MonoBehaviour
     private List<Transform> cocodrilosCercanos = new List<Transform>();
     public float distanciaMaxima = 1f;
 
+    public Bark bark;
+
     //Getters y Setters
     public float getHambre()
     {
@@ -120,6 +122,9 @@ public class Pato : MonoBehaviour
         uHambre = hambre;
         uEnergia = energia;
         uMiedo = miedo;
+
+        bark = GetComponentInChildren<Bark>();
+
     }
 
     private void Update()
@@ -178,6 +183,10 @@ public class Pato : MonoBehaviour
             btHambre.SetActive(false);
             btEnergia.SetActive(false);
             btMiedo.SetActive(true);
+
+            bark.gameObject.SetActive(true);
+            bark.ChangeImage(1);
+
         }
         else if (uEnergia < 20 || descansando) //si energia baja o descansando -> arbol de energia
         {
@@ -190,6 +199,9 @@ public class Pato : MonoBehaviour
             btHambre.SetActive(false);
             btMiedo.SetActive(false);
             btEnergia.SetActive(true);
+
+            bark.gameObject.SetActive(true);
+            bark.ChangeImage(2);
 
         }
         else if (uHambre < 20 && uEnergia > 70) //si sufienciente energia y poca hambre -> generar patitos
@@ -215,6 +227,9 @@ public class Pato : MonoBehaviour
             btMiedo.SetActive(false);
             btEnergia.SetActive(false);
             btHambre.SetActive(true);
+
+            bark.gameObject.SetActive(true);
+            bark.ChangeImage(0);
         }
         else if (uMiedo > 70)//si miedo -> arbol de miedo
         {
@@ -227,6 +242,9 @@ public class Pato : MonoBehaviour
             btHambre.SetActive(false);
             btEnergia.SetActive(false);
             btMiedo.SetActive(true);
+
+            bark.gameObject.SetActive(true);
+            bark.ChangeImage(1);
         }
         else //si nada -> movimiento estandar
         {
@@ -239,6 +257,8 @@ public class Pato : MonoBehaviour
             btEnergia.SetActive(false);
             btHambre.SetActive(false);
             btMiedo.SetActive(false);
+
+            bark.gameObject.SetActive(false);
         }
     }
 

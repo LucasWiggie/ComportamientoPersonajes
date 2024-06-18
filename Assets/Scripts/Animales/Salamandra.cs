@@ -91,6 +91,8 @@ public class Salamandra : MonoBehaviour
     private List<Transform> patosCercanos = new List<Transform>();
     public float distanciaMaxima = 35;
 
+    public Bark bark;
+
     //Getters y Setters
     public float getHambre()
     {
@@ -151,6 +153,9 @@ public class Salamandra : MonoBehaviour
         uMiedo = miedo;
         uTemorHuevos = temorHuevos;
         uMoscasComidas = moscasComidas;
+
+        bark = GetComponentInChildren<Bark>();
+
 
     }
 
@@ -229,6 +234,9 @@ public class Salamandra : MonoBehaviour
             btEnergia.SetActive(false);
             btMiedoPatos.SetActive(true);
             btPonerHuevos.SetActive(false);
+
+            bark.gameObject.SetActive(true);
+            bark.ChangeImage(3);
         }
         else if (uTemorHuevos > 60)
         {
@@ -245,6 +253,9 @@ public class Salamandra : MonoBehaviour
             btEnergia.SetActive(false);
             btMiedoPatos.SetActive(false);
             btPonerHuevos.SetActive(false);
+
+            bark.gameObject.SetActive(true);
+            bark.ChangeImage(0);
         }
         else if (uEnergia < 20 || descansando)
         {
@@ -261,6 +272,9 @@ public class Salamandra : MonoBehaviour
             btEnergia.SetActive(true);
             btMiedoPatos.SetActive(false);
             btPonerHuevos.SetActive(false);
+
+            bark.gameObject.SetActive(true);
+            bark.ChangeImage(2);
         }
         else if (uHambre > 60)
         {
@@ -277,6 +291,9 @@ public class Salamandra : MonoBehaviour
             btEnergia.SetActive(false);
             btMiedoPatos.SetActive(false);
             btPonerHuevos.SetActive(false);
+
+            bark.gameObject.SetActive(true);
+            bark.ChangeImage(1);
         }
         else if (uMiedo > 70) 
         {
@@ -293,6 +310,9 @@ public class Salamandra : MonoBehaviour
             btEnergia.SetActive(false);
             btMiedoPatos.SetActive(true);
             btPonerHuevos.SetActive(false);
+
+            bark.gameObject.SetActive(true);
+            bark.ChangeImage(3);
         }
         else if (uMoscasComidas >= 2)
         {
@@ -310,6 +330,9 @@ public class Salamandra : MonoBehaviour
             btEnergia.SetActive(false);
             btMiedoPatos.SetActive(false);
             btPonerHuevos.SetActive(true);
+
+            bark.gameObject.SetActive(true);
+            bark.ChangeImage(0);
         }
         else if(!boolProtegerHuevos)
         {
@@ -327,6 +350,8 @@ public class Salamandra : MonoBehaviour
             btEnergia.SetActive(false);
             btMiedoPatos.SetActive(false);
             btPonerHuevos.SetActive(false);
+
+            bark.gameObject.SetActive(false);
         }
 
         huevosPuestos = false;
