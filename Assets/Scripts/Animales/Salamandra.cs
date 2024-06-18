@@ -159,10 +159,12 @@ public class Salamandra : MonoBehaviour
         UpdateVariables();
         DetectarPatosCercanos();
         ActualizarMiedo();
-
+       
         if (moscaTarget != null)
         {
-            if ((transform.position.x - moscaTarget.position.x <= 0.05f) && (transform.position.z - moscaTarget.position.z <= 0.05f) && !comeMosca)
+            float distanciaX = Mathf.Abs(transform.position.x - moscaTarget.position.x);
+            float distanciaZ = Mathf.Abs(transform.position.z - moscaTarget.position.z);
+            if (distanciaX <= 1 && distanciaZ <= 1)
             {
                 comeMosca = true;
             }
@@ -326,6 +328,8 @@ public class Salamandra : MonoBehaviour
             btMiedoPatos.SetActive(false);
             btPonerHuevos.SetActive(false);
         }
+
+        huevosPuestos = false;
     }
 
     private void UpdateVariables()
@@ -467,8 +471,9 @@ public class Salamandra : MonoBehaviour
             if (sandTarget != null)
             {
                 salamandraNav?.SetDestination(sandTarget.position); //se pone como punto de destino la posicion de la arena
-
-                if ((transform.position.x - sandTarget.position.x <= 0.5f) && (transform.position.z - sandTarget.position.z <= 0.5f))
+                float distanciaX = Mathf.Abs(transform.position.x - sandTarget.position.x);
+                float distanciaZ = Mathf.Abs(transform.position.z - sandTarget.position.z);
+                if (distanciaX <= 2 && distanciaZ <= 2)
                 {
                     aSalvo = true;
 
@@ -611,9 +616,10 @@ public class Salamandra : MonoBehaviour
             if (sandTarget != null)
             {
                 salamandraNav?.SetDestination(sandTarget.position); //se pone como punto de destino la posicion de la arena
-
+                float distanciaX = Mathf.Abs(transform.position.x - sandTarget.position.x);
+                float distanciaZ = Mathf.Abs(transform.position.z - sandTarget.position.z);
                 // Si está en la arena
-                if ((transform.position.x - sandTarget.position.x <= 0.5f) && (transform.position.z - sandTarget.position.z <= 0.5f))
+                if (distanciaX <= 2 && distanciaZ <= 2)
                 {
                     Debug.Log("Salamandra en arena");
                     aSalvo = true;

@@ -53,7 +53,7 @@ public class Cocodrilo : MonoBehaviour
     public float miedo;
 
     float hambreRate = 2f;
-    float energiaRate = 1.5f;
+    float energiaRate = 1.25f;
 
     public bool isDefaultMov = false;
 

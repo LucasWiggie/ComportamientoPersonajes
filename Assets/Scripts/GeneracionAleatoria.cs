@@ -80,6 +80,7 @@ public class GeneracionAleatoria : MonoBehaviour
         DestroyAnimalsWithTag("Salamandra");
         DestroyAnimalsWithTag("Palo");
         DestroyAnimalsWithTag("Mosca");
+        DestroyAnimalsWithTag("Huevo");
     }
 
     private void DestroyAnimalsWithTag(string tag)

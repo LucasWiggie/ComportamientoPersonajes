@@ -204,7 +204,7 @@ public class Pato : MonoBehaviour
             btHambre.SetActive(false);
             btMiedo.SetActive(false);
         }
-        else if (uHambre > 80 && animalesNoASalvo.Count != 0)// si hambre -> arbol de hambre
+        else if (uHambre > 65 && animalesNoASalvo.Count != 0)// si hambre -> arbol de hambre
         {
             boolEnergia = false;
             boolMiedo = false;
