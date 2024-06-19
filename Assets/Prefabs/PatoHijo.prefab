@@ -295,7 +295,7 @@ GameObject:
   - component: {fileID: 243555104146194913}
   m_Layer: 16
   m_Name: PatoHijo
-  m_TagString: Undefined
+  m_TagString: Patitos
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
