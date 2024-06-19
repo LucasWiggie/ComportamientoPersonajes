@@ -257,7 +257,7 @@ public class Salamandra : MonoBehaviour
             bark.gameObject.SetActive(true);
             bark.ChangeImage(0);
         }
-        else if (uEnergia < 20 || descansando)
+        else if (uEnergia < 30 || descansando)
         {
             isDefaultMov = false;
             boolHambre = false;

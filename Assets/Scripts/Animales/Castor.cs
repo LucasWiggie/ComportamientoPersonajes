@@ -191,7 +191,7 @@ public class Castor : MonoBehaviour
             btPalosPresa.SetActive(false);
             btEnergiaMiedo.SetActive(true);
         }
-        else if (uEnergia < 20  || descansando)
+        else if (uEnergia < 30  || descansando)
         {
             boolHambre = false;
             boolMiedo = false;

@@ -190,7 +190,7 @@ public class Cocodrilo : MonoBehaviour
             bark.ChangeImage(2);
             btMiedo.SetActive(true);
         }
-        else if (uEnergia < 20 && huevosIndefensos.Count != 0)
+        else if (uEnergia < 35 && huevosIndefensos.Count != 0)
         {
             boolHambre = false;
             boolMiedo = false;
@@ -462,7 +462,7 @@ public class Cocodrilo : MonoBehaviour
             GameObject.Destroy(targetParent);
 
             // Aumentar la energía
-            energia += 40;
+            energia = Random.Range(80, 100); 
             energia = Mathf.Clamp(energia, 0f, 100f);
 
         }

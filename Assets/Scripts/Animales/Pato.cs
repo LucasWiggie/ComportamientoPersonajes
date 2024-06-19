@@ -188,7 +188,7 @@ public class Pato : MonoBehaviour
             bark.ChangeImage(1);
 
         }
-        else if (uEnergia < 20 || descansando) //si energia baja o descansando -> arbol de energia
+        else if (uEnergia < 35 || descansando) //si energia baja o descansando -> arbol de energia
         {
             boolHambre = false;
             boolMiedo = false;
