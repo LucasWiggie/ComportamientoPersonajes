@@ -295,7 +295,7 @@ GameObject:
   - component: {fileID: 243555104146194913}
   m_Layer: 16
   m_Name: PatoHijo
-  m_TagString: Untagged
+  m_TagString: Undefined
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -360,7 +360,6 @@ MonoBehaviour:
   obstructionMask:
     serializedVersion: 2
     m_Bits: 0
-  lifeTime: 20
   puedeVer: 0
   movementInterval: 3
 --- !u!195 &243555104146194913

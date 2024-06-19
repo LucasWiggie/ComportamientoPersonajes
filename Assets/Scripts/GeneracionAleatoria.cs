@@ -21,7 +21,7 @@ public class GeneracionAleatoria : MonoBehaviour
 
     void Awake()
     {
-        // Puedes dejar este bloque vacío si no quieres que se generen animales automáticamente al inicio
+        // Puedes dejar este bloque vacï¿½o si no quieres que se generen animales automï¿½ticamente al inicio
     }
 
     public void GenerateAnimals()
@@ -81,6 +81,7 @@ public class GeneracionAleatoria : MonoBehaviour
         DestroyAnimalsWithTag("Palo");
         DestroyAnimalsWithTag("Mosca");
         DestroyAnimalsWithTag("Huevo");
+        DestroyAnimalsWithTag("Patitos");
     }
 
     private void DestroyAnimalsWithTag(string tag)
@@ -98,6 +99,6 @@ public class GeneracionAleatoria : MonoBehaviour
 
     void Update()
     {
-        // Dejar vacío si no hay necesidad de actualizar cada frame
+        // Dejar vacï¿½o si no hay necesidad de actualizar cada frame
     }
 }
