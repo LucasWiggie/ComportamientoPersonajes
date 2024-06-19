@@ -142,6 +142,7 @@ MonoBehaviour:
   patito: {fileID: 5842986526443527119, guid: fcd7e96b0af642c45930bff60bce15b1, type: 3}
   movementInterval: 3
   distanciaMaxima: 25
+  bark: {fileID: 0}
 --- !u!195 &4023073068378583411
 NavMeshAgent:
   m_ObjectHideFlags: 0

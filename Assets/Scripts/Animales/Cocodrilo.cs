@@ -406,7 +406,6 @@ public class Cocodrilo : MonoBehaviour
             if (crocNav.pathPending || dist > minDist)
             {
                 crocNav?.SetDestination(animalTarget.position); // Actualiza el destino
-                energiaRate += 0.5f;
                 return ChaseState.Enproceso; // La persecución está en curso
             }
 

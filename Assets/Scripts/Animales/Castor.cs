@@ -128,7 +128,7 @@ public class Castor : MonoBehaviour
         ActualizarMiedo();
 
         if (paloTarget != null) { 
-            if (transform.position.x == paloTarget.position.x && transform.position.z == paloTarget.position.z && !cogePalo)
+            if ((transform.position.x - paloTarget.position.x <=0.5f)&& (transform.position.z - paloTarget.position.z<=0.5f) && !cogePalo)
             {
                 CogerPalo();
             }
@@ -136,7 +136,7 @@ public class Castor : MonoBehaviour
 
         if (presaTarget != null)
         {
-            if ((transform.position.x - presaTarget.position.x <= 0.5f) && (transform.position.z - presaTarget.position.z <= 0.5f) && !dejaPalo)
+            if ((transform.position.x - presaTarget.position.x <= 1f) && (transform.position.z - presaTarget.position.z <= 1f) && !dejaPalo)
             {
                 SoltarPalo();
             }
