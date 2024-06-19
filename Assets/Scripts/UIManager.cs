@@ -96,6 +96,7 @@ public class UIManager : MonoBehaviour
         UpdateUI();
     }
 
+
     public void StartGeneration()
     {
         generacionAleatoriaScript.nCastores = castorCount;

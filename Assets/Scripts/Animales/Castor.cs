@@ -127,8 +127,11 @@ public class Castor : MonoBehaviour
         DetectarObjetivos();
         ActualizarMiedo();
 
-        if (paloTarget != null) { 
-            if ((transform.position.x - paloTarget.position.x <=0.5f)&& (transform.position.z - paloTarget.position.z<=0.5f) && !cogePalo)
+        if (paloTarget != null)
+        {
+            float distanciaPalo = Vector3.Distance(transform.position, paloTarget.position);
+
+            if (distanciaPalo <= 1f && !cogePalo)
             {
                 CogerPalo();
             }
@@ -136,10 +139,15 @@ public class Castor : MonoBehaviour
 
         if (presaTarget != null)
         {
-            if ((transform.position.x - presaTarget.position.x <= 1f) && (transform.position.z - presaTarget.position.z <= 1f) && !dejaPalo)
+            float distanciaPresa = Vector3.Distance(transform.position, presaTarget.position);
+
+            if (distanciaPresa <= 1f && cogePalo)
             {
                 SoltarPalo();
             }
+        }
+        if(hambre>80 && cogePalo){
+            comerPalo();
         }
     }
     private void FixedUpdate()
@@ -258,26 +266,32 @@ public class Castor : MonoBehaviour
     {
         if (paloTarget != null)
         {
-            // Verificar que el palo tenga un padre antes de soltarlo
+            // Verificar que el palo esté siendo llevado por el castor
             if (paloTarget.parent == transform)
             {
-                // Desasignar el padre del palo
+                // Soltar el palo
                 paloTarget.parent = null;
                 dejaPalo = true;
                 cogePalo = false;
-                Destroy(paloTarget.gameObject); // Destruir el palo que estaba llevando el castor
+
+                // Destruir el palo
+                Destroy(paloTarget.gameObject);
                 paloTarget = null;
+
+                Debug.Log("Palo dejado en la presa");
             }
         }
     }
-    
 
     void CogerPalo()
     {
-        Debug.Log("cogio");
-        paloTarget.parent = transform;
-        dejaPalo = false;
-        cogePalo = true;
+        if (paloTarget != null)
+        {
+            Debug.Log("Cogió el palo");
+            paloTarget.parent = transform;
+            dejaPalo = false;
+            cogePalo = true;
+        }
     }
 
     public ChaseState ComprobarVision()
@@ -414,7 +428,7 @@ public class Castor : MonoBehaviour
                     castNav.speed = 3.5f;
                     // Incrementa la energía del castor mientras está en la presa
                     energia += 0.4f;
-                    hambreRate -= 0.005f;
+                    //hambreRate = 0.005f;
                     descansando = true;
                     if (energia > 90)//una cantidad necesaria de energia que reponer para poder salir del nenufar, evitando cambios de comportamiento por cte por el cambio del valor de energia en la franja de cansancio
                     {
@@ -446,13 +460,13 @@ public class Castor : MonoBehaviour
     {
         try
         {
-            Debug.Log("irpalo");
+            Debug.Log("Ir por el palo");
             castNav.stoppingDistance = 0;
 
             if (paloTarget != null)
             {
                 castNav?.SetDestination(paloTarget.position);
-                //StartCoroutine(EsperarLlegada());
+
                 if (cogePalo)
                 {
                     return ChaseState.Finished;
@@ -461,21 +475,22 @@ public class Castor : MonoBehaviour
             }
             else
             {
-                Debug.Log("fallo");
+                Debug.Log("Fallo al buscar el palo");
                 ComprobarVision();
                 return ChaseState.Failed;
             }
         }
-        catch { return ChaseState.Failed;}
-        
+        catch
+        {
+            return ChaseState.Failed;
+        }
     }
 
-    
     public ChaseState llevarAPresa()
     {
         try
         {
-            Debug.Log("lleva palo a presa");
+            Debug.Log("Lleva palo a la presa");
             HayPresa();
 
             castNav.stoppingDistance = 0;
@@ -483,18 +498,24 @@ public class Castor : MonoBehaviour
             if (presaTarget != null)
             {
                 castNav?.SetDestination(presaTarget.position);
+
                 if (dejaPalo)
                 {
-                    Debug.Log("finished llevarapresa");
+                    Debug.Log("Llegó a la presa");
                     return ChaseState.Finished;
                 }
                 return ChaseState.Enproceso;
-
             }
-            else { Debug.Log("presa null"); return ChaseState.Failed; }
+            else
+            {
+                Debug.Log("Fallo al buscar la presa");
+                return ChaseState.Failed;
+            }
         }
-        catch { return ChaseState.Failed;}
-    
+        catch
+        {
+            return ChaseState.Failed;
+        }
     }
 
     public ChaseState comerPalo()
@@ -502,7 +523,7 @@ public class Castor : MonoBehaviour
         if (cogePalo)
         {
             SoltarPalo();
-            hambre -= 20;
+            hambre -= 30;
             return ChaseState.Finished;
 
         }
